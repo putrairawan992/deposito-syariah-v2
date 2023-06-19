@@ -55,6 +55,7 @@ CREATE TABLE nasabah (
   tmpt_lahir varchar(255) DEFAULT NULL,
   tgl_lahir date DEFAULT NULL,
   ibu_kandung varchar(255) DEFAULT NULL,
+  id_privy nvarchar(255) NULL,
   id_bank int DEFAULT NULL,
   norek varchar(255) DEFAULT NULL,
   status_pernikahan int NULL,
@@ -67,8 +68,6 @@ CREATE TABLE nasabah (
   image_ktp_ahli_waris varchar(255) DEFAULT NULL,
   hub_ahli_waris INT DEFAULT NULL,
   phone_ahli_waris varchar(255) DEFAULT NULL,
-  kriptorone int default NULL,
-  kriptortwo int default NULL,
   validasi int DEFAULT NULL, -- 1=Blm Valid, 2=Sdh Valid
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
@@ -81,8 +80,8 @@ CREATE TABLE nasabah (
 
 CREATE TABLE mitra (
   id int IDENTITY(1,1) PRIMARY KEY,
+  id_user INT NOT NULL,
   nama nvarchar(255) NOT NULL,
-  email nvarchar(255) NOT NULL,
   kode_bank nvarchar(255) not NULL,
   no_npwp nvarchar(255) not NULL,
   no_akta_pendirian nvarchar(255) not NULL,
@@ -109,14 +108,13 @@ CREATE TABLE mitra (
   norek_bank nvarchar(255) NULL,
   id_privy nvarchar(255) NULL,
   logo nvarchar(255) NULL,
-  kriptorone int default NULL,
-  kriptortwo int default NULL,
   validasi int DEFAULT 0,
   id_validator INT NOT NULL,
   keterangan nvarchar(255) default null,
   db_name nvarchar(255) NULL,
   created_at datetime DEFAULT GETDATE(),
   updated_at datetime DEFAULT NULL,
+  CONSTRAINT fk_mitra_user FOREIGN KEY (id_user) REFERENCES users(id),
   CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
   CONSTRAINT fk_mitra_validator FOREIGN KEY (id_validator) REFERENCES users(id)
 );
@@ -134,18 +132,6 @@ CREATE TABLE norek_mitra (
   updated_at datetime DEFAULT NULL,
   CONSTRAINT fk_norekmitra_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id),
   CONSTRAINT fk_norekmitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
-);
-
--- --------------------------------------------------------
-
-CREATE TABLE admin_bpr (
-  id int IDENTITY(1,1) PRIMARY KEY,
-  id_user INT NOT NULL,
-  id_mitra INT NULL,
-  created_at datetime DEFAULT GETDATE(),
-  updated_at datetime DEFAULT NULL,
-  CONSTRAINT fk_admin_user FOREIGN KEY (id_user) REFERENCES users(id),
-  CONSTRAINT fk_admin_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
 );
 
 -- --------------------------------------------------------
@@ -175,6 +161,8 @@ CREATE TABLE produk (
   tenor int NULL,
   start_date date NULL,
   end_date date NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT GETDATE(),
   updated_at datetime DEFAULT NULL,
   CONSTRAINT fk_produk_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)

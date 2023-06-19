@@ -87,3 +87,144 @@ function dekripsina($data, $kriptorone, $kriptortwo)
     $fromAscii = convertFromAscii($fromOpenssl, $kriptorone);
     return $fromAscii;
 }
+
+// DB Load Balancing
+function bestConnection()
+{
+    // Find the best database connection based on custom criteria
+    $connections = ['db2', 'db3', 'db1'];
+    $bestConnection = findBestConnection($connections);
+
+    // Switch to the selected database connection
+    DB::setDefaultConnection($bestConnection);
+
+    // Delete DB Name
+    if (($key = array_search($bestConnection, $connections)) !== false) {
+        unset($connections[$key]);
+    }
+
+    return ['conn' => $bestConnection, 'listconn' => $connections];
+}
+
+function findBestConnection($connections)
+{
+    $availableConnections = [];
+    foreach ($connections as $connection) {
+        if (isConnectionAvailable($connection)) {
+            $availableConnections[] = $connection;
+        }
+    }
+
+    // If there are available connections, select the first one
+    // You can implement a more sophisticated algorithm here based on your specific requirements
+    if (!empty($availableConnections)) {
+        return $availableConnections[0];
+    }
+
+    // If no available connections found, fallback to a default connection or handle the case as needed
+    return 'default';
+}
+
+function isConnectionAvailable(string $connection)
+{
+    try {
+        // Get the configuration for the specified connection
+        $config = config("database.connections.$connection");
+
+        // Create a new temporary connection to check availability
+        $tempConnection = new \PDO("sqlsrv:Server={$config['host']},{$config['port']};Database={$config['database']};Encrypt=true;TrustServerCertificate=true;", $config['username'], $config['password']);
+
+        // Set the timeout for the connection attempt (adjust as needed)
+        $tempConnection->setAttribute(\PDO::ATTR_TIMEOUT, 5);
+
+        // Attempt to establish the connection
+        $tempConnection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $tempConnection->query('SELECT 1');
+
+        // The connection was successful
+        return true;
+    } catch (\Throwable $e) {
+        // An error occurred, indicating that the connection is not available
+        return false;
+    }
+}
+// end DB Load Balancing
+
+// Sync DB Manually
+function syncTBUsers($dbname, $alluser)
+{
+    try {
+        foreach ($dbname['listconn'] as $key => $value) {
+            foreach ($alluser as $key => $user) {
+                DB::connection($value)
+                    ->table('users')
+                    ->updateOrInsert(
+                        // ['id' => $user->id],
+                        [
+                            'username' => $user->username,
+                            'email' => $user->email,
+                            'phone' => $user->phone,
+                            'password' => $user->password,
+                            'kriptorone' => $user->kriptorone,
+                            'kriptortwo' => $user->kriptortwo,
+                            'status' => $user->status,
+                            'role' => $user->role,
+                            'otp' => $user->otp,
+                            'store_token' => $user->store_token,
+                            'reset_token' => $user->reset_token,
+                            'created_at' => $user->created_at,
+                            'updated_at' => $user->updated_at,
+                        ],
+                    );
+            }
+        }
+        return true;
+    } catch (Exception $e) {
+        return response()->json($e->message, 400);
+    }
+}
+
+function syncTBNasabah($dbname, $allnasabah)
+{
+    try {
+        foreach ($dbname['listconn'] as $key => $value) {
+            foreach ($allnasabah as $key => $nasabah) {
+                DB::connection($value)
+                    ->table('users')
+                    ->updateOrInsert(
+                        // ['id' => $user->id],
+                        [
+                            'id_user' => $nasabah->id_user,
+                            'id_validator' => $nasabah->id_validator,
+                            'nama' => $nasabah->nama,
+                            'ktp' => $nasabah->ktp,
+                            'image_ktp' => $nasabah->image_ktp,
+                            'image_selfie' => $nasabah->image_selfie,
+                            'tmpt_lahir' => $nasabah->tmpt_lahir,
+                            'tgl_lahir' => $nasabah->tgl_lahir,
+                            'ibu_kandung' => $nasabah->ibu_kandung,
+                            'id_privy' => $nasabah->id_privy,
+                            'id_bank' => $nasabah->id_bank,
+                            'norek' => $nasabah->norek,
+                            'status_pernikahan' => $nasabah->status_pernikahan,
+                            'jenis_pekerjaan' => $nasabah->jenis_pekerjaan,
+                            'alamat' => $nasabah->alamat,
+                            'alamat_kerja' => $nasabah->alamat_kerja,
+                            'penghasilan' => $nasabah->penghasilan,
+                            'nama_ahli_waris' => $nasabah->nama_ahli_waris,
+                            'ktp_ahli_waris' => $nasabah->ktp_ahli_waris,
+                            'image_ktp_ahli_waris' => $nasabah->image_ktp_ahli_waris,
+                            'hub_ahli_waris' => $nasabah->hub_ahli_waris,
+                            'phone_ahli_waris' => $nasabah->phone_ahli_waris,
+                            'validasi' => $nasabah->validasi,
+                            'created_at' => $nasabah->created_at,
+                            'updated_at' => $nasabah->updated_at,
+                        ],
+                    );
+            }
+        }
+        return true;
+    } catch (Exception $e) {
+        return response()->json($e->message, 400);
+    }
+}

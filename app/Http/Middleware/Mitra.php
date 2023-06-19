@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
-class Operator
+class Mitra
 {
     /**
      * The authentication guard factory instance.

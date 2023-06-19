@@ -35,11 +35,11 @@ CREATE TABLE users (
   reset_token varchar(255) DEFAULT NULL,
   role int NOT NULL DEFAULT 0,
   status int NOT NULL DEFAULT 1,
-  id_kriptor int default NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_otp_reset datetime DEFAULT NULL,
   created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  CONSTRAINT fk_users_kriptor FOREIGN KEY (id_kriptor) REFERENCES db_enkriptor.enkripsi(id)
+  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp()
 );
 
 -- --------------------------------------------------------
@@ -55,6 +55,7 @@ CREATE TABLE nasabah (
   tmpt_lahir varchar(255) DEFAULT NULL,
   tgl_lahir date DEFAULT NULL,
   ibu_kandung varchar(255) DEFAULT NULL,
+  id_privy varchar(255) default null,
   id_bank int DEFAULT NULL,
   norek varchar(255) DEFAULT NULL,
   status_pernikahan int default null,
@@ -67,14 +68,14 @@ CREATE TABLE nasabah (
   image_ktp_ahli_waris varchar(255) DEFAULT NULL,
   hub_ahli_waris INT DEFAULT NULL,
   phone_ahli_waris varchar(255) DEFAULT NULL,
-  id_kriptor int default NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid
   created_at datetime DEFAULT current_timestamp(),
   updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
   CONSTRAINT fk_nasabah_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
   CONSTRAINT fk_nasabah_user FOREIGN KEY (id_user) REFERENCES users(id),
-  CONSTRAINT fk_nasabah_validator FOREIGN KEY (id_validator) REFERENCES users(id),
-  CONSTRAINT fk_nasabah_kriptor FOREIGN KEY (id_kriptor) REFERENCES db_enkriptor.enkripsi(id)
+  CONSTRAINT fk_nasabah_validator FOREIGN KEY (id_validator) REFERENCES users(id)
 );
 
 -- --------------------------------------------------------
@@ -96,6 +97,8 @@ CREATE TABLE mitra (
   provinsi int default NULL,
   kota int default NULL,
   alamat varchar(255) default NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   npwp_provinsi int default NULL,
   npwp_kota int default NULL,
   npwp_alamat varchar(255) default NULL,
@@ -109,16 +112,14 @@ CREATE TABLE mitra (
   norek_bank varchar(255) default null,
   id_privy varchar(255) default null,
   logo varchar(255) default null,
-  id_kriptor int default 0,
   validasi int default 0,
   id_validator INT NOT NULL,
   keterangan varchar(255) default null,
-  db_name nvarchar(255) NULL,
+  db_name varchar(255) NULL,
   created_at datetime DEFAULT current_timestamp(),
   updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
   CONSTRAINT fk_mitra_validator FOREIGN KEY (id_validator) REFERENCES users(id),
-  CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
-  CONSTRAINT fk_mitra_kriptor FOREIGN KEY (id_kriptor) REFERENCES db_enkriptor.enkripsi(id)
+  CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 
 -- --------------------------------------------------------
@@ -128,6 +129,8 @@ CREATE TABLE norek_mitra (
   id_mitra int not null,
   id_bank int not null,
   atas_nama varchar(255) not null,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp(),
   updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
   CONSTRAINT fk_norekmitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
@@ -154,7 +157,8 @@ CREATE TABLE neraca (
   asset INT DEFAULT 0,
   kewajiban INT DEFAULT 0,
   ekuitas INT DEFAULT 0,
-  id_kriptor int default NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp(),
   updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
   CONSTRAINT fk_neraca_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
@@ -172,6 +176,8 @@ CREATE TABLE produk (
   tenor int default null,
   start_date date DEFAULT null,
   end_date date DEFAULT null,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp(),
   updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
   CONSTRAINT fk_produk_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
@@ -184,10 +190,10 @@ CREATE TABLE log_app (
   id_user int not null,
   keterangan varchar(255) not null,
   notifikasi int default 0,
-  id_kriptor int default NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp(),
-  CONSTRAINT fk_logapp_user FOREIGN KEY (id_user) REFERENCES users(id),
-  CONSTRAINT fk_logapp_kriptor FOREIGN KEY (id_kriptor) REFERENCES db_enkriptor.enkripsi(id)
+  CONSTRAINT fk_logapp_user FOREIGN KEY (id_user) REFERENCES users(id)
 );
 
 -- --------------------------------------------------------
