@@ -39,7 +39,7 @@ class Mitra
             return response(['status' => 'error', 'message' => 'Unauthorized.']);
         }
 
-        if (auth()->user()->role == 2) {
+        if (auth()->user()->role == 2 || auth()->user()->role == 99) {
             return $next($request);
         } else {
             return response(['status' => 'error', 'message' => 'You are Not Operator.']);

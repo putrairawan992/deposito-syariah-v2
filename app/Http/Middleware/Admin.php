@@ -39,7 +39,7 @@ class Admin
             return response(['status' => 'error', 'message' => 'Unauthorized Access.']);
         }
 
-        if (auth()->user()->role == 1 || auth()->user()->role == 99 || auth()->user()->role == 88) {
+        if (auth()->user()->role == 1 || auth()->user()->role == 99) {
             return $next($request);
         } else {
             return response(['status' => 'error', 'message' => 'You are Not Admin.']);

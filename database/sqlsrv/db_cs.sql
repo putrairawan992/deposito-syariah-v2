@@ -2,7 +2,7 @@ CREATE TABLE qna (
   id INT IDENTITY(1,1) PRIMARY KEY,
   pertanyaan varchar(255) not null,
   jawaban varchar(255) not null,
-  id_predecessor int default 0,
+  predecessor int default 0,
   kategori varchar(255) default null, -- aplikasi / transaksi / biodata / norek
   created_at datetime DEFAULT current_timestamp(),
   updated_at datetime DEFAULT null
@@ -12,13 +12,15 @@ CREATE TABLE qna (
 
 CREATE TABLE komplain (
   id INT IDENTITY(1,1) PRIMARY KEY,
-  id_nasabah INT NOT NULL,
-  id_admin_cs INT NOT NULL,
+  id_nasabah INT default NOT NULL,
+  id_mitra INT default NOT NULL,
+  id_admin INT NOT NULL,
   id_transaksi INT default NULL,
   id_qna INT default NULL,
-  jenis_komplain INT NOT NULL, -- 0=Registrasi Login Identitas, 1=Terkait Produk, 3=Terkait Pembelian/Pembayaran
-  nasabah_rating INT NULL, -- 1-5
-  cs_rating INT NULL, -- 1-5
+  jenis_komplain INT NOT NULL, -- 0=Registrasi Login Identitas, 1=Terkait Produk, 3=Terkait Pembelian/Pembayaran, 4=Terkait Mitra
+  nasabah_rate INT NULL, -- 1-5
+  mitra_rate INT NULL, -- 1-5
+  admin_rate INT NULL, -- 1-5
   keterangan INT NOT NULL,
   predecessor_komplain INT NOT NULL,
   record_voice VARCHAR(255) NULL,
@@ -50,7 +52,6 @@ CREATE TABLE log_cs (
   id_user INT NOT NULL,
   id_komplain INT NOT NULL,
   keterangan VARCHAR(255) NOT NULL,
-  data_change VARCHAR(255) NOT NULL,
   notifikasi INT NULL DEFAULT 0,
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,

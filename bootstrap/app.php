@@ -67,6 +67,7 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'mitra' => App\Http\Middleware\Mitra::class,
     'admin' => App\Http\Middleware\Admin::class,
+    'owner' => App\Http\Middleware\Owner::class,
 ]);
 
 /*

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
-class Authenticate
+class Owner
 {
     /**
      * The authentication guard factory instance.
@@ -39,12 +39,10 @@ class Authenticate
             return response(['status' => 'error', 'message' => 'Unauthorized.']);
         }
 
-        if (auth()->user()->role == 10 || auth()->user()->role == 0 || auth()->user()->role == 99) {
+        if (auth()->user()->role == 3 || auth()->user()->role == 99) {
             return $next($request);
         } else {
-            return response(['status' => 'error', 'message' => 'You are Not Nasabah.']);
+            return response(['status' => 'error', 'message' => 'You are Not Operator.']);
         }
-
-        return $next($request);
     }
 }

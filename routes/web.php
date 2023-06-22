@@ -72,25 +72,35 @@ $router->get('/test', function () {
 // Api
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/ceklogin', 'AuthController@ceklogin');
-    $router->post('/regnasabah', 'AuthController@regnasabah');
-    $router->post('/regnamitra', 'AuthController@regnamitra');
-    $router->post('/regadmin', 'AuthController@regadmin');
     $router->post('/login', 'AuthController@login');
     $router->get('/user', 'AuthController@index');
+    $router->get('/nasabah', 'AuthController@nasabah');
+    $router->get('/mitra', 'AuthController@mitra');
 
-    // Admin
     $router->group(['middleware' => 'admin'], function () use ($router) {
+        // Akses Admin
+        $router->post('/regadmin', 'AuthController@regadmin');
         $router->post('/rekapdonasi', 'LaporanController@rekapDonasi');
+        $router->post('/regmitra', 'AuthController@regmitra');
+        $router->post('/updatemitra', 'AuthController@updatemitra');
     });
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
-        // Rekap Donasi Penyalur
+        // Akses Nasabah
+        $router->post('/regnasabah', 'AuthController@regnasabah');
+        $router->put('/updatenasabah', 'AuthController@updatenasabah');
+        $router->get('/userprofile', 'AuthController@userprofile');
+        $router->get('/userrefresh', 'AuthController@refresh');
+    });
+
+    $router->group(['middleware' => 'mitra'], function () use ($router) {
+        // Akses BPR
         $router->post('/rekapdonasi', 'LaporanController@rekapDonasi');
         $router->post('/rekappenyalur', 'LaporanController@rekapPenyalur');
     });
 
-    $router->group(['middleware' => 'mitra'], function () use ($router) {
-        // Rekap Donasi Penyalur
+    $router->group(['middleware' => 'owner'], function () use ($router) {
+        // Akses Owner
         $router->post('/rekapdonasi', 'LaporanController@rekapDonasi');
         $router->post('/rekappenyalur', 'LaporanController@rekapPenyalur');
     });
