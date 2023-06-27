@@ -73,8 +73,16 @@ function generatekriptor()
     ];
 }
 
-function enkripsina($data, $randnum, $randomBytes)
+function newenkripsina($data, $randnum, $randomBytes)
 {
+    $DataToAscii = convertToAscii($data, str_split($randnum));
+    return convertToOpensll($DataToAscii, $randomBytes);
+}
+
+function oldenkripsina($data, $kriptorone, $kriptortwo)
+{
+    $randomBytes = hex2bin($kriptortwo);
+    $randnum = convertFromOpensll($kriptorone, $kriptortwo);
     $DataToAscii = convertToAscii($data, str_split($randnum));
     return convertToOpensll($DataToAscii, $randomBytes);
 }
