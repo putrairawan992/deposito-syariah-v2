@@ -148,6 +148,7 @@ class NasabahController extends Controller
             'jenis_pekerjaan' => $jenis_pekerjaan,
             'penghasilan' => $penghasilan,
             'hub_ahli_waris' => $hub_ahli_waris,
+            'user_created' => auth()->user()->id,
         ];
 
         try {
@@ -206,43 +207,65 @@ class NasabahController extends Controller
         // Check if username, email, phone already exist
         $cekData = DB::table('users')
             ->where('id', '!=', $id_user)
+            ->wherein('role', [0, 10])
             ->get();
         foreach ($cekData as $key => $value) {
             $dekripEmail = null;
+            $dekripPhone = null;
             if ($value->email != null) {
                 $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
             }
-
             if ($email == $dekripEmail) {
                 return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 404);
                 break;
             }
-        }
 
-        $cekNasabah = DB::table('nasabah')
-            ->where('id_user', '!=', $id_user)
-            ->get();
-        foreach ($cekNasabah as $key => $value) {
-            $dekripKTP = null;
-            if ($value->ktp != null) {
-                $dekripKTP = dekripsina($value->ktp, $value->kriptorone, $value->kriptortwo);
+            if ($value->phone != null) {
+                $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
             }
 
-            if ($ktp == $dekripKTP) {
-                return response()->json('No KTP sudah digunakan, Silahkan gunakan yang lain', 404);
+            if ($phone == $dekripPhone) {
+                return response()->json('No Telepon sudah digunakan, Silahkan gunakan yang lain', 404);
                 break;
             }
         }
 
-        // Start Enkrip Data
-        $getNasabah = DB::table('users')
+        // Check nasabah already exist
+        $cekNasabah = DB::table('users')
+            ->where('users.id', '!=', $id_user)
+            ->wherein('role', [0, 10])
+            ->leftjoin('nasabah', 'users.id', 'nasabah.id_user')
+            ->get();
+        foreach ($cekNasabah as $key => $value) {
+            $dekripKtp = null;
+            $dekripIdprivy = null;
+
+            $kriptorone = $value->kriptorone;
+            $kriptortwo = $value->kriptortwo;
+
+            if (!empty($value->ktp)) {
+                $dekripKtp = dekripsina($value->nama, $kriptorone, $kriptortwo);
+                if ($ktp == $dekripKtp) {
+                    return response()->json('No KTP sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
+            }
+
+            if (!empty($value->id_privy)) {
+                $dekripIdprivy = dekripsina($value->kode_bank, $kriptorone, $kriptortwo);
+                if ($id_privy == $dekripIdprivy) {
+                    return response()->json('ID Privy sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
+            }
+        }
+
+        // Create new enkripsi Mitra
+        $getKriptor = DB::table('users')
             ->where('id', $id_user)
             ->first();
-        $kriptorone = $getNasabah->kriptorone;
-        $kriptortwo = $getNasabah->kriptortwo;
-        $kriptortwo = hex2bin($kriptortwo);
-        $kriptorone = convertFromOpensll($kriptorone, $kriptortwo);
-
+        $kriptorone = $getKriptor->kriptorone;
+        $kriptortwo = $getKriptor->kriptortwo;
         if ($email != null) {
             $email = oldenkripsina($email, $kriptorone, $kriptortwo);
         }
@@ -319,9 +342,75 @@ class NasabahController extends Controller
 
     public function validasinasabah(Request $request)
     {
+        $user = DB::table('nasabah')->where('id_user', $request->id);
+        if (empty($nasabah->first())) {
+            return response()->json('Nasabah tidak ditemukan', 400);
+        }
+
+        switch ($request->validasi) {
+            case 0:
+                $res = 'Data Belum Lengkap';
+                break;
+            case 1:
+                $res = 'Nasabah Valid';
+                break;
+            case 2:
+                $res = 'Nasabah Belum Valid';
+                break;
+            case 3:
+                $res = 'Nasabah Dinonaktifkan';
+                break;
+            default:
+                return response()->json('Error Validasi', 400);
+                break;
+        }
+
+        try {
+            $nasabah->update([
+                'validasi' => $request->validasi,
+                'id_validator' => auth()->user()->id,
+            ]);
+            return response()->json($res, 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 
-    public function deletenasabah(Request $request)
+    public function restorenasabah($id)
     {
+        $nasabah = DB::table('nasabah')->where('id_user', $id);
+        if (empty($nasabah->first())) {
+            return response()->json('Nasabah tidak ditemukan', 400);
+        }
+
+        try {
+            $nasabah->update([
+                'validasi' => 3,
+                'user_deleted' => auth()->user()->id,
+                'deleted_at' => date('Y-m-d H:i:s'),
+            ]);
+            return response()->json('Restore Berhasil', 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
+    public function deletenasabah($id)
+    {
+        $nasabah = DB::table('nasabah')->where('id_user', $id);
+        if (empty($nasabah->first())) {
+            return response()->json('Nasabah tidak ditemukan', 400);
+        }
+
+        try {
+            $nasabah->update([
+                'validasi' => 4,
+                'user_deleted' => auth()->user()->id,
+                'deleted_at' => date('Y-m-d H:i:s'),
+            ]);
+            return response()->json('Hapus Berhasil', 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 }

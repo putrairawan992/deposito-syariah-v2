@@ -82,8 +82,8 @@ function newenkripsina($data, $randnum, $randomBytes)
 function oldenkripsina($data, $kriptorone, $kriptortwo)
 {
     $randomBytes = hex2bin($kriptortwo);
-    $randnum = convertFromOpensll($kriptorone, $kriptortwo);
-    $DataToAscii = convertToAscii($data, str_split($randnum));
+    $kriptorone = str_split(convertFromOpensll($kriptorone, $randomBytes));
+    $DataToAscii = convertToAscii($data, $kriptorone);
     return convertToOpensll($DataToAscii, $randomBytes);
 }
 

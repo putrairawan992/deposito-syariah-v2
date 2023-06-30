@@ -1,29 +1,3 @@
-CREATE TABLE bank (
-  id INT IDENTITY(1,1) PRIMARY KEY,
-  nama VARCHAR(255),
-  kode VARCHAR(10),
-  alamat VARCHAR(255)
-);
-
--- --------------------------------------------------------
-
-CREATE TABLE kota (
-  id INT IDENTITY(1,1) PRIMARY KEY,
-  kota nvarchar(255) not null,
-  provinsi nvarchar(255) not null,
-  CONSTRAINT kota_na UNIQUE (kota)
-);
-
--- --------------------------------------------------------
-
-CREATE TABLE coa (
-  id int IDENTITY(1,1) PRIMARY KEY,
-  kode nvarchar(10) NOT NULL,
-  CONSTRAINT kode_na UNIQUE (kode)
-);
-
--- --------------------------------------------------------
-
 CREATE TABLE users (
   id int IDENTITY(1,1) PRIMARY KEY,
   username varchar(255) DEFAULT NULL,
@@ -39,7 +13,64 @@ CREATE TABLE users (
   kriptortwo varchar(255) default NULL,
   created_otp datetime DEFAULT NULL,
   created_at datetime DEFAULT current_timestamp,
-  updated_at datetime DEFAULT NULL
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE bank (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  nama VARCHAR(255),
+  kode VARCHAR(10),
+  alamat VARCHAR(255),
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id)
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE kota (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  kota nvarchar(255) not null,
+  provinsi nvarchar(255) not null,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  CONSTRAINT kota_na UNIQUE (kota)
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE coa (
+  id int IDENTITY(1,1) PRIMARY KEY,
+  kode nvarchar(10) NOT NULL,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  CONSTRAINT kode_na UNIQUE (kode)
 );
 
 -- --------------------------------------------------------
@@ -68,12 +99,18 @@ CREATE TABLE nasabah (
   image_ktp_ahli_waris varchar(255) DEFAULT NULL,
   hub_ahli_waris varchar(255) DEFAULT NULL,
   phone_ahli_waris varchar(255) DEFAULT NULL,
-  validasi int DEFAULT NULL, -- 1=Blm Valid, 2=Sdh Valid
+  validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
-  CONSTRAINT fk_nasabah_user FOREIGN KEY (id_user) REFERENCES users(id),
-  CONSTRAINT fk_nasabah_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
-  CONSTRAINT fk_nasabah_validator FOREIGN KEY (id_validator) REFERENCES users(id)
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  FOREIGN KEY (id_validator) REFERENCES users(id),
+  CONSTRAINT fk_nasabah_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 
 -- --------------------------------------------------------
@@ -106,15 +143,21 @@ CREATE TABLE mitra (
   norek_bank nvarchar(255) default NULL,
   id_privy nvarchar(255) default NULL,
   logo nvarchar(255) default NULL,
-  validasi int DEFAULT 0,
+  validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid
   id_validator INT NOT NULL,
   keterangan nvarchar(255) default null,
   db_name nvarchar(255)  default NULL,
-  created_at datetime DEFAULT GETDATE(),
+  created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
-  CONSTRAINT fk_mitra_user FOREIGN KEY (id_user) REFERENCES users(id),
-  CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
-  CONSTRAINT fk_mitra_validator FOREIGN KEY (id_validator) REFERENCES users(id)
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  FOREIGN KEY (id_validator) REFERENCES users(id),
+  CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 
 -- --------------------------------------------------------
@@ -126,6 +169,13 @@ CREATE TABLE norek_mitra (
   atas_nama varchar(255) not null,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
   CONSTRAINT fk_norekmitra_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id),
   CONSTRAINT fk_norekmitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
@@ -138,9 +188,54 @@ CREATE TABLE neraca (
   asset INT DEFAULT 0,
   kewajiban INT DEFAULT 0,
   ekuitas INT DEFAULT 0,
-  created_at datetime DEFAULT GETDATE(),
+  created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
   CONSTRAINT fk_neraca_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE splash_screen (
+  id int IDENTITY(1,1) PRIMARY KEY,
+  id_admin INT NOT NULL,
+  image INT DEFAULT 0,
+  deskripsi INT DEFAULT 0,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  CONSTRAINT fk_splash FOREIGN KEY (id_admin) REFERENCES mitra(id)
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE promo (
+  id int IDENTITY(1,1) PRIMARY KEY,
+  id_mitra INT NOT NULL,
+  image INT DEFAULT 0,
+  deskripsi INT DEFAULT 0,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  CONSTRAINT fk_promo_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
 );
 
 -- --------------------------------------------------------
@@ -155,8 +250,15 @@ CREATE TABLE produk (
   tenor nvarchar(255) NULL,
   start_date date NULL,
   end_date date NULL,
-  created_at datetime DEFAULT GETDATE(),
+  created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
+  FOREIGN KEY (user_created) REFERENCES users(id),
+  FOREIGN KEY (user_updated) REFERENCES users(id),
+  FOREIGN KEY (user_deleted) REFERENCES users(id),
   CONSTRAINT fk_produk_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
 );
 

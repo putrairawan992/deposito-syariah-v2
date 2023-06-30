@@ -65,7 +65,7 @@ class MitraController extends Controller
 
         // Check if password is greater than 5 character
         if (strlen($password) < 8) {
-            return response()->json('Password Kurang Dari 6 Digit', 400);
+            return response()->json('Password Kurang Dari 8 Digit', 400);
         }
 
         // Check if username, email, phone already exist
@@ -74,7 +74,7 @@ class MitraController extends Controller
             $dekripEmail = null;
             $dekripUsername = null;
             $dekripPhone = null;
-            if ($value->email != null) {
+            if (!empty($value->email)) {
                 $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
             }
             if ($email == $dekripEmail) {
@@ -82,7 +82,7 @@ class MitraController extends Controller
                 break;
             }
 
-            if ($value->username != null) {
+            if (!empty($value->username)) {
                 $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);
             }
             if ($username == $dekripUsername) {
@@ -90,7 +90,7 @@ class MitraController extends Controller
                 break;
             }
 
-            if ($value->phone != null) {
+            if (!empty($value->phone)) {
                 $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
             }
 
@@ -143,7 +143,7 @@ class MitraController extends Controller
                     break;
                 }
             }
-            return response()->json('npwp ga deteksi', 400);
+
             if (!empty($value->no_akta_pendirian)) {
                 $dekripno_akta_pendirian = dekripsina($value->no_akta_pendirian, $kriptorone, $kriptortwo);
                 if ($no_akta_pendirian == $dekripno_akta_pendirian) {
@@ -272,7 +272,7 @@ class MitraController extends Controller
         $insertDataUsers = [
             'username' => $username,
             'email' => $email,
-            'password' => app('hash')->make($password),
+            'password' => $password,
             'phone' => $phone,
             'role' => 2,
             'kriptorone' => $kriptor['kriptorone'],
@@ -499,70 +499,70 @@ class MitraController extends Controller
         $kriptorone = $getKriptor->kriptorone;
         $kriptortwo = $getKriptor->kriptortwo;
 
-        if ($username != null) {
+        if (!empty($username)) {
             $username = oldenkripsina($username, $kriptorone, $kriptortwo);
         }
-        if ($email != null) {
+        if (!empty($email)) {
             $email = oldenkripsina($email, $kriptorone, $kriptortwo);
         }
-        if ($phone != null) {
+        if (!empty($phone)) {
             $phone = oldenkripsina($phone, $kriptorone, $kriptortwo);
         }
-        if ($nama != null) {
+        if (!empty($nama)) {
             $nama = oldenkripsina($nama, $kriptorone, $kriptortwo);
         }
-        if ($kode_bank != null) {
+        if (!empty($kode_bank)) {
             $kode_bank = oldenkripsina($kode_bank, $kriptorone, $kriptortwo);
         }
-        if ($no_npwp != null) {
+        if (!empty($no_npwp)) {
             $no_npwp = oldenkripsina($no_npwp, $kriptorone, $kriptortwo);
         }
-        if ($no_akta_pendirian != null) {
+        if (!empty($no_akta_pendirian)) {
             $no_akta_pendirian = oldenkripsina($no_akta_pendirian, $kriptorone, $kriptortwo);
         }
-        if ($no_pengesahan_akta != null) {
+        if (!empty($no_pengesahan_akta)) {
             $no_pengesahan_akta = oldenkripsina($no_pengesahan_akta, $kriptorone, $kriptortwo);
         }
-        if ($website != null) {
+        if (!empty($website)) {
             $website = oldenkripsina($website, $kriptorone, $kriptortwo);
         }
-        if ($phone_pengurus != null) {
+        if (!empty($phone_pengurus)) {
             $phone_pengurus = oldenkripsina($phone_pengurus, $kriptorone, $kriptortwo);
         }
-        if ($id_privy != null) {
+        if (!empty($id_privy)) {
             $id_privy = oldenkripsina($id_privy, $kriptorone, $kriptortwo);
         }
-        if ($norek_bank != null) {
+        if (!empty($norek_bank)) {
             $norek_bank = oldenkripsina($norek_bank, $kriptorone, $kriptortwo);
         }
-        if ($nama_notaris != null) {
+        if (!empty($nama_notaris)) {
             $nama_notaris = oldenkripsina($nama_notaris, $kriptorone, $kriptortwo);
         }
-        if ($lokasi_notaris != null) {
+        if (!empty($lokasi_notaris)) {
             $lokasi_notaris = oldenkripsina($lokasi_notaris, $kriptorone, $kriptortwo);
         }
-        if ($no_ijin != null) {
+        if (!empty($no_ijin)) {
             $no_ijin = oldenkripsina($no_ijin, $kriptorone, $kriptortwo);
         }
-        if ($alamat != null) {
+        if (!empty($alamat)) {
             $alamat = oldenkripsina($alamat, $kriptorone, $kriptortwo);
         }
-        if ($npwp_provinsi != null) {
+        if (!empty($npwp_provinsi)) {
             $npwp_provinsi = oldenkripsina($npwp_provinsi, $kriptorone, $kriptortwo);
         }
-        if ($npwp_kota != null) {
+        if (!empty($npwp_kota)) {
             $npwp_kota = oldenkripsina($npwp_kota, $kriptorone, $kriptortwo);
         }
-        if ($npwp_alamat != null) {
+        if (!empty($npwp_alamat)) {
             $npwp_alamat = oldenkripsina($npwp_alamat, $kriptorone, $kriptortwo);
         }
-        if ($nama_pengurus != null) {
+        if (!empty($nama_pengurus)) {
             $nama_pengurus = oldenkripsina($nama_pengurus, $kriptorone, $kriptortwo);
         }
-        if ($jabatan_pengurus != null) {
+        if (!empty($jabatan_pengurus)) {
             $jabatan_pengurus = oldenkripsina($jabatan_pengurus, $kriptorone, $kriptortwo);
         }
-        if ($keterangan != null) {
+        if (!empty($keterangan)) {
             $keterangan = oldenkripsina($keterangan, $kriptorone, $kriptortwo);
         }
 
@@ -613,9 +613,33 @@ class MitraController extends Controller
                 ->where('id_user', $idUser)
                 ->update($updateDataMitra);
             // $createDB = createDB($dbname);
-            return response()->json('Register Mitra Succesfully', 200);
+            return response()->json('Update Mitra Succesfully', 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);
+        }
+    }
+
+    public function aktivasi($id)
+    {
+        $user = DB::table('users')
+            ->where('id', $id)
+            ->where('role', 2);
+        if (empty($user->first())) {
+            return response()->json('User tidak ditemukan', 400);
+        }
+
+        $status = 1;
+        $res = 'Aktivasi Berhasil';
+        if ($user->first()->status == 1) {
+            $status = 0;
+            $res = 'Deaktivasi Berhasil';
+        }
+
+        try {
+            $user->update(['status' => $status]);
+            return response()->json($res, 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
         }
     }
 
@@ -625,9 +649,75 @@ class MitraController extends Controller
 
     public function validasimitra(Request $request)
     {
+        $user = DB::table('mitra')->where('id_mitra', $request->id);
+        if (empty($mitra->first())) {
+            return response()->json('Mitra tidak ditemukan', 400);
+        }
+
+        switch ($request->validasi) {
+            case 0:
+                $res = 'Data Belum Lengkap';
+                break;
+            case 1:
+                $res = 'Mitra Valid';
+                break;
+            case 2:
+                $res = 'Mitra Belum Valid';
+                break;
+            case 3:
+                $res = 'Mitra Dinonaktifkan';
+                break;
+            default:
+                return response()->json('Error Validasi', 400);
+                break;
+        }
+
+        try {
+            $mitra->update([
+                'validasi' => $request->validasi,
+                'id_validator' => auth()->user()->id,
+            ]);
+            return response()->json($res, 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 
-    public function deletemitra(Request $request)
+    public function restoremitra($id)
     {
+        $mitra = DB::table('mitra')->where('id_mitra', $id);
+        if (empty($mitra->first())) {
+            return response()->json('Mitra tidak ditemukan', 400);
+        }
+
+        try {
+            $mitra->update([
+                'validasi' => 3,
+                'user_deleted' => auth()->user()->id,
+                'deleted_at' => date('Y-m-d H:i:s'),
+            ]);
+            return response()->json('Restore Berhasil', 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
+    public function deletemitra($id)
+    {
+        $mitra = DB::table('mitra')->where('id_mitra', $id);
+        if (empty($mitra->first())) {
+            return response()->json('Mitra tidak ditemukan', 400);
+        }
+
+        try {
+            $mitra->update([
+                'validasi' => 4,
+                'user_deleted' => auth()->user()->id,
+                'deleted_at' => date('Y-m-d H:i:s'),
+            ]);
+            return response()->json('Hapus Berhasil', 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
     }
 }

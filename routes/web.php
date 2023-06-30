@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
@@ -14,10 +15,10 @@
 */
 
 // View
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-    // return view('welcome');
-    // return view('auth.login');
+$router->group(['domain' => 'subdomain.localhost:8000'], function () use ($router) {
+    $router->get('/', function () use ($router) {
+        return $router->app->version() . ' Awal';
+    });
 });
 
 // Main Page
@@ -76,22 +77,32 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/user', 'AuthController@index');
     $router->get('/nasabah', 'AuthController@nasabah');
     $router->get('/mitra', 'AuthController@mitra');
+    $router->get('/delall', 'AuthController@deleteall');
+
+    // Test create DB Fixed
+    $router->get('/createdb/{dbname}', 'DatabaseController@newDbTransaksi');
 
     $router->group(['middleware' => 'admin'], function () use ($router) {
         // Akses Admin
         $router->post('/regadmin', 'AuthController@regadmin');
+        $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');
+        $router->put('/updateadmin', 'AuthController@updateadmin');
         $router->post('/regmitra', 'MitraController@regmitra');
-        $router->post('/updatemitra', 'MitraController@updatemitra');
-        $router->post('/validasinasabah', 'MitraController@validasinasabah');
+        $router->put('/updatemitra', 'MitraController@updatemitra');
+        $router->post('/validasinasabah', 'NasabahController@validasinasabah');
+        $router->put('/restorenasabah/{id}', 'NasabahController@restorenasabah');
+        $router->delete('/hapusnasabah/{id}', 'NasabahController@deletenasabah');
         $router->post('/validasimitra', 'MitraController@validasimitra');
+        $router->put('/restoremitra/{id}', 'MitraController@restoremitra');
+        $router->delete('/hapusmitra/{id}', 'MitraController@deletemitra');
     });
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
         // Akses Nasabah
+        $router->get('/userprofile', 'AuthController@userprofile');
         $router->post('/regnasabah', 'NasabahController@regnasabah');
         $router->put('/updatenasabah', 'NasabahController@updatenasabah');
-        $router->get('/userprofile', 'AuthController@userprofile');
-        $router->get('/userrefresh', 'AuthController@refresh');
+        $router->get('/refreshtoken', 'AuthController@refresh');
     });
 
     $router->group(['middleware' => 'mitra'], function () use ($router) {
