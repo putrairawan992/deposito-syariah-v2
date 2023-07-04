@@ -77,37 +77,53 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/user', 'AuthController@index');
     $router->get('/nasabah', 'AuthController@nasabah');
     $router->get('/mitra', 'AuthController@mitra');
+    $router->get('/promo', 'PromoController@index');
+    $router->get('/promo/{id}', 'PromoController@detail');
+    $router->get('/splash', 'SplashController@index');
+    $router->get('/splash/{id}', 'SplashController@detail');
+    $router->get('/produk', 'ProductController@index');
+    $router->get('/produk/{id}', 'ProductController@detail');
+
     $router->get('/delall', 'AuthController@deleteall');
 
     // Test create DB Fixed
     $router->get('/createdb/{dbname}', 'DatabaseController@newDbTransaksi');
 
     $router->group(['middleware' => 'admin'], function () use ($router) {
-        // Akses Admin
+        // Admin Section
         $router->post('/regadmin', 'AuthController@regadmin');
+        $router->put('/updateadmin', 'AuthController@update');
         $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');
-        $router->put('/updateadmin', 'AuthController@updateadmin');
-        $router->post('/regmitra', 'MitraController@regmitra');
-        $router->put('/updatemitra', 'MitraController@updatemitra');
-        $router->post('/validasinasabah', 'NasabahController@validasinasabah');
-        $router->put('/restorenasabah/{id}', 'NasabahController@restorenasabah');
-        $router->delete('/hapusnasabah/{id}', 'NasabahController@deletenasabah');
+
+        // Mitra Section
+        $router->post('/regmitra', 'MitraController@store');
+        $router->put('/updatemitra', 'MitraController@update');
+        $router->put('/restoremitra/{id}', 'MitraController@restore');
+        $router->delete('/hapusmitra/{id}', 'MitraController@delete');
         $router->post('/validasimitra', 'MitraController@validasimitra');
-        $router->put('/restoremitra/{id}', 'MitraController@restoremitra');
-        $router->delete('/hapusmitra/{id}', 'MitraController@deletemitra');
+
+        // Nasabah Section
+        $router->put('/validasinasabah', 'NasabahController@validasinasabah');
+        $router->put('/restorenasabah/{id}', 'NasabahController@restore');
+        $router->delete('/hapusnasabah/{id}', 'NasabahController@delete');
     });
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
         // Akses Nasabah
         $router->get('/userprofile', 'AuthController@userprofile');
-        $router->post('/regnasabah', 'NasabahController@regnasabah');
-        $router->put('/updatenasabah', 'NasabahController@updatenasabah');
         $router->get('/refreshtoken', 'AuthController@refresh');
+        $router->post('/regnasabah', 'NasabahController@store');
+        $router->put('/updatenasabah', 'NasabahController@update');
     });
 
     $router->group(['middleware' => 'mitra'], function () use ($router) {
         // Akses BPR
-        $router->post('/neraca', 'MitraController@neraca');
+        $router->post('/neraca', 'MitraController@storeneraca');
+        $router->put('/neraca', 'MitraController@updateneraca');
+
+        // Promo
+        $router->post('/promo', 'PromoController@store');
+        $router->put('/promo', 'PromoController@update');
     });
 
     $router->group(['middleware' => 'owner'], function () use ($router) {

@@ -6,14 +6,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\helpers;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\ServiceProvider;
 
 class MitraController extends Controller
 {
-    public function regmitra(Request $request)
+    public function store(Request $request)
     {
         $username = $request->username;
         $email = $request->email;
@@ -211,61 +208,61 @@ class MitraController extends Controller
         $nama = newenkripsina($nama, $kriptorone, $kriptortwo);
         $password = app('hash')->make($password);
 
-        if ($kode_bank != null) {
+        if (!empty($kode_bank)) {
             $kode_bank = newenkripsina($kode_bank, $kriptorone, $kriptortwo);
         }
-        if ($no_npwp != null) {
+        if (!empty($no_npwp)) {
             $no_npwp = newenkripsina($no_npwp, $kriptorone, $kriptortwo);
         }
-        if ($no_akta_pendirian != null) {
+        if (!empty($no_akta_pendirian)) {
             $no_akta_pendirian = newenkripsina($no_akta_pendirian, $kriptorone, $kriptortwo);
         }
-        if ($no_pengesahan_akta != null) {
+        if (!empty($no_pengesahan_akta)) {
             $no_pengesahan_akta = newenkripsina($no_pengesahan_akta, $kriptorone, $kriptortwo);
         }
-        if ($website != null) {
+        if (!empty($website)) {
             $website = newenkripsina($website, $kriptorone, $kriptortwo);
         }
-        if ($phone_pengurus != null) {
+        if (!empty($phone_pengurus)) {
             $phone_pengurus = newenkripsina($phone_pengurus, $kriptorone, $kriptortwo);
         }
-        if ($id_privy != null) {
+        if (!empty($id_privy)) {
             $id_privy = newenkripsina($id_privy, $kriptorone, $kriptortwo);
         }
-        if ($db_name != null) {
+        if (!empty($db_name)) {
             $db_name = newenkripsina($db_name, $kriptorone, $kriptortwo);
         }
-        if ($norek_bank != null) {
+        if (!empty($norek_bank)) {
             $norek_bank = newenkripsina($norek_bank, $kriptorone, $kriptortwo);
         }
-        if ($nama_notaris != null) {
+        if (!empty($nama_notaris)) {
             $nama_notaris = newenkripsina($nama_notaris, $kriptorone, $kriptortwo);
         }
-        if ($lokasi_notaris != null) {
+        if (!empty($lokasi_notaris)) {
             $lokasi_notaris = newenkripsina($lokasi_notaris, $kriptorone, $kriptortwo);
         }
-        if ($no_ijin != null) {
+        if (!empty($no_ijin)) {
             $no_ijin = newenkripsina($no_ijin, $kriptorone, $kriptortwo);
         }
-        if ($alamat != null) {
+        if (!empty($alamat)) {
             $alamat = newenkripsina($alamat, $kriptorone, $kriptortwo);
         }
-        if ($npwp_provinsi != null) {
+        if (!empty($npwp_provinsi)) {
             $npwp_provinsi = newenkripsina($npwp_provinsi, $kriptorone, $kriptortwo);
         }
-        if ($npwp_kota != null) {
+        if (!empty($npwp_kota)) {
             $npwp_kota = newenkripsina($npwp_kota, $kriptorone, $kriptortwo);
         }
-        if ($npwp_alamat != null) {
+        if (!empty($npwp_alamat)) {
             $npwp_alamat = newenkripsina($npwp_alamat, $kriptorone, $kriptortwo);
         }
-        if ($nama_pengurus != null) {
+        if (!empty($nama_pengurus)) {
             $nama_pengurus = newenkripsina($nama_pengurus, $kriptorone, $kriptortwo);
         }
-        if ($jabatan_pengurus != null) {
+        if (!empty($jabatan_pengurus)) {
             $jabatan_pengurus = newenkripsina($jabatan_pengurus, $kriptorone, $kriptortwo);
         }
-        if ($keterangan != null) {
+        if (!empty($keterangan)) {
             $keterangan = newenkripsina($keterangan, $kriptorone, $kriptortwo);
         }
 
@@ -313,6 +310,7 @@ class MitraController extends Controller
             'id_validator' => $id_validator,
         ];
 
+        DB::beginTransaction();
         try {
             DB::table('users')->insert([$insertDataUsers]);
             $getId = DB::table('users')
@@ -320,13 +318,16 @@ class MitraController extends Controller
                 ->first();
             $insertDataMitra['id_user'] = $getId->id;
             DB::table('mitra')->insert([$insertDataMitra]);
+
+            DB::commit();
             return response()->json('Register Mitra Succesfully', 200);
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 400);
+            DB::rollback();
+            return $e->getMessage();
         }
     }
 
-    public function updatemitra(Request $request)
+    public function update(Request $request)
     {
         $idUser = $request->id;
         $username = $request->username;
@@ -372,7 +373,7 @@ class MitraController extends Controller
             $dekripEmail = null;
             $dekripUsername = null;
             $dekripPhone = null;
-            if ($value->email != null) {
+            if (!empty($value->email)) {
                 $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
             }
             if ($email == $dekripEmail) {
@@ -380,7 +381,7 @@ class MitraController extends Controller
                 break;
             }
 
-            if ($value->username != null) {
+            if (!empty($value->username)) {
                 $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);
             }
             if ($username == $dekripUsername) {
@@ -388,7 +389,7 @@ class MitraController extends Controller
                 break;
             }
 
-            if ($value->phone != null) {
+            if (!empty($value->phone)) {
                 $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
             }
 
@@ -643,11 +644,15 @@ class MitraController extends Controller
         }
     }
 
-    public function neraca(Request $request)
+    public function storeneraca(Request $request)
     {
     }
 
-    public function validasimitra(Request $request)
+    public function updateneraca(Request $request)
+    {
+    }
+
+    public function validasi(Request $request)
     {
         $user = DB::table('mitra')->where('id_mitra', $request->id);
         if (empty($mitra->first())) {
@@ -683,7 +688,7 @@ class MitraController extends Controller
         }
     }
 
-    public function restoremitra($id)
+    public function restore($id)
     {
         $mitra = DB::table('mitra')->where('id_mitra', $id);
         if (empty($mitra->first())) {
@@ -702,7 +707,7 @@ class MitraController extends Controller
         }
     }
 
-    public function deletemitra($id)
+    public function delete($id)
     {
         $mitra = DB::table('mitra')->where('id_mitra', $id);
         if (empty($mitra->first())) {

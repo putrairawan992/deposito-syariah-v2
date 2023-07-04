@@ -6,17 +6,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\helpers;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\ServiceProvider;
 
 class NasabahController extends Controller
 {
-    public function regnasabah(Request $request)
+    public function store(Request $request)
     {
-        $dbname = bestConnection();
-
         $email = $request->email;
         $id_user = auth()->user()->id;
         $nama = $request->nama;
@@ -162,7 +157,7 @@ class NasabahController extends Controller
         }
     }
 
-    public function updatenasabah(Request $request)
+    public function update(Request $request)
     {
         $dbname = bestConnection();
 
@@ -340,7 +335,7 @@ class NasabahController extends Controller
         }
     }
 
-    public function validasinasabah(Request $request)
+    public function validasi(Request $request)
     {
         $user = DB::table('nasabah')->where('id_user', $request->id);
         if (empty($nasabah->first())) {
@@ -376,7 +371,7 @@ class NasabahController extends Controller
         }
     }
 
-    public function restorenasabah($id)
+    public function restore($id)
     {
         $nasabah = DB::table('nasabah')->where('id_user', $id);
         if (empty($nasabah->first())) {
@@ -395,7 +390,7 @@ class NasabahController extends Controller
         }
     }
 
-    public function deletenasabah($id)
+    public function delete($id)
     {
         $nasabah = DB::table('nasabah')->where('id_user', $id);
         if (empty($nasabah->first())) {

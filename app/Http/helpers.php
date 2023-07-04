@@ -1,5 +1,10 @@
 <?php
 
+function keyNa()
+{
+    return 'superbwx';
+}
+
 function formatDate($date, $format = 'Y-m-d')
 {
     return date($format, strtotime($date));
@@ -49,16 +54,14 @@ function convertFromAscii($ascii, $kode)
 
 function convertToOpensll($data, $kode)
 {
-    $key = 'superbwx';
-    $encrypted = openssl_encrypt($data, 'AES-256-CBC', $key, 0, $kode);
+    $encrypted = openssl_encrypt($data, 'AES-256-CBC', keyNa(), 0, $kode);
     return base64_encode($encrypted);
 }
 
 function convertFromOpensll($data, $kode)
 {
-    $key = 'superbwx';
     $data = base64_decode($data);
-    return openssl_decrypt($data, 'AES-256-CBC', $key, 0, $kode);
+    return openssl_decrypt($data, 'AES-256-CBC', keyNa(), 0, $kode);
 }
 
 function generatekriptor()
@@ -96,6 +99,66 @@ function dekripsina($data, $kriptorone, $kriptortwo)
     return $fromAscii;
 }
 
+function uploadFile($uploadedFile, $binNumb)
+{
+    // Generate a unique filename
+    $filename = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+
+    // Specify the source path for the uploaded file
+    $sourcePath = 'upload/promo/' . $filename;
+
+    // Move the uploaded file to the source path
+    $uploadedFile->move('upload/promo', $filename);
+
+    // Read the file content
+    $fileContent = file_get_contents($sourcePath);
+
+    // Encrypt the file content using openssl_encrypt
+    $encryptedContent = openssl_encrypt($fileContent, 'AES-256-CBC', keyNa(), 0, $binNumb);
+
+    // Generate a unique filename for the encrypted file
+    $encryptedFilename = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+
+    // Specify the destination path for the encrypted file
+    $destinationPath = 'upload/promo/' . $encryptedFilename;
+
+    // Store the encrypted file
+    file_put_contents($destinationPath, $encryptedContent);
+
+    // Delete the uploaded file
+    unlink($sourcePath);
+
+    // Return the encrypted file path or do something with it
+    return $destinationPath;
+}
+
+function showFile($filePath, $binNumb)
+{
+    // Read the file content
+    $fileContent = file_get_contents($filePath);
+    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+    // Generate a unique filename for the encrypted file
+    $decryptedFilename = uniqid() . '.' . $extension;
+
+    // Decrypt Open SSL
+    $decryptedContent = openssl_decrypt($fileContent, 'AES-256-CBC', keyNa(), 0, hex2bin($binNumb));
+
+    // Specify the destination path for the encrypted file
+    $destinationPath = 'upload/promo/show/' . $decryptedFilename;
+
+    // Store the encrypted file
+    file_put_contents($destinationPath, $decryptedContent);
+
+    // Schedule a task to delete the decrypted file after 5 minutes
+    $scheduledTaskCommand = "sleep 300 && rm {$destinationPath}";
+    exec($scheduledTaskCommand . ' > /dev/null 2>&1 &'); // Run the command in the background
+
+    // Return the decrypted content
+    return $destinationPath;
+}
+
+// DB Load Balancing
 function bestConnection()
 {
     // Find the best database connection based on custom criteria

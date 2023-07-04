@@ -15,7 +15,6 @@ class AuthController extends Controller
 {
     public function index()
     {
-        $dbname = bestConnection();
         $alluser = User::all();
         foreach ($alluser as $key => $value) {
             $kriptorone = $value->kriptorone;
@@ -35,9 +34,6 @@ class AuthController extends Controller
             if ($value->reset_token != null) {
                 $value->reset_token = dekripsina($value->reset_token, $kriptorone, $kriptortwo);
             }
-            if ($value->kriptorone != null) {
-                // $value->kriptorone = convertFromOpensll($kriptorone, hex2bin($kriptortwo));
-            }
         }
 
         return response()->json($alluser, 200);
@@ -45,7 +41,6 @@ class AuthController extends Controller
 
     public function nasabah()
     {
-        $dbname = bestConnection();
         $alluser = DB::table('users')
             ->wherein('role', [0, 10])
             ->leftjoin('nasabah', 'users.id', 'nasabah.id_user')
@@ -108,7 +103,6 @@ class AuthController extends Controller
 
     public function mitra()
     {
-        $dbname = bestConnection();
         $alluser = DB::table('users')
             ->where('role', 2)
             ->leftjoin('mitra', 'users.id', 'mitra.id_user')
@@ -234,28 +228,118 @@ class AuthController extends Controller
         $enkripUsername = newenkripsina($username, $kriptorone, $kriptortwo);
         $enkripEmail = newenkripsina($email, $kriptorone, $kriptortwo);
         $enkripPhone = newenkripsina($phone, $kriptorone, $kriptortwo);
+
         try {
             $user = new User();
             $user->username = $enkripUsername;
             $user->email = $enkripEmail;
             $user->phone = $enkripPhone;
-            $user->password = app('hash')->make($request->password);
+            $user->password = app('hash')->make($password);
             $user->kriptorone = $kriptor['kriptorone'];
             $user->kriptortwo = $kriptor['kriptortwo'];
             $user->role = 1;
+            $user->status = 1;
             $user->user_created = auth()->user()->id;
 
             if ($user->save()) {
                 return response()->json('Register Admin Berhasil', 200);
             }
         } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 400);
+            return response()->json($e, 400);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $username = $request->username;
+        $email = $request->email;
+        $password = $request->password;
+        $phone = $request->phone;
+
+        // Check if field is empty
+        if (empty($email) or empty($username) or empty($password)) {
+            return response()->json('Semua Kolom harus terisi', 400);
+        }
+
+        // Check if email is valid
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return response()->json('Email tidak Valid', 400);
+        }
+
+        // Check if password is greater than 5 character
+        if (strlen($password) < 6) {
+            return response()->json('Password Kurang Dari 6 Digit', 400);
+        }
+
+        // Check if password is greater than 5 character
+        if (strlen($phone) < 10) {
+            return response()->json('Password Kurang Dari 6 Digit', 400);
+        }
+
+        // Check if username, email, phone already exist
+        $cekData = User::where('id', '!=', auth()->user()->id)->all();
+        foreach ($cekData as $key => $value) {
+            $dekripEmail = null;
+            $dekripUsername = null;
+            $dekripPhone = null;
+            if ($value->email != null) {
+                $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
+            }
+
+            if ($value->username != null) {
+                $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);
+            }
+
+            if ($value->phone != null) {
+                $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
+            }
+
+            if ($email == $dekripEmail) {
+                return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 404);
+                break;
+            }
+
+            if ($username == $dekripUsername) {
+                return response()->json('Username sudah digunakan, Silahkan gunakan yang lain', 404);
+                break;
+            }
+
+            if ($phone == $dekripPhone) {
+                return response()->json('No Telp sudah digunakan, Silahkan gunakan yang lain', 404);
+                break;
+            }
+        }
+
+        // Create new user
+        $kriptor = generatekriptor();
+        $kriptorone = $kriptor['randnum'];
+        $kriptortwo = $kriptor['randomBytes'];
+        $enkripUsername = newenkripsina($username, $kriptorone, $kriptortwo);
+        $enkripEmail = newenkripsina($email, $kriptorone, $kriptortwo);
+        $enkripPhone = newenkripsina($phone, $kriptorone, $kriptortwo);
+
+        try {
+            $user = User::where('id', $request->id);
+            !empty($request->username) ? ($user->username = $enkripUsername) : null;
+            !empty($request->email) ? ($user->email = $enkripEmail) : null;
+            !empty($request->phone) ? ($user->phone = $enkripPhone) : null;
+            !empty($request->password) ? ($user->password = app('hash')->make($password)) : null;
+            $user->updated_at = auth()->user()->id;
+            $user->user_updated = date('Y-m-d H:i:s');
+
+            if ($user->save()) {
+                return response()->json('Register Admin Berhasil', 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json($e, 400);
         }
     }
 
     public function aktivasi($id)
     {
-        $user = DB::table('users')->where('id', $id);
+        $user = DB::table('users')
+            ->where('id', $id)
+            ->where('role', 1);
         if (empty($user->first())) {
             return response()->json('User tidak ditemukan', 400);
         }
@@ -460,36 +544,6 @@ class AuthController extends Controller
         }
     }
 
-    public function update(Request $request)
-    {
-        $updateDataUser = [
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'phone' => $request->phone,
-        ];
-
-        try {
-            $user = DB::table('users');
-            if (auth()->user()->role == 99 || auth()->user()->role == 1 || auth()->user()->role == 2 || auth()->user()->role == 3) {
-                $user
-                    ->where('id', $request->id)
-                    ->whereNotIn('role', [1, 99, 2, 3])
-                    ->get();
-            } elseif (auth()->user()->role != 0) {
-                $user
-                    ->where('id', $request->id)
-                    ->whereIn('role', [0, 4, 5, 6, 10])
-                    ->get();
-            } else {
-                return response()->json('Not Authorized', 401);
-            }
-            $user->update($updateDataUser);
-            return response()->json('Updating Successfully', 200);
-        } catch (\Exception $e) {
-            return response()->json('Bad Request', 400);
-        }
-    }
-
     public function logout()
     {
         $id = auth()->user()->id;
@@ -671,9 +725,12 @@ class AuthController extends Controller
     public function deleteall()
     {
         try {
-            DB::table('users')->delete();
-            DB::table('nasabah')->delete();
-            DB::table('mitra')->delete();
+            // DB::table('users')
+            //     ->where('id', '>', 2)
+            //     ->delete();
+            // DB::table('nasabah')->delete();
+            // DB::table('mitra')->delete();
+            DB::table('promo')->delete();
         } catch (\Throwable $e) {
             return response()->json($e->getMessage(), 400);
         }
