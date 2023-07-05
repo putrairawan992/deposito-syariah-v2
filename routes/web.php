@@ -114,6 +114,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('/refreshtoken', 'AuthController@refresh');
         $router->post('/regnasabah', 'NasabahController@store');
         $router->put('/updatenasabah', 'NasabahController@update');
+
+        // Promo Splash Screen
+        $router->get('/showpromo', 'PromoController@show');
     });
 
     $router->group(['middleware' => 'mitra'], function () use ($router) {
@@ -123,7 +126,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         // Promo
         $router->post('/promo', 'PromoController@store');
-        $router->put('/promo', 'PromoController@update');
+        $router->post('/updatepromo', 'PromoController@update');
     });
 
     $router->group(['middleware' => 'owner'], function () use ($router) {

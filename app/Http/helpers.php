@@ -99,37 +99,42 @@ function dekripsina($data, $kriptorone, $kriptortwo)
     return $fromAscii;
 }
 
-function dekripsinaFile($filePath, $kriptorone, $kriptortwo)
+function dekripsinaFile($filePath, $kriptorone, $kriptortwo, $pathNa)
 {
     $randomBytes = hex2bin($kriptortwo);
     $randnum = str_split(convertFromOpensll($kriptorone, $randomBytes));
     // $fileOpenssl = convertFromOpensllFile($filePath, $randomBytes);
     // $fromAscii = fileFromAscii($fileOpenssl, $randnum);
     // return $fromAscii;
-    $fromAscii = fileFromAscii($filePath, $randnum);
-    return convertFromOpensllFile($fromAscii, $randomBytes);
+    $fromAscii = fileFromAscii($filePath, $randnum, $pathNa);
+    return convertFromOpensllFile($fromAscii, $randomBytes, $pathNa);
     // return $fromOpenssl;
 }
 
-function newenkripsinaFile($uploadedFile, $randnum, $randomBytes)
+function newenkripsinaFile($uploadedFile, $randnum, $randomBytes, $pathNa)
 {
     // $asciiFile = fileToAscii($uploadedFile, $randnum);
     // return convertToOpensllFile($asciiFile, $randomBytes);
-    $opensslFile = convertToOpensllFile($uploadedFile, $randomBytes);
-    return fileToAscii($opensslFile, $randnum);
+    $opensslFile = convertToOpensllFile($uploadedFile, $randomBytes, $pathNa);
+    return fileToAscii($opensslFile, $randnum, $pathNa);
     // return convertToOpensllFile($uploadedFile, $randomBytes);
     // return $asciiFile;
 }
 
-function oldenkripsinaFile($uploadedFile, $kriptorone, $kriptortwo)
+function oldenkripsinaFile($uploadedFile, $kriptorone, $kriptortwo, $pathNa, $oldFilePath)
 {
     $randomBytes = hex2bin($kriptortwo);
-    $kode = str_split(convertFromOpensll($kriptorone, $randomBytes));
-    $asciiFile = fileToAscii($uploadedFile, $kode);
-    return convertToOpensllFile($asciiFile, $randomBytes);
+    $randnum = convertFromOpensll($kriptorone, $randomBytes);
+    // $asciiFile = fileToAscii($uploadedFile, $kode);
+    // return convertToOpensllFile($asciiFile, $randomBytes);
+    // return [$randnum, $kriptortwo];
+    $opensslFile = convertToOpensllFile($uploadedFile, $randomBytes, $pathNa);
+    $fileAscii = fileToAscii($opensslFile, $randnum, $pathNa);
+    unlink($oldFilePath);
+    return $fileAscii;
 }
 
-function fileToAscii($uploadedFile, $kode)
+function fileToAscii($uploadedFile, $kode, $pathNa)
 {
     // Read the file content
     $fileContent = file_get_contents($uploadedFile);
@@ -153,7 +158,7 @@ function fileToAscii($uploadedFile, $kode)
     $encryptedFilename = uniqid() . '.' . pathinfo($uploadedFile, PATHINFO_EXTENSION);
 
     // Specify the destination path for the encrypted file
-    $destinationPath = 'upload/promo/' . $encryptedFilename;
+    $destinationPath = $pathNa . $encryptedFilename;
 
     // Store the encrypted file
     file_put_contents($destinationPath, trim($ascii));
@@ -165,7 +170,7 @@ function fileToAscii($uploadedFile, $kode)
     return $destinationPath;
 }
 
-function fileFromAscii($filePath, $kode)
+function fileFromAscii($filePath, $kode, $pathNa)
 {
     // Read the file content
     $fileContent = file_get_contents($filePath);
@@ -193,7 +198,7 @@ function fileFromAscii($filePath, $kode)
     }
 
     // Specify the destination path for the encrypted file
-    $destinationPath = 'upload/promo/show/' . $decryptedFilename;
+    $destinationPath = $pathNa . $decryptedFilename;
 
     // Store the encrypted file
     file_put_contents($destinationPath, $data);
@@ -205,7 +210,7 @@ function fileFromAscii($filePath, $kode)
     return $destinationPath;
 }
 
-function convertToOpensllFile($uploadedFile, $randomBytes)
+function convertToOpensllFile($uploadedFile, $randomBytes, $pathNa)
 {
     // Read the file content
     $fileContent = file_get_contents($uploadedFile);
@@ -217,7 +222,7 @@ function convertToOpensllFile($uploadedFile, $randomBytes)
     $encryptedFilename = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
 
     // Specify the destination path for the encrypted file
-    $destinationPath = 'upload/promo/' . $encryptedFilename;
+    $destinationPath = $pathNa . $encryptedFilename;
 
     // Store the encrypted file
     file_put_contents($destinationPath, $encryptedContent);
@@ -229,7 +234,7 @@ function convertToOpensllFile($uploadedFile, $randomBytes)
     return $destinationPath;
 }
 
-function convertFromOpensllFile($filePath, $randomBytes)
+function convertFromOpensllFile($filePath, $randomBytes, $pathNa)
 {
     // Read the file content
     $fileContent = file_get_contents($filePath);
@@ -242,7 +247,7 @@ function convertFromOpensllFile($filePath, $randomBytes)
     $decryptedContent = openssl_decrypt($fileContent, 'AES-256-CBC', keyNa(), 0, $randomBytes);
 
     // Specify the destination path for the encrypted file
-    $destinationPath = 'upload/promo/show/' . $decryptedFilename;
+    $destinationPath = $pathNa . $decryptedFilename;
 
     // Store the encrypted file
     file_put_contents($destinationPath, $decryptedContent);
