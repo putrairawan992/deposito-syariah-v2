@@ -15,8 +15,8 @@ class PromoController extends Controller
         $promo = DB::table('promo')->get();
 
         foreach ($promo as $value) {
-            $value->deskripsi = dekripsina($value->deskripsi, $value->kriptorone, $value->kriptortwo);
-            $value->newImage = showFile($value->image, $value->kriptortwo);
+            !empty($value->deskripsi) ? ($value->deskripsi = dekripsina($value->deskripsi, $value->kriptorone, $value->kriptortwo)) : null;
+            !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo)) : null;
         }
 
         return $promo;
@@ -59,7 +59,8 @@ class PromoController extends Controller
         $kriptor = generatekriptor();
         $deskripsi = newenkripsina($request->deskripsi, $kriptor['randnum'], $kriptor['randomBytes']);
 
-        $uploadFilename = uploadFile($request->file('image'), $kriptor['randomBytes']);
+        // $uploadFilename = uploadFile($request->file('image'), $kriptor['randomBytes']);
+        $uploadFilename = newenkripsinaFile($request->file('image'), $kriptor['randnum'], $kriptor['randomBytes']);
 
         $mitraId = DB::table('mitra')
             ->where('id_user', auth()->user()->id)
@@ -76,7 +77,7 @@ class PromoController extends Controller
 
         try {
             DB::table('promo')->insert([$insertData]);
-            return response()->json('Tambah Promo Screen Berhasil', 200);
+            return response()->json($insertData, 200);
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
