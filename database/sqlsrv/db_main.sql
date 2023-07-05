@@ -205,8 +205,8 @@ CREATE TABLE neraca (
 CREATE TABLE splash_screen (
   id int IDENTITY(1,1) PRIMARY KEY,
   id_admin INT NOT NULL,
-  image INT DEFAULT 0,
-  deskripsi INT DEFAULT 0,
+  image nvarchar(255) DEFAULT 0,
+  deskripsi nvarchar(255) DEFAULT 0,
   status INT DEFAULT 1,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
@@ -219,7 +219,7 @@ CREATE TABLE splash_screen (
   FOREIGN KEY (user_created) REFERENCES users(id),
   FOREIGN KEY (user_updated) REFERENCES users(id),
   FOREIGN KEY (user_deleted) REFERENCES users(id),
-  CONSTRAINT fk_splash FOREIGN KEY (id_admin) REFERENCES mitra(id)
+  CONSTRAINT fk_splash FOREIGN KEY (id_admin) REFERENCES users(id)
 );
 
 -- --------------------------------------------------------
@@ -230,6 +230,7 @@ CREATE TABLE promo (
   image nvarchar(255) DEFAULT null,
   deskripsi nvarchar(255) not null,
   status INT DEFAULT 1,
+  end_date date not null,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,

@@ -16,7 +16,7 @@ class PromoController extends Controller
 
         foreach ($promo as $value) {
             !empty($value->deskripsi) ? ($value->deskripsi = dekripsina($value->deskripsi, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo, 'upload/promo/show/')) : null;
+            !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo, promoPath() . 'show/')) : null;
         }
 
         return $promo;
@@ -26,12 +26,13 @@ class PromoController extends Controller
     {
         $promo = DB::table('promo')
             ->where('status', 1)
-            ->orderbt('id', 'desc')
+            ->where('end_date', '>=', date('Y-m-d'))
+            ->orderby('id', 'desc')
             ->get();
 
         foreach ($promo as $value) {
             !empty($value->deskripsi) ? ($value->deskripsi = dekripsina($value->deskripsi, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo, 'upload/promo/show/')) : null;
+            !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo, promoPath() . 'show/')) : null;
         }
 
         return $promo;
@@ -45,7 +46,7 @@ class PromoController extends Controller
         if ($promoDetail) {
             foreach ($promo as $value) {
                 !empty($promoDetail->deskripsi) ? ($promoDetail->deskripsi = dekripsina($promoDetail->deskripsi, $promoDetail->kriptorone, $promoDetail->kriptortwo)) : null;
-                !empty($promoDetail->image) ? ($promoDetail->showImage = dekripsinaFile($promoDetail->image, $promoDetail->kriptorone, $promoDetail->kriptortwo, 'upload/promo/show/')) : null;
+                !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo, promoPath() . 'show/')) : null;
             }
         } else {
             return response()->json('Data tidak Ada', 400);
@@ -60,7 +61,7 @@ class PromoController extends Controller
         $deskripsi = newenkripsina($request->deskripsi, $kriptor['randnum'], $kriptor['randomBytes']);
 
         // Upload File Function
-        $uploadFilename = newenkripsinaFile($request->file('image'), $kriptor['randnum'], $kriptor['randomBytes'], 'upload/promo/');
+        $uploadFilename = newenkripsinaFile($request->file('image'), $kriptor['randnum'], $kriptor['randomBytes'], promoPath());
 
         $mitraId = DB::table('mitra')
             ->where('id_user', auth()->user()->id)
@@ -70,6 +71,7 @@ class PromoController extends Controller
             'id_mitra' => $mitraId->id,
             'image' => $uploadFilename,
             'deskripsi' => $deskripsi,
+            'end_date' => $request->end_date,
             'user_created' => auth()->user()->id,
             'kriptorone' => $kriptor['kriptorone'],
             'kriptortwo' => $kriptor['kriptortwo'],
@@ -77,7 +79,7 @@ class PromoController extends Controller
 
         try {
             DB::table('promo')->insert([$insertData]);
-            return response()->json([$insertData, $kriptor['randnum'], $kriptor['kriptortwo']], 200);
+            return response()->json($insertData, 200);
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -86,6 +88,7 @@ class PromoController extends Controller
     public function update(Request $request)
     {
         $deskirpsi = $request->deskripsi;
+        $end_date = $request->end_date;
         $uploadedFile = $request->file('image');
 
         // Create new enkripsi Mitra
@@ -98,13 +101,10 @@ class PromoController extends Controller
         $kriptorone = $getPromo->kriptorone;
         $kriptortwo = $getPromo->kriptortwo;
 
-        // Test
-        $randomBytes = hex2bin($getPromo->kriptortwo);
-        $randnum = convertFromOpensll($getPromo->kriptorone, $randomBytes);
-
         !empty($deskirpsi) ? ($updateData['deskripsi'] = oldenkripsina($deskirpsi, $kriptorone, $kriptortwo)) : null;
+        !empty($end_date) ? ($updateData['end_date'] = $end_date) : null;
         if ($uploadedFile) {
-            $updateData['image'] = oldenkripsinaFile($uploadedFile, $kriptorone, $kriptortwo, 'upload/promo/', $getPromo->image);
+            $updateData['image'] = oldenkripsinaFile($uploadedFile, $kriptorone, $kriptortwo, promoPath(), $getPromo->image);
         }
 
         $updateData['updated_at'] = date('Y-m-d H:i:s');
@@ -122,20 +122,25 @@ class PromoController extends Controller
 
     public function aktivasi($id)
     {
-        $$promoNa = DB::table('promo')->where('id', $id);
-        if (empty($$promoNa->first())) {
+        $promoNa = DB::table('promo')->where('id', $id);
+        if (empty($promoNa->wherein('status', [0, 1])->first())) {
             return response()->json('Data tidak ditemukan', 400);
         }
 
-        $$promoNa->status == 0 ? ($status = 1) : ($status = 0);
+        $status = 0;
+        $msg = 'Deaktivasi Berhasil';
+        if ($promoNa->first()->status == 0) {
+            $status = 1;
+            $msg = 'Aktivasi Berhasil';
+        }
 
         try {
-            $$promoNa->update([
+            $promoNa->update([
                 'status' => $status,
-                'user_deleted' => auth()->user()->id,
-                'deleted_at' => date('Y-m-d H:i:s'),
+                'user_updated' => auth()->user()->id,
+                'updated_at' => date('Y-m-d H:i:s'),
             ]);
-            return response()->json('Restore Berhasil', 200);
+            return response()->json($msg, 200);
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -143,16 +148,18 @@ class PromoController extends Controller
 
     public function restore($id)
     {
-        $$promoNa = DB::table('promo')->where('id', $id);
-        if (empty($$promoNa->first())) {
+        $promoNa = DB::table('promo')->where('id', $id);
+        if (empty($promoNa->first())) {
             return response()->json('Data tidak ditemukan', 400);
         }
 
         try {
-            $$promoNa->update([
+            $promoNa->update([
                 'status' => 0,
-                'user_deleted' => auth()->user()->id,
-                'deleted_at' => date('Y-m-d H:i:s'),
+                'user_updated' => auth()->user()->id,
+                'updated_at' => date('Y-m-d H:i:s'),
+                'user_deleted' => null,
+                'deleted_at' => null,
             ]);
             return response()->json('Restore Berhasil', 200);
         } catch (\Throwable $th) {
@@ -162,13 +169,13 @@ class PromoController extends Controller
 
     public function delete($id)
     {
-        $$promoNa = DB::table('promo')->where('id', $id);
-        if (empty($$promoNa->first())) {
+        $promoNa = DB::table('promo')->where('id', $id);
+        if (empty($promoNa->first())) {
             return response()->json('Data tidak ditemukan', 400);
         }
 
         try {
-            $$promoNa->update([
+            $promoNa->update([
                 'status' => 3,
                 'user_deleted' => auth()->user()->id,
                 'deleted_at' => date('Y-m-d H:i:s'),

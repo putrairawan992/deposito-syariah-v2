@@ -1,5 +1,15 @@
 <?php
 
+function promoPath()
+{
+    return 'upload/promo/';
+}
+
+function splashPath()
+{
+    return 'upload/splash/';
+}
+
 function keyNa()
 {
     return 'superbwx';

@@ -72,17 +72,17 @@ $router->get('/test', function () {
 
 // Api
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('/ceklogin', 'AuthController@ceklogin');
-    $router->post('/login', 'AuthController@login');
     $router->get('/user', 'AuthController@index');
     $router->get('/nasabah', 'AuthController@nasabah');
     $router->get('/mitra', 'AuthController@mitra');
-    $router->get('/promo', 'PromoController@index');
-    $router->get('/promo/{id}', 'PromoController@detail');
-    $router->get('/splash', 'SplashController@index');
-    $router->get('/splash/{id}', 'SplashController@detail');
     $router->get('/produk', 'ProductController@index');
     $router->get('/produk/{id}', 'ProductController@detail');
+
+    // Fix Function
+    $router->post('/ceklogin', 'AuthController@ceklogin');
+    $router->post('/login', 'AuthController@login');
+    $router->get('/showpromo', 'PromoController@show');
+    $router->get('/promo/{id}', 'PromoController@detail');
 
     $router->get('/delall', 'AuthController@deleteall');
 
@@ -106,6 +106,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/validasinasabah', 'NasabahController@validasinasabah');
         $router->put('/restorenasabah/{id}', 'NasabahController@restore');
         $router->delete('/hapusnasabah/{id}', 'NasabahController@delete');
+
+        // Splash Section
+        $router->get('/splash', 'SplashController@index');
+        $router->post('/splash', 'SplashController@store');
+        $router->post('/updatesplash', 'SplashController@update');
+        $router->put('/splashaktivasi/{id}', 'SplashController@aktivasi');
+        $router->put('/splashrestore/{id}', 'SplashController@restore');
+        $router->put('/splashdelete/{id}', 'SplashController@delete');
     });
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
@@ -116,7 +124,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/updatenasabah', 'NasabahController@update');
 
         // Promo Splash Screen
-        $router->get('/showpromo', 'PromoController@show');
+        $router->get('/showsplash', 'SplashController@show');
+        $router->get('/splash/{id}', 'SplashController@detail');
     });
 
     $router->group(['middleware' => 'mitra'], function () use ($router) {
@@ -125,8 +134,19 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/neraca', 'MitraController@updateneraca');
 
         // Promo
+        $router->get('/promo', 'PromoController@index');
         $router->post('/promo', 'PromoController@store');
         $router->post('/updatepromo', 'PromoController@update');
+        $router->put('/promoaktivasi/{id}', 'PromoController@aktivasi');
+        $router->put('/promorestore/{id}', 'PromoController@restore');
+        $router->put('/promodelete/{id}', 'PromoController@delete');
+
+        // Produk
+        // $router->post('/produk', 'ProdukController@store');
+        // $router->post('/updateproduk', 'ProdukController@update');
+        // $router->put('/produkaktivasi/{id}', 'ProdukController@aktivasi');
+        // $router->put('/produkrestore/{id}', 'ProdukController@restore');
+        // $router->put('/produkdelete/{id}', 'ProdukController@delete');
     });
 
     $router->group(['middleware' => 'owner'], function () use ($router) {
