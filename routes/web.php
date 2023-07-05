@@ -79,10 +79,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/produk/{id}', 'ProductController@detail');
 
     // Fix Function
+    $router->get('/userprofile', 'AuthController@userprofile');
     $router->post('/ceklogin', 'AuthController@ceklogin');
     $router->post('/login', 'AuthController@login');
     $router->get('/showpromo', 'PromoController@show');
     $router->get('/promo/{id}', 'PromoController@detail');
+    $router->get('/showproduk', 'ProductController@show');
+    $router->get('/produk/{id}', 'ProductController@detail');
 
     $router->get('/delall', 'AuthController@deleteall');
 
@@ -98,9 +101,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         // Mitra Section
         $router->post('/regmitra', 'MitraController@store');
         $router->put('/updatemitra', 'MitraController@update');
+        $router->put('/validasimitra', 'MitraController@validasimitra');
         $router->put('/restoremitra/{id}', 'MitraController@restore');
         $router->delete('/hapusmitra/{id}', 'MitraController@delete');
-        $router->post('/validasimitra', 'MitraController@validasimitra');
 
         // Nasabah Section
         $router->put('/validasinasabah', 'NasabahController@validasinasabah');
@@ -118,7 +121,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
         // Akses Nasabah
-        $router->get('/userprofile', 'AuthController@userprofile');
         $router->get('/refreshtoken', 'AuthController@refresh');
         $router->post('/regnasabah', 'NasabahController@store');
         $router->put('/updatenasabah', 'NasabahController@update');
@@ -142,11 +144,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/promodelete/{id}', 'PromoController@delete');
 
         // Produk
-        // $router->post('/produk', 'ProdukController@store');
-        // $router->post('/updateproduk', 'ProdukController@update');
-        // $router->put('/produkaktivasi/{id}', 'ProdukController@aktivasi');
-        // $router->put('/produkrestore/{id}', 'ProdukController@restore');
-        // $router->put('/produkdelete/{id}', 'ProdukController@delete');
+        $router->post('/produk', 'ProductController@store');
+        $router->post('/updateproduk', 'ProductController@update');
+        $router->put('/produkaktivasi/{id}', 'ProductController@aktivasi');
+        $router->put('/produkrestore/{id}', 'ProductController@restore');
+        $router->put('/produkdelete/{id}', 'ProductController@delete');
     });
 
     $router->group(['middleware' => 'owner'], function () use ($router) {

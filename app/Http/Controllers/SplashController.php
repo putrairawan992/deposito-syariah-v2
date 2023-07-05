@@ -43,10 +43,8 @@ class SplashController extends Controller
             ->where('id', $id)
             ->first();
         if ($splashDetail) {
-            foreach ($splash as $value) {
-                !empty($splashDetail->deskripsi) ? ($splashDetail->deskripsi = dekripsina($splashDetail->deskripsi, $splashDetail->kriptorone, $splashDetail->kriptortwo)) : null;
-                !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo, splashPath() . 'show/')) : null;
-            }
+            !empty($splashDetail->deskripsi) ? ($splashDetail->deskripsi = dekripsina($splashDetail->deskripsi, $splashDetail->kriptorone, $splashDetail->kriptortwo)) : null;
+            !empty($splashDetail->image) ? ($splashDetail->showImage = dekripsinaFile($splashDetail->image, $splashDetail->kriptorone, $splashDetail->kriptortwo, splashPath() . 'show/')) : null;
         } else {
             return response()->json('Data tidak Ada', 400);
         }

@@ -44,10 +44,8 @@ class PromoController extends Controller
             ->where('id', $id)
             ->first();
         if ($promoDetail) {
-            foreach ($promo as $value) {
-                !empty($promoDetail->deskripsi) ? ($promoDetail->deskripsi = dekripsina($promoDetail->deskripsi, $promoDetail->kriptorone, $promoDetail->kriptortwo)) : null;
-                !empty($value->image) ? ($value->showImage = dekripsinaFile($value->image, $value->kriptorone, $value->kriptortwo, promoPath() . 'show/')) : null;
-            }
+            !empty($promoDetail->deskripsi) ? ($promoDetail->deskripsi = dekripsina($promoDetail->deskripsi, $promoDetail->kriptorone, $promoDetail->kriptortwo)) : null;
+            !empty($promoDetail->image) ? ($promoDetail->showImage = dekripsinaFile($promoDetail->image, $promoDetail->kriptorone, $promoDetail->kriptortwo, promoPath() . 'show/')) : null;
         } else {
             return response()->json('Data tidak Ada', 400);
         }
