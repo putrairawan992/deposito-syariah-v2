@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\helpers;
 
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Config;
+
 class MitraController extends Controller
 {
     public function store(Request $request)
@@ -25,9 +29,8 @@ class MitraController extends Controller
         $website = $request->website;
         $phone_pengurus = $request->phone_pengurus;
         $id_privy = $request->id_privy;
-        $db_name = 'ds_transaksi_' . $kode_bank;
+        // $db_name = 'ds_transaksi_' . $kode_bank;
         $norek_bank = $request->norek_bank;
-        $dbname = $db_name;
 
         $nama_notaris = $request->nama_notaris;
         $lokasi_notaris = $request->lokasi_notaris;
@@ -613,7 +616,6 @@ class MitraController extends Controller
             DB::table('mitra')
                 ->where('id_user', $idUser)
                 ->update($updateDataMitra);
-            // $createDB = createDB($dbname);
             return response()->json('Update Mitra Succesfully', 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 400);
@@ -654,23 +656,47 @@ class MitraController extends Controller
 
     public function validasi(Request $request)
     {
-        $user = DB::table('mitra')->where('id_mitra', $request->id);
+        $dbName = null;
+        $res = [];
+        $validasi = $request->validasi;
+        $mitra = DB::table('mitra')->where('id', $request->id);
+        $getMitra = $mitra->first();
+        $idMitra = $getMitra->id;
         if (empty($mitra->first())) {
             return response()->json('Mitra tidak ditemukan', 400);
         }
 
-        switch ($request->validasi) {
+        $getKriptor = DB::table('users')
+            ->where('id', $getMitra->id_user)
+            ->first();
+        $kriptorone = $getKriptor->kriptorone;
+        $kriptortwo = $getKriptor->kriptortwo;
+
+        $dbName = dekripsina($getMitra->db_name, $kriptorone, $kriptortwo);
+        if (empty($getMitra->db_name)) {
+            $idMitra < 100 ? ($lastNameDB = 'M0' . $idMitra) : null;
+            $idMitra < 10 ? ($lastNameDB = 'M00' . $idMitra) : null;
+            $dbName = 'ds_tx_' . $lastNameDB;
+            $updateData['db_name'] = oldenkripsina($dbName, $kriptorone, $kriptortwo);
+        }
+
+        $updateData['validasi'] = $validasi;
+        $updateData['id_validator'] = auth()->user()->id;
+        $updateData['updated_at'] = date('Y-m-d H:i:s');
+        $updateData['user_updated'] = auth()->user()->id;
+
+        switch ($validasi) {
             case 0:
-                $res = 'Data Belum Lengkap';
+                $res['validasi'] = 'Data Belum Lengkap';
                 break;
             case 1:
-                $res = 'Mitra Valid';
+                $res['validasi'] = 'Status Mitra Valid';
                 break;
             case 2:
-                $res = 'Mitra Belum Valid';
+                $res['validasi'] = 'Status Mitra Belum Valid';
                 break;
             case 3:
-                $res = 'Mitra Dinonaktifkan';
+                $res['validasi'] = 'Status Mitra Dinonaktifkan';
                 break;
             default:
                 return response()->json('Error Validasi', 400);
@@ -678,10 +704,11 @@ class MitraController extends Controller
         }
 
         try {
-            $mitra->update([
-                'validasi' => $request->validasi,
-                'id_validator' => auth()->user()->id,
-            ]);
+            DB::table('mitra')
+                ->where('id', $request->id)
+                ->update($updateData);
+
+            !$this->checkDatabaseName($dbName) ? ($res['genDB'] = $this->generateDb($dbName)) : null;
             return response()->json($res, 200);
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -724,5 +751,101 @@ class MitraController extends Controller
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
+    }
+
+    // Generate DB
+    protected function createDbTransaksi($dbname)
+    {
+        $connection = 'db1';
+        $query = "CREATE DATABASE $dbname";
+        try {
+            DB::connection($connection)->statement($query);
+            // Switch to the new database
+            config(["database.connections.{$connection}.database" => $dbname]);
+            DB::purge($connection);
+            return true;
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
+    protected function createTbTransaksi($dbname)
+    {
+        try {
+            Schema::create('transaksi', function (Blueprint $table) {
+                $table->increments('id');
+                // $table->integer('id_coa');
+                $table->integer('id_coa')->nullable();
+                $table->integer('id_nasabah');
+                $table->integer('id_mitra');
+                $table->integer('id_produk');
+                $table->string('amount')->default(0);
+                $table->string('bagi_hasil')->nullable();
+                $table->string('bukti_transfer')->nullable();
+                $table->string('tenor')->nullable();
+                $table->integer('aro')->nullable();
+                $table->datetime('tgl_approve')->nullable();
+                $table->integer('jenis')->default(0);
+                $table->integer('status')->default(0);
+                $table->string('kriptorone');
+                $table->string('kriptortwo');
+                $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
+            Schema::create('rekap', function (Blueprint $table) {
+                $table->increments('id');
+                // $table->integer('id_coa');
+                $table->integer('id_coa')->nullable();
+                $table->integer('id_produk');
+                $table->integer('tahun');
+                $table->integer('bulan');
+                $table->integer('jenis')->default(0);
+                $table->string('kriptorone');
+                $table->string('kriptortwo');
+                $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
+            Schema::create('log_transaksi', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('id_user');
+                $table->text('keterangan');
+                $table->integer('notifikasi');
+                $table->string('kriptorone');
+                $table->string('kriptortwo');
+                $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            });
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+            // return [$dbname, $th->getMessage()];
+        }
+    }
+
+    protected function generateDb($dbname)
+    {
+        $createDbTransaksi = $this->createDbTransaksi($dbname);
+        DB::reconnect();
+        $createTbTransaksi = $this->createTbTransaksi($dbname);
+
+        if ($createDbTransaksi) {
+            if ($createTbTransaksi) {
+                return 'Generate Succesfully';
+            } else {
+                return ['Generate DB Successfully, TB Failed', $createDbTransaksi];
+            }
+        } else {
+            return ['Generate DB Failed', $createDbTransaksi];
+        }
+    }
+
+    protected function checkDatabaseName($dbname)
+    {
+        // Get all database names on the current connection
+        $databaseNames = DB::connection()->select('SELECT name FROM sys.databases');
+
+        $result = [];
+        foreach ($databaseNames as $database) {
+            $result[] = $database->name;
+        }
+
+        return array_search($dbname, $result);
     }
 }

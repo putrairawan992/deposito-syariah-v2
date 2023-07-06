@@ -10,6 +10,8 @@ use App\Models\File;
 
 class ProductController extends Controller
 {
+    protected $connection = 'db1';
+
     public function index()
     {
         $produk = DB::table('produk')->get();
@@ -60,7 +62,7 @@ class ProductController extends Controller
             return response()->json('Data tidak Ada', 400);
         }
 
-        return $produkDetail;
+        return response()->json($produkDetail, 200);
     }
 
     public function store(Request $request)
@@ -223,6 +225,153 @@ class ProductController extends Controller
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Hapus Berhasil', 200);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
+    public function buyshow()
+    {
+        $connection = 'db1';
+        $listDbTrx = DB::table('mitra')
+            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
+            ->get();
+
+        // Check transaksi every db transaksi
+        $result = [];
+        foreach ($listDbTrx as $value) {
+            $value->dbname = dekripsina($value->db_name, $value->kriptorone, $value->kriptortwo);
+            config(["database.connections.{$connection}.database" => $value->dbname]);
+            DB::purge($connection);
+
+            // Get transaksi evry db transaksi
+            // Jenis = 3 (Pembelian)
+            $getTrx = DB::table('transaksi')
+                ->where('id_nasabah', auth()->user()->id)
+                ->where('jenis', 3)
+                ->get();
+            foreach ($getTrx as $value) {
+                $value->amount = dekripsina($value->amount, $value->kriptorone, $value->kriptortwo);
+                $value->bagi_hasil = dekripsina($value->bagi_hasil, $value->kriptorone, $value->kriptortwo);
+                $value->tenor = dekripsina($value->tenor, $value->kriptorone, $value->kriptortwo);
+                unset($value->kriptorone);
+                unset($value->kriptortwo);
+                $result[] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    public function buydetail(Request $req)
+    {
+        $connection = 'db1';
+        $id = $req->id;
+        $id_mitra = $req->id_mitra;
+
+        $getMitra = DB::table('mitra')
+            ->where('mitra.id', $req->id_mitra)
+            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
+            ->first();
+
+        $dbname = dekripsina($getMitra->db_name, $getMitra->kriptorone, $getMitra->kriptortwo);
+        config(["database.connections.{$connection}.database" => $dbname]);
+        DB::purge($connection);
+
+        $detailTrx = DB::table('transaksi')
+            ->where('id', $id)
+            ->first();
+        $detailTrx->amount = dekripsina($detailTrx->amount, $detailTrx->kriptorone, $detailTrx->kriptortwo);
+        $detailTrx->bagi_hasil = dekripsina($detailTrx->bagi_hasil, $detailTrx->kriptorone, $detailTrx->kriptortwo);
+        $detailTrx->tenor = dekripsina($detailTrx->tenor, $detailTrx->kriptorone, $detailTrx->kriptortwo);
+        unset($detailTrx->kriptorone);
+        unset($detailTrx->kriptortwo);
+        return response()->json($detailTrx, 200);
+    }
+
+    public function buystore(Request $req)
+    {
+        $produk = DB::table('produk')
+            ->leftjoin('mitra', 'produk.id_mitra', 'mitra.id')
+            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->where('produk.id', $req->id)
+            ->select('db_name', 'users.kriptorone', 'users.kriptortwo', 'produk.kriptorone as kriptoroneProduk', 'produk.kriptortwo as kriptortwoProduk', 'id_mitra', 'bagi_hasil', 'tenor')
+            ->first();
+
+        $dbname = dekripsina($produk->db_name, $produk->kriptorone, $produk->kriptortwo);
+
+        // Create Enkripsi
+        $kriptor = generatekriptor();
+        $amount = newenkripsina($req->amount, $kriptor['randnum'], $kriptor['randomBytes']);
+        $bagi_hasilDekrip = dekripsina($produk->bagi_hasil, $produk->kriptoroneProduk, $produk->kriptortwoProduk);
+        $tenorDekrip = dekripsina($produk->tenor, $produk->kriptoroneProduk, $produk->kriptortwoProduk);
+        $bagi_hasil = newenkripsina($bagi_hasilDekrip, $kriptor['randnum'], $kriptor['randomBytes']);
+        $tenor = newenkripsina($tenorDekrip, $kriptor['randnum'], $kriptor['randomBytes']);
+
+        $insertData = [
+            'id_nasabah' => auth()->user()->id,
+            'id_mitra' => $produk->id_mitra,
+            'id_coa' => '',
+            'id_produk' => $req->id,
+            'amount' => $amount,
+            'bagi_hasil' => $bagi_hasil,
+            'tenor' => $tenor,
+            'aro' => $req->aro,
+            'jenis' => 3,
+            'status' => 1,
+            'kriptorone' => $kriptor['kriptorone'],
+            'kriptortwo' => $kriptor['kriptortwo'],
+        ];
+
+        config(["database.connections.{$this->connection}.database" => $dbname]);
+        DB::purge($this->connection);
+        $cekTransaksi = DB::table('transaksi')
+            ->where('id_nasabah', auth()->user()->id)
+            ->where('id_produk', $req->id)
+            ->where('jenis', 3)
+            ->where('status', 1)
+            ->get();
+
+        // ERRORRRR KENEH IFF NA
+        if (empty($cekTransaksi)) {
+            try {
+                DB::table('transaksi')->insert([$insertData]);
+                return response()->json('Pengajuan Pembelian Berhasil', 200);
+            } catch (\Throwable $th) {
+                return $th->getMessage();
+            }
+        } else {
+            return response()->json(['Anda tidak bisa melakukan pengajuan, Karena transaksi Anda sebelumnya belum di Proses', $cekTransaksi], 400);
+        }
+    }
+
+    public function buyvalidasi(Request $req)
+    {
+    }
+
+    public function buycancel(Request $req)
+    {
+        $connection = 'db1';
+        $id = $req->id;
+        $id_mitra = $req->id_mitra;
+
+        $getMitra = DB::table('mitra')
+            ->where('mitra.id', $req->id_mitra)
+            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
+            ->first();
+
+        $dbname = dekripsina($getMitra->db_name, $getMitra->kriptorone, $getMitra->kriptortwo);
+        config(["database.connections.{$connection}.database" => $dbname]);
+        DB::purge($connection);
+
+        try {
+            DB::table('transaksi')
+                ->where('id', $id)
+                ->update(['status' => '0']);
+            return response()->json('Pembatalan Berhasil', 200);
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

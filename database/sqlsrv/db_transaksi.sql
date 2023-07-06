@@ -4,14 +4,14 @@ CREATE TABLE transaksi (
   id_nasabah INT NOT NULL,
   id_mitra INT NOT NULL,
   id_produk INT NOT NULL,
-  amount INT DEFAULT 0,
-  bagi_hasil int default NULL,
+  amount nvarchar(255) not null,
+  bagi_hasil nvarchar(255) not NULL,
   bukti_transfer nvarchar(255) NULL,
-  tenor INT NULL,
+  tenor nvarchar(255) not NULL,
   aro INT NULL,
   tgl_approve datetime NULL,
   jenis int default 0, -- 0=bagihasil, 1=pengembalian, 2=penarikan, 3=pembelian
-  status int default 0, -- 1=pengajuan, 2=ttdDokumen, 3=disetujui, 4=transfer, 5=done
+  status int default 0, -- 1=pengajuan, 2=ttdDokumen, 3=disetujui, 4=transfer, 5=done, 0=ditolak
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT GETDATE()
@@ -21,7 +21,7 @@ CREATE TABLE transaksi (
 CREATE TABLE rekap (
   id int PRIMARY KEY IDENTITY(1,1),
   id_coa INT NOT NULL,
-  id_mitra INT NOT NULL,
+  id_produk INT NOT NULL,
   tahun INT NOT NULL,
   bulan INT NOT NULL,
   jenis int default 0, -- 0=bagihasil, 1=pengembalian, 2=penarikan, 3=pembelian

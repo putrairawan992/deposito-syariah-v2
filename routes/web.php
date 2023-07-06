@@ -76,7 +76,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/nasabah', 'AuthController@nasabah');
     $router->get('/mitra', 'AuthController@mitra');
     $router->get('/produk', 'ProductController@index');
-    $router->get('/produk/{id}', 'ProductController@detail');
 
     // Fix Function
     $router->get('/userprofile', 'AuthController@userprofile');
@@ -90,7 +89,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/delall', 'AuthController@deleteall');
 
     // Test create DB Fixed
-    $router->get('/createdb/{dbname}', 'DatabaseController@newDbTransaksi');
+    $router->post('/createdb/{dbname}', 'DatabaseController@generateDb');
+    $router->get('/cekdb/{dbname}', 'DatabaseController@checkDatabaseName');
 
     $router->group(['middleware' => 'admin'], function () use ($router) {
         // Admin Section
@@ -100,8 +100,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         // Mitra Section
         $router->post('/regmitra', 'MitraController@store');
-        $router->put('/updatemitra', 'MitraController@update');
-        $router->put('/validasimitra', 'MitraController@validasimitra');
+        $router->put('/regmitra', 'MitraController@update');
+        $router->put('/validasimitra', 'MitraController@validasi');
         $router->put('/restoremitra/{id}', 'MitraController@restore');
         $router->delete('/hapusmitra/{id}', 'MitraController@delete');
 
@@ -117,9 +117,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/splashaktivasi/{id}', 'SplashController@aktivasi');
         $router->put('/splashrestore/{id}', 'SplashController@restore');
         $router->put('/splashdelete/{id}', 'SplashController@delete');
+
+        // Validasi Pembelian
+        $router->put('/validasipembelian', 'SplashController@buyvalidasi');
     });
 
-    $router->group(['middleware' => 'auth'], function () use ($router) {
+    $router->group(['middleware' => 'nasabah'], function () use ($router) {
         // Akses Nasabah
         $router->get('/refreshtoken', 'AuthController@refresh');
         $router->post('/regnasabah', 'NasabahController@store');
@@ -128,6 +131,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         // Promo Splash Screen
         $router->get('/showsplash', 'SplashController@show');
         $router->get('/splash/{id}', 'SplashController@detail');
+
+        // Pembelian
+        $router->get('/pembelian', 'ProductController@buyshow');
+        $router->post('/pembeliandetail', 'ProductController@buydetail');
+        $router->post('/pembelian', 'ProductController@buystore');
+        $router->put('/pembelian', 'ProductController@buyupdate');
+        $router->put('/pembeliancancel', 'ProductController@buycancel');
     });
 
     $router->group(['middleware' => 'mitra'], function () use ($router) {

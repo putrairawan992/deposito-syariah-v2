@@ -15,12 +15,11 @@ class DatabaseController extends Controller
         try {
             DB::connection($connection)->statement($query);
             // Switch to the new database
-            config(['database.connections.db1.database' => $dbname]);
-            DB::purge('db1');
+            config(["database.connections.{$connection}.database" => $dbname]);
+            DB::purge($connection);
             return true;
         } catch (\Throwable $th) {
-            return false;
-            // return [$dbname, $th->getMessage()];
+            return $th->getMessage();
         }
     }
 
@@ -29,7 +28,8 @@ class DatabaseController extends Controller
         try {
             Schema::create('transaksi', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('id_coa');
+                // $table->integer('id_coa');
+                $table->integer('id_coa')->nullable();
                 $table->integer('id_mitra');
                 $table->integer('id_produk');
                 $table->integer('amount')->default(0);
@@ -46,8 +46,9 @@ class DatabaseController extends Controller
             });
             Schema::create('rekap', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('id_coa');
-                $table->integer('id_mitra');
+                // $table->integer('id_coa');
+                $table->integer('id_coa')->nullable();
+                $table->integer('id_produk');
                 $table->integer('tahun');
                 $table->integer('bulan');
                 $table->integer('jenis')->default(0);
@@ -71,20 +72,34 @@ class DatabaseController extends Controller
         }
     }
 
-    public function newDbTransaksi($dbname)
+    public function generateDb($dbname)
     {
         $createDbTransaksi = $this->createDbTransaksi($dbname);
-        $createTbTransaksi = $this->createTbTransaksi($dbname);
-
         DB::reconnect();
+        $createTbTransaksi = $this->createTbTransaksi($dbname);
+        return [$createDbTransaksi, $createTbTransaksi];
+
         if ($createDbTransaksi) {
             if ($createTbTransaksi) {
                 return response()->json('Generate Succesfully', 200);
             } else {
-                return response()->json('Generate DB Successfully, TB Failed', 400);
+                return response()->json(['Generate DB Successfully, TB Failed', $createDbTransaksi], 400);
             }
         } else {
-            return response()->json('Generate DB Failed', 400);
+            return response()->json(['Generate DB Failed', $createDbTransaksi], 400);
         }
+    }
+
+    public function checkDatabaseName($dbname)
+    {
+        // Get all database names on the current connection
+        $databaseNames = DB::connection()->select('SELECT name FROM sys.databases');
+
+        $result = [];
+        foreach ($databaseNames as $database) {
+            $result[] = $database->name;
+        }
+
+        return [$result, array_search($dbname, $result)];
     }
 }
