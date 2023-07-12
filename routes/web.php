@@ -69,6 +69,9 @@ $router->get('/test', function () {
         return response()->json(['error' => $e->getMessage()], 500);
     }
 });
+$router->get('/welcome', function () {
+    return view('welcome');
+});
 
 // Api
 $router->group(['prefix' => 'api'], function () use ($router) {
@@ -119,7 +122,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/splashdelete/{id}', 'SplashController@delete');
 
         // Validasi Pembelian
-        $router->put('/validasipembelian', 'SplashController@buyvalidasi');
+        $router->put('/validasipembelian', 'ProductController@buyvalidasi');
     });
 
     $router->group(['middleware' => 'nasabah'], function () use ($router) {

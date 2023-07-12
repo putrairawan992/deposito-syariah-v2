@@ -245,16 +245,21 @@ class ProductController extends Controller
             config(["database.connections.{$connection}.database" => $value->dbname]);
             DB::purge($connection);
 
-            // Get transaksi evry db transaksi
+            // Get transaksi every db transaksi
             // Jenis = 3 (Pembelian)
-            $getTrx = DB::table('transaksi')
-                ->where('id_nasabah', auth()->user()->id)
-                ->where('jenis', 3)
-                ->get();
+            if (auth()->user()->id == 1 || auth()->user()->id == 99) {
+                $getTrx = DB::table('transaksi')->get();
+            } else {
+                $getTrx = DB::table('transaksi')
+                    ->where('id_nasabah', auth()->user()->id)
+                    ->where('jenis', 3)
+                    ->get();
+            }
             foreach ($getTrx as $value) {
-                $value->amount = dekripsina($value->amount, $value->kriptorone, $value->kriptortwo);
-                $value->bagi_hasil = dekripsina($value->bagi_hasil, $value->kriptorone, $value->kriptortwo);
-                $value->tenor = dekripsina($value->tenor, $value->kriptorone, $value->kriptortwo);
+                !empty($value->no_transaksi) ? ($value->no_transaksi = dekripsina($value->no_transaksi, $value->kriptorone, $value->kriptortwo)) : null;
+                !empty($value->amount) ? ($value->amount = dekripsina($value->amount, $value->kriptorone, $value->kriptortwo)) : null;
+                !empty($value->bagi_hasil) ? ($value->bagi_hasil = dekripsina($value->bagi_hasil, $value->kriptorone, $value->kriptortwo)) : null;
+                !empty($value->tenor) ? ($value->tenor = dekripsina($value->tenor, $value->kriptorone, $value->kriptortwo)) : null;
                 unset($value->kriptorone);
                 unset($value->kriptortwo);
                 $result[] = $value;
@@ -297,13 +302,32 @@ class ProductController extends Controller
             ->leftjoin('mitra', 'produk.id_mitra', 'mitra.id')
             ->leftjoin('users', 'mitra.id_user', 'users.id')
             ->where('produk.id', $req->id)
-            ->select('db_name', 'users.kriptorone', 'users.kriptortwo', 'produk.kriptorone as kriptoroneProduk', 'produk.kriptortwo as kriptortwoProduk', 'id_mitra', 'bagi_hasil', 'tenor')
+            ->select('produk.id_mitra', 'db_name', 'users.kriptorone', 'users.kriptortwo', 'produk.kriptorone as kriptoroneProduk', 'produk.kriptortwo as kriptortwoProduk', 'id_mitra', 'bagi_hasil', 'tenor')
             ->first();
-
         $dbname = dekripsina($produk->db_name, $produk->kriptorone, $produk->kriptortwo);
+
+        // Generate No Transaksi
+        config(["database.connections.{$this->connection}.database" => $dbname]);
+        DB::purge($this->connection);
+        $cekTransaksi = DB::table('transaksi')->get();
+        $req->id < 100 ? ($genOne = 'D0' . $req->id . '-') : null;
+        $req->id < 10 ? ($genOne = 'D00' . $req->id . '-') : null;
+        $produk->id_mitra < 100 ? ($genTwo = 'M0' . $produk->id_mitra . '-') : null;
+        $produk->id_mitra < 10 ? ($genTwo = 'M00' . $produk->id_mitra . '-') : null;
+        $key = true;
+        while ($key) {
+            $count = 0;
+            $no_transaksi = $genOne . $genTwo . date('ym') . rand(999, 9999);
+            foreach ($cekTransaksi as $value) {
+                $noTransaksiNa = dekripsina($value->no_transaksi, $value->kriptorone, $value->kriptortwo);
+                $noTransaksiNa == $no_transaksi ? $count++ : null;
+            }
+            $count == 0 ? ($key = false) : null;
+        }
 
         // Create Enkripsi
         $kriptor = generatekriptor();
+        $noTransaksi = newenkripsina($no_transaksi, $kriptor['randnum'], $kriptor['randomBytes']);
         $amount = newenkripsina($req->amount, $kriptor['randnum'], $kriptor['randomBytes']);
         $bagi_hasilDekrip = dekripsina($produk->bagi_hasil, $produk->kriptoroneProduk, $produk->kriptortwoProduk);
         $tenorDekrip = dekripsina($produk->tenor, $produk->kriptoroneProduk, $produk->kriptortwoProduk);
@@ -315,6 +339,7 @@ class ProductController extends Controller
             'id_mitra' => $produk->id_mitra,
             'id_coa' => '',
             'id_produk' => $req->id,
+            'no_transaksi' => $noTransaksi,
             'amount' => $amount,
             'bagi_hasil' => $bagi_hasil,
             'tenor' => $tenor,
@@ -325,16 +350,13 @@ class ProductController extends Controller
             'kriptortwo' => $kriptor['kriptortwo'],
         ];
 
-        config(["database.connections.{$this->connection}.database" => $dbname]);
-        DB::purge($this->connection);
         $cekTransaksi = DB::table('transaksi')
             ->where('id_nasabah', auth()->user()->id)
             ->where('id_produk', $req->id)
             ->where('jenis', 3)
             ->where('status', 1)
-            ->get();
+            ->first();
 
-        // ERRORRRR KENEH IFF NA
         if (empty($cekTransaksi)) {
             try {
                 DB::table('transaksi')->insert([$insertData]);
@@ -345,10 +367,6 @@ class ProductController extends Controller
         } else {
             return response()->json(['Anda tidak bisa melakukan pengajuan, Karena transaksi Anda sebelumnya belum di Proses', $cekTransaksi], 400);
         }
-    }
-
-    public function buyvalidasi(Request $req)
-    {
     }
 
     public function buycancel(Request $req)
@@ -367,13 +385,50 @@ class ProductController extends Controller
         config(["database.connections.{$connection}.database" => $dbname]);
         DB::purge($connection);
 
+        $trxNa = DB::table('transaksi')->where('id', $id);
+        if (empty($trxNa->where('status', '!=', 0)->first())) {
+            return response()->json('Data tidak ditemukan', 400);
+        }
         try {
-            DB::table('transaksi')
-                ->where('id', $id)
-                ->update(['status' => '0']);
+            $trxNa->update(['status' => '0']);
             return response()->json('Pembatalan Berhasil', 200);
         } catch (\Throwable $th) {
             return $th->getMessage();
+        }
+    }
+
+    public function buyvalidasi(Request $req)
+    {
+        $connection = 'db1';
+        $id = $req->id;
+        $id_mitra = $req->id_mitra;
+        $status = $req->status;
+
+        $getMitra = DB::table('mitra')
+            ->where('mitra.id', $req->id_mitra)
+            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
+            ->first();
+
+        $dbname = dekripsina($getMitra->db_name, $getMitra->kriptorone, $getMitra->kriptortwo);
+        config(["database.connections.{$connection}.database" => $dbname]);
+        DB::purge($connection);
+
+        $trxNa = DB::table('transaksi')->where('id', $id);
+        if (empty($trxNa->where('status', '!=', 0)->first())) {
+            return response()->json('Data tidak ditemukan', 400);
+        }
+        $updateData['status'] = $status;
+        $status == 5 ? ($updateData['tgl_approve'] = date('Y-m-d H:i:s')) : null;
+        if (empty($trxNa->where('status', 5)->first())) {
+            try {
+                $trxNa->update($updateData);
+                return response()->json('Update Validasi Berhasil', 200);
+            } catch (\Throwable $th) {
+                return $th->getMessage();
+            }
+        } else {
+            return response()->json('Validasi dibatalkan, karena data ini sudah di Approve', 400);
         }
     }
 }

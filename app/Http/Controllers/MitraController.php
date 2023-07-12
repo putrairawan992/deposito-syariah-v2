@@ -708,7 +708,7 @@ class MitraController extends Controller
                 ->where('id', $request->id)
                 ->update($updateData);
 
-            !$this->checkDatabaseName($dbName) ? ($res['genDB'] = $this->generateDb($dbName)) : null;
+            !$this->checkDatabaseName($dbName) && $validasi == 1 ? ($res['genDB'] = $this->generateDb($dbName)) : null;
             return response()->json($res, 200);
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -779,7 +779,9 @@ class MitraController extends Controller
                 $table->integer('id_nasabah');
                 $table->integer('id_mitra');
                 $table->integer('id_produk');
-                $table->string('amount')->default(0);
+                $table->integer('predecessor')->default(0);
+                $table->string('no_transaksi');
+                $table->string('amount');
                 $table->string('bagi_hasil')->nullable();
                 $table->string('bukti_transfer')->nullable();
                 $table->string('tenor')->nullable();
