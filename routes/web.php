@@ -15,10 +15,10 @@ use Illuminate\Http\Request;
 */
 
 // View
-$router->group(['domain' => 'subdomain.localhost:8000'], function () use ($router) {
-    $router->get('/', function () use ($router) {
-        return $router->app->version() . ' Awal';
-    });
+$router->get('/', function () use ($router) {
+    // return $router->app->version();
+    return view('welcome');
+    // return view('auth.login');
 });
 
 // Main Page
@@ -68,9 +68,6 @@ $router->get('/test', function () {
     } catch (Exception $e) {
         return response()->json(['error' => $e->getMessage()], 500);
     }
-});
-$router->get('/welcome', function () {
-    return view('welcome');
 });
 
 // Api
