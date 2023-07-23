@@ -228,7 +228,7 @@ class AuthController extends Controller
         $enkripUsername = newenkripsina($username, $kriptorone, $kriptortwo);
         $enkripEmail = newenkripsina($email, $kriptorone, $kriptortwo);
         $enkripPhone = newenkripsina($phone, $kriptorone, $kriptortwo);
-
+        // return response()->json([$enkripUsername, $enkripEmail, $enkripPhone], 400);
         try {
             $user = new User();
             $user->username = $enkripUsername;
@@ -244,8 +244,8 @@ class AuthController extends Controller
             if ($user->save()) {
                 return response()->json('Register Admin Berhasil', 200);
             }
-        } catch (\Exception $e) {
-            return response()->json($e, 400);
+        } catch (\Throwable $th) {
+            return $th->getMessage();
         }
     }
 
@@ -365,7 +365,6 @@ class AuthController extends Controller
 
     public function ceklogin(Request $request)
     {
-        $dbname = bestConnection();
         $username = $request->username;
         $loginType = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'other';
         if ($loginType == 'other') {
@@ -380,12 +379,13 @@ class AuthController extends Controller
                     $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
                     if ($username == $dekripPhone) {
                         $enkripPhone = $value->phone;
+                        $password = $value->password;
                         $rolena = $value->role;
                         break;
                     }
                 }
 
-                if ($rolena == 10 || $rolena == 0) {
+                if ($rolena == 0 && empty($password)) {
                     $createotp = $this->createotp($enkripPhone, $dbname);
                 }
 
@@ -400,7 +400,7 @@ class AuthController extends Controller
                     return response()->json('phone', 200);
                 }
 
-                return response()->json('Register or CreateOTP Failed', 404);
+                return response()->json('password', 404);
             } else {
                 $cekRole = DB::table('users')
                     ->where('username', $username)
@@ -481,6 +481,24 @@ class AuthController extends Controller
 
                             $this->storeToken($idNa, $token, $kriptorone, $kriptortwo);
                             return $this->respondWithToken($token);
+                        } else {
+                            request()->merge([$loginType => $enkripPhone]);
+                            $credentials = request([$loginType, 'password']);
+
+                            if (!($token = auth()->attempt($credentials))) {
+                                return response()->json(['status' => 'failed', 'message' => 'Username atau Password Salah']);
+                            }
+
+                            if (auth()->user()->role == 0) {
+                                return response()->json(['status' => 'error', 'message' => 'Akun Anda Belum Aktif, Pastikan data anda lengkap']);
+                            }
+
+                            if ($oldToken != null) {
+                                $this->revoke($oldToken);
+                            }
+
+                            $this->storeToken($idNa, $token, $kriptorone, $kriptortwo);
+                            return $this->respondWithToken($token);
                         }
                     } else {
                         return response()->json(['error' => 'User not found'], 404);
@@ -526,13 +544,13 @@ class AuthController extends Controller
 
             request()->merge([$loginType => $loginField]);
             $credentials = request([$loginType, 'password']);
-            // return response()->json([$dekripUsername, $dekripEmail, $enkripUsername, $credentials], 400);
+
             if (!($token = auth()->attempt($credentials))) {
                 return response()->json(['status' => 'failed', 'message' => 'Username atau Password Salah']);
             }
 
             if (auth()->user()->role == 0) {
-                return response()->json(['status' => 'error', 'message' => 'Akun Anda Belum Aktif, Hubungi Admin']);
+                return response()->json(['status' => 'error', 'message' => 'Akun Anda Belum Aktif, Pastikan data anda lengkap']);
             }
 
             if ($oldToken != null) {
@@ -607,7 +625,6 @@ class AuthController extends Controller
                 $detailUser->jabatan = 'SuperAdmin';
                 break;
             default:
-            // echo 'Your favorite color is neither red, blue, nor green!';
         }
 
         $userResponse = [

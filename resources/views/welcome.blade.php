@@ -99,7 +99,7 @@
 
     <script>
         // Change the value of countDownEndDate to the day you want to end the count down
-        var countDownEndDate = "December 13, 2023 08:00:00";
+        var countDownEndDate = "May 3, 2024 08:00:00";
 
         var endDate = new Date(countDownEndDate).getTime();
 

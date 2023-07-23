@@ -756,7 +756,7 @@ class MitraController extends Controller
     // Generate DB
     protected function createDbTransaksi($dbname)
     {
-        $connection = 'db1';
+        $connection = 'db2';
         $query = "CREATE DATABASE $dbname";
         try {
             DB::connection($connection)->statement($query);

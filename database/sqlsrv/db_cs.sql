@@ -23,9 +23,9 @@ CREATE TABLE komplain (
   admin_rate INT NULL, -- 1-5
   keterangan INT NOT NULL,
   predecessor_komplain INT NOT NULL,
-  record_voice VARCHAR(255) NULL,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
+  record_voice VARCHAR(255) default NULL,
+  kriptorone varchar(255) not NULL,
+  kriptortwo varchar(255) not NULL,
   created_at DATETIME DEFAULT GETDATE(),
   updated_at DATETIME NULL,
   CONSTRAINT fk_komplain_qna FOREIGN KEY (id_qna) REFERENCES qna(id)

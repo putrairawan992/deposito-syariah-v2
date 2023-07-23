@@ -4,10 +4,11 @@ CREATE TABLE users (
   email varchar(255) DEFAULT NULL,
   phone varchar(255) DEFAULT NULL,
   [otp] varchar(255) DEFAULT Null,
+  pin varchar(255) DEFAULT Null,
   [password] varchar(255) DEFAULT Null,
   store_token text DEFAULT NULL,
   reset_token text DEFAULT NULL,
-  [role] int NOT NULL DEFAULT 0,
+  [role] int NOT NULL DEFAULT 0, -- 99=SuperAdmin
   [status] int NOT NULL DEFAULT 0,
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,

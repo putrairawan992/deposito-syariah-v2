@@ -10,7 +10,7 @@ use App\Models\File;
 
 class ProductController extends Controller
 {
-    protected $connection = 'db1';
+    protected $connection = 'db2';
 
     public function index()
     {
@@ -232,7 +232,7 @@ class ProductController extends Controller
 
     public function buyshow()
     {
-        $connection = 'db1';
+        $connection = 'db2';
         $listDbTrx = DB::table('mitra')
             ->leftjoin('users', 'mitra.id_user', 'users.id')
             ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
@@ -271,7 +271,7 @@ class ProductController extends Controller
 
     public function buydetail(Request $req)
     {
-        $connection = 'db1';
+        $connection = 'db2';
         $id = $req->id;
         $id_mitra = $req->id_mitra;
 
@@ -371,7 +371,7 @@ class ProductController extends Controller
 
     public function buycancel(Request $req)
     {
-        $connection = 'db1';
+        $connection = 'db2';
         $id = $req->id;
         $id_mitra = $req->id_mitra;
 
@@ -399,7 +399,7 @@ class ProductController extends Controller
 
     public function buyvalidasi(Request $req)
     {
-        $connection = 'db1';
+        $connection = 'db2';
         $id = $req->id;
         $id_mitra = $req->id_mitra;
         $status = $req->status;
