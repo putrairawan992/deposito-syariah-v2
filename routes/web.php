@@ -23,7 +23,7 @@ $router->get('/', function () use ($router) {
 
 // Main Page
 $router->get('/dashboard', function () use ($router) {
-    return view('admin.dashboard');
+    return view('nasabah.dashboard');
 });
 $router->get('/donasi', function () use ($router) {
     return view('admin.donasi');

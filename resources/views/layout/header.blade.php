@@ -12,77 +12,23 @@
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
-    <!-- Theme style -->
-    <link rel="stylesheet" href="css/adminlte.min.css">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-    <!-- summernote -->
-    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
-
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-    <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- ChartJS -->
-    <script src="plugins/chart.js/Chart.min.js"></script>
-
-    <!-- jQuery Knob Chart -->
-    <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- daterangepicker -->
-    <script src="plugins/moment/moment.min.js"></script>
-    <script src="plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- Summernote -->
-    <script src="plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="js/adminlte.js"></script>
-    <!-- DataTables  & Plugins -->
-    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="plugins/jszip/jszip.min.js"></script>
-    <script src="plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
-    <!-- DataTables -->
-    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
-    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
-    <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
-    <!-- SA -->
+    <!-- SA, Excel to JSON, JQUERY -->
     <script src="plugins/sweetalert.min.js"></script>
-    <!-- Convert Excel -->
+    <script src="plugins/jquery-3.7.0.min.js"></script>
     <script src="plugins/xlsx.min.js"></script>
+    <link href="/output.css" rel="stylesheet">
 
-    <link rel="icon" type="image/x-icon" href="/img/AdminLTELogo.png">
+    <link rel="icon" type="image/x-icon" href="/img/Favicon Harta Insan Karimah.png">
 </head>
 
-<body class="sidebar-mini sidebar-collapse layout-fixed">
+<body>
     <div class="wrapper">
         <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center" style="background-color: #044500">
-            <img class="animation__wobble" src="img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+        <div class="preloader" id="preloader" style="background: whitesmoke">
+            <div class="loader"></div>
+            <img class="-m-16 pr-2" src="img/Favicon Harta Insan Karimah.png" alt="HIK Logo" height="62"
+                width="62">
         </div>
 
         <!-- Navbar -->
@@ -96,5 +42,56 @@
     </div>
     <!-- ./wrapper -->
 </body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Preloader styles */
+    .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader {
+        border: 6px solid whitesmoke;
+        /* Light grey border */
+        border-top: 6px solid #3498db;
+        /* Blue border for the loader animation */
+        border-radius: 50%;
+        width: 74px;
+        height: 74px;
+        animation: spin 1.5s linear infinite;
+        /* Animation for the loader */
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<script>
+    const preloader = document.querySelector('.preloader');
+    setTimeout(function() {
+        $('#preloader').fadeOut()
+    }, 1500);
+</script>
 
 </html>
