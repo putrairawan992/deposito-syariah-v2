@@ -24,28 +24,36 @@
         crossorigin="anonymous" />
 
     <link rel="icon" type="image/x-icon" href="/img/Favicon Harta Insan Karimah.png">
-
-    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
 </head>
 
-<body class="bg-gradient-to-l h-screen from-green-900 to-green-800">
+<body>
     <div class="wrapper">
         <!-- Preloader -->
-        {{-- <div class="preloader" id="preloader" style="background: rgb(179, 255, 164)">
+        <div class="preloader" id="preloader" style="background: green">
             <div class="loader"></div>
             <img class="-m-16 pr-2" src="img/Favicon Harta Insan Karimah.png" alt="HIK Logo" height="62"
                 width="62">
-        </div> --}}
+        </div>
 
         <!-- Navbar -->
         @include('layout.topbar')
         <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        @include('layout.sidebar')
+        <!-- /.Main Sidebar Container -->
 
     </div>
     <!-- ./wrapper -->
 </body>
 
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
     /* Preloader styles */
     .preloader {
         position: fixed;

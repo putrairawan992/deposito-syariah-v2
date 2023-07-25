@@ -25,30 +25,6 @@ $router->get('/', function () use ($router) {
 $router->get('/dashboard', function () use ($router) {
     return view('nasabah.dashboard');
 });
-$router->get('/donasi', function () use ($router) {
-    return view('admin.donasi');
-});
-$router->get('/penyalur', function () use ($router) {
-    return view('admin.penyalur');
-});
-$router->get('/donatur', function () use ($router) {
-    return view('admin.donatur');
-});
-$router->get('/masjid', function () use ($router) {
-    return view('admin.masjid');
-});
-$router->get('/zismustahik', function () use ($router) {
-    return view('admin.zismustahik');
-});
-$router->get('/users', function () use ($router) {
-    return view('admin.users');
-});
-$router->get('/laporan', function () use ($router) {
-    return view('admin.laporan');
-});
-$router->get('/pengaturan', function () use ($router) {
-    return view('admin.pengaturan');
-});
 
 // Auth
 $router->get('/login', function () use ($router) {
