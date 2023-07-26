@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        $alluser = User::all();
+        $alluser = DB::table('users')->get();
         foreach ($alluser as $key => $value) {
             $kriptorone = $value->kriptorone;
             $kriptortwo = $value->kriptortwo;
@@ -166,6 +166,7 @@ class AuthController extends Controller
         $email = $request->email;
         $password = $request->password;
         $phone = $request->phone;
+        $role = $request->role;
 
         // Check if field is empty
         if (empty($email) or empty($username) or empty($password)) {
@@ -221,6 +222,21 @@ class AuthController extends Controller
             }
         }
 
+        // Check Id User
+        $cekUserId = DB::table('users')
+            ->wherein('role', [1, 3, 99])
+            ->get();
+        $key = true;
+        while ($key) {
+            $count = 0;
+            $userId = 'A' . date('ym') . '-' . rand(10000, 99999);
+            foreach ($cekUserId as $value) {
+                $noIdNa = $value->id;
+                $noIdNa == $userId ? $count++ : null;
+            }
+            $count == 0 ? ($key = false) : null;
+        }
+
         // Create new user
         $kriptor = generatekriptor();
         $kriptorone = $kriptor['randnum'];
@@ -232,14 +248,15 @@ class AuthController extends Controller
         try {
             $user = new User();
             $user->username = $enkripUsername;
+            $user->iduser = $userId;
             $user->email = $enkripEmail;
             $user->phone = $enkripPhone;
             $user->password = app('hash')->make($password);
             $user->kriptorone = $kriptor['kriptorone'];
             $user->kriptortwo = $kriptor['kriptortwo'];
-            $user->role = 1;
+            $user->role = $role;
             $user->status = 1;
-            $user->user_created = auth()->user()->id;
+            $user->user_created = auth()->user()->iduser;
 
             if ($user->save()) {
                 return response()->json('Register Admin Berhasil', 200);
@@ -277,7 +294,7 @@ class AuthController extends Controller
         }
 
         // Check if username, email, phone already exist
-        $cekData = User::where('id', '!=', auth()->user()->id)->all();
+        $cekData = User::where('iduser', '!=', auth()->user()->iduser)->all();
         foreach ($cekData as $key => $value) {
             $dekripEmail = null;
             $dekripUsername = null;
@@ -319,7 +336,7 @@ class AuthController extends Controller
         $enkripPhone = newenkripsina($phone, $kriptorone, $kriptortwo);
 
         try {
-            $user = User::where('id', $request->id);
+            $user = User::where('iduser', $request->iduser);
             !empty($request->username) ? ($user->username = $enkripUsername) : null;
             !empty($request->email) ? ($user->email = $enkripEmail) : null;
             !empty($request->phone) ? ($user->phone = $enkripPhone) : null;
@@ -366,82 +383,130 @@ class AuthController extends Controller
     public function ceklogin(Request $request)
     {
         $username = $request->username;
-        $loginType = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'other';
-        if ($loginType == 'other') {
-            $pattern = '/^\d{10,}$/';
-            if (filter_var($username, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $pattern]])) {
-                $regphone = null;
-                $createotp = null;
-                $enkripPhone = null;
-                $rolena = null;
-                $cekRole = User::all();
-                foreach ($cekRole as $key => $value) {
-                    $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
-                    if ($username == $dekripPhone) {
-                        $enkripPhone = $value->phone;
-                        $password = $value->password;
-                        $rolena = $value->role;
+        if (is_numeric($username)) {
+            if (strlen($username) < 10) {
+                return response()->json('Digit No Handphone yang ada inputkan tidak valid', 400);
+            }
+            $cekHP = mb_substr($username, 0, 3);
+            switch ($cekHP) {
+                case '081':
+                    break;
+                case '082':
+                    break;
+                case '085':
+                    break;
+                case '087':
+                    break;
+                case '088':
+                    break;
+                case '089':
+                    break;
+                default:
+                    return response()->json('No Handphone yang ada inputkan tidak valid', 400);
+                    break;
+            }
+        }
+
+        $loginField = $username;
+        $cekRole = User::all();
+        foreach ($cekRole as $key => $value) {
+            $role = $value->role;
+            $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
+            $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);
+            $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
+            if ($username == $dekripPhone) {
+                if ($role == 0 || $role == 10) {
+                    if ($value->password == null) {
+                        $this->createotp($value->phone);
+                        return response()->json('otp', 200);
+                        break;
+                    } else {
+                        return response()->json('password', 200);
                         break;
                     }
-                }
-
-                if ($rolena == 0 && empty($password)) {
-                    $createotp = $this->createotp($enkripPhone, $dbname);
-                }
-
-                if ($enkripPhone == null) {
-                    $regphone = $this->regphone($username, $dbname);
-                }
-
-                if ($regphone == 'create otp done') {
-                    return response()->json('phone', 200);
-                }
-                if ($createotp == 'create otp done') {
-                    return response()->json('phone', 200);
-                }
-
-                return response()->json('password', 404);
-            } else {
-                $cekRole = DB::table('users')
-                    ->where('username', $username)
-                    ->first();
-                if ($cekRole) {
-                    if ($cekRole->role > 9) {
-                        return response()->json('phone', 200);
-                    } else {
-                        return response()->json('username', 200);
-                    }
-                }
-                return response()->json('User Tidak Terdaftar', 404);
-            }
-        } else {
-            $cekRole = DB::table('users')
-                ->where('email', $username)
-                ->first();
-            if ($cekRole) {
-                if ($cekRole->role > 9) {
-                    return response()->json('phone', 200);
                 } else {
-                    return response()->json('email', 200);
+                    return response()->json('User tidak terdaftar', 400);
+                    break;
+                }
+            } elseif ($username == $dekripUsername || $username == $dekripEmail) {
+                return response()->json('password', 200);
+                break;
+            }
+        }
+
+        $loginType = filter_var($loginField, FILTER_VALIDATE_EMAIL) ? 'email' : 'other';
+        if ($loginType == 'other') {
+            if (is_numeric($username)) {
+                $this->regphone($username);
+                return response()->json('otp', 200);
+            }
+        }
+        return response()->json('User tidak terdaftar', 400);
+    }
+
+    public function cekloginmobile(Request $request)
+    {
+        $username = $request->username;
+        if (is_numeric($username)) {
+            if (strlen($username) < 10) {
+                return response()->json('Digit No Handphone yang ada inputkan tidak valid', 400);
+            }
+            $cekHP = mb_substr($username, 0, 3);
+            switch ($cekHP) {
+                case '081':
+                    break;
+                case '082':
+                    break;
+                case '085':
+                    break;
+                case '087':
+                    break;
+                case '088':
+                    break;
+                case '089':
+                    break;
+                default:
+                    return response()->json('No Handphone yang ada inputkan tidak valid', 400);
+                    break;
+            }
+        }
+        $loginField = $username;
+        $cekRole = DB::table('users')->wherein('role', [0, 10]);
+        foreach ($cekRole as $key => $value) {
+            $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
+            $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);
+            $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
+            if ($username == $dekripPhone) {
+                if ($value->password == null) {
+                    $this->createotp($value->phone);
+                    return response()->json('otp', 200);
+                    break;
+                } else {
+                    return response()->json('password', 200);
+                    break;
                 }
             }
-            return response()->json('Email Tidak Terdaftar', 404);
         }
+
+        if (is_numeric($username)) {
+            $this->regphone($username);
+            return response()->json('otp', 200);
+        }
+        return response()->json('Silahkan Coba Kembali', 400);
     }
 
     public function login(Request $request)
     {
         $username = $request->username;
         $password = $request->password;
-        $otp = $request->password;
         $credentials = null;
         $loginField = $username;
 
         // Check if field is empty
-        if (empty($username)) {
-            return response()->json(['status' => 'error', 'message' => 'You must fill all the fields']);
+        if (empty($username) || empty($password)) {
+            return response()->json('Mohon isi dengan lengkap', 400);
         } else {
-            $cekRole = User::all();
+            $cekRole = DB::table('users')->get();
             $loginType = filter_var($loginField, FILTER_VALIDATE_EMAIL) ? 'email' : 'other';
             if ($loginType == 'other') {
                 if (is_numeric($username)) {
@@ -451,13 +516,13 @@ class AuthController extends Controller
                     $oldToken = null;
                     $idNa = null;
                     foreach ($cekRole as $key => $value) {
-                        $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
+                        $kriptorone = $value->kriptorone;
+                        $kriptortwo = $value->kriptortwo;
+                        $dekripPhone = dekripsina($value->phone, $kriptorone, $kriptortwo);
                         if ($username == $dekripPhone) {
                             $idNa = $value->id;
                             $enkripPhone = $value->phone;
                             $rolena = $value->role;
-                            $kriptorone = $value->kriptorone;
-                            $kriptortwo = $value->kriptortwo;
                             if ($value->store_token != null) {
                                 $oldToken = dekripsina($value->store_token, $kriptorone, $kriptortwo);
                             }
@@ -468,31 +533,16 @@ class AuthController extends Controller
                     // Login OTP
                     if ($idNa != null) {
                         $dateTime = strtotime('-5 minutes', strtotime(date('Y-m-d H:i:s')));
-                        $cekOtp = User::where('id', $idNa)
-                            ->where('otp', $password)
-                            ->where('created_otp', '>', date('Y-m-d H:i:s', $dateTime))
-                            ->firstOrFail();
+                        $cekOtp = User::where('phone', $enkripPhone)->firstorfail();
 
                         if ($cekOtp) {
+                            if ($cekOtp->created_otp > $dateTime) {
+                                return response()->json('OTP anda Expire, Silahkan tekan kirim ulang OTP', 400);
+                            }
+                            if ($cekOtp->otp != $password) {
+                                return response()->json('Kode OTP Anda Salah', 400);
+                            }
                             $token = JWTAuth::fromUser($cekOtp);
-                            if ($oldToken != null) {
-                                $this->revoke($oldToken);
-                            }
-
-                            $this->storeToken($idNa, $token, $kriptorone, $kriptortwo);
-                            return $this->respondWithToken($token);
-                        } else {
-                            request()->merge([$loginType => $enkripPhone]);
-                            $credentials = request([$loginType, 'password']);
-
-                            if (!($token = auth()->attempt($credentials))) {
-                                return response()->json(['status' => 'failed', 'message' => 'Username atau Password Salah']);
-                            }
-
-                            if (auth()->user()->role == 0) {
-                                return response()->json(['status' => 'error', 'message' => 'Akun Anda Belum Aktif, Pastikan data anda lengkap']);
-                            }
-
                             if ($oldToken != null) {
                                 $this->revoke($oldToken);
                             }
@@ -501,7 +551,7 @@ class AuthController extends Controller
                             return $this->respondWithToken($token);
                         }
                     } else {
-                        return response()->json(['error' => 'User not found'], 404);
+                        return response()->json('User not found', 404);
                     }
                 } else {
                     $loginType = 'username';
@@ -615,11 +665,13 @@ class AuthController extends Controller
                 $detailUser->jabatan = 'Mitra BPR';
                 break;
             case 3:
+                $detailUser->jabatan = 'Admin CS';
+                break;
+            case 4:
                 $detailUser->jabatan = 'Owner';
                 break;
             case 10:
                 $detailUser->jabatan = 'Registered Nasabah';
-                break;
                 break;
             case 99:
                 $detailUser->jabatan = 'SuperAdmin';
@@ -664,12 +716,28 @@ class AuthController extends Controller
         ]);
     }
 
-    protected function regphone($phone, $dbname)
+    protected function regphone($phone)
     {
         $kriptor = generatekriptor();
         $phoneNa = newenkripsina($phone, $kriptor['randnum'], $kriptor['randomBytes']);
 
+        // Check Id User
+        $cekUserId = DB::table('users')
+            ->wherein('role', [0, 10])
+            ->get();
+        $key = true;
+        while ($key) {
+            $count = 0;
+            $userId = 'N' . date('ym') . '-' . rand(10000, 99999);
+            foreach ($cekUserId as $value) {
+                $noIdNa = $value->id;
+                $noIdNa == $userId ? $count++ : null;
+            }
+            $count == 0 ? ($key = false) : null;
+        }
+
         $insertData = [
+            'iduser' => $userId,
             'phone' => $phoneNa,
             'kriptorone' => $kriptor['kriptorone'],
             'kriptortwo' => $kriptor['kriptortwo'],
@@ -677,44 +745,26 @@ class AuthController extends Controller
 
         try {
             DB::table('users')->insert($insertData);
-            return $this->createotp($phoneNa, $dbname);
+            return $this->createotp($phoneNa);
         } catch (\Exception $e) {
-            return response()->json($e->message, 404);
+            return response()->json($e->getMessage(), 404);
         }
     }
 
-    protected function createotp($phone, $dbname)
+    protected function createotp($enkripPhone)
     {
         $updateOTP = [
-            'otp' => rand(1000, 9999),
+            'otp' => rand(100000, 999999),
             'created_otp' => date('Y-m-d h:i:s'),
         ];
 
         try {
             DB::table('users')
-                ->where('phone', $phone)
+                ->where('phone', $enkripPhone)
                 ->update($updateOTP);
-
-            $alluser = User::all();
-            foreach ($dbname['listconn'] as $key => $value) {
-                if (isConnectionAvailable($value)) {
-                    foreach ($alluser as $key => $user) {
-                        DB::connection($value)
-                            ->table('users')
-                            ->updateOrInsert(
-                                ['id' => $user->id],
-                                [
-                                    'otp' => $user->otp,
-                                    'created_otp' => $user->created_otp,
-                                ],
-                            );
-                    }
-                }
-            }
-
             return 'create otp done';
         } catch (\Exception $e) {
-            return response()->json($e->message, 404);
+            return response()->json($e->getMessage(), 404);
         }
     }
 

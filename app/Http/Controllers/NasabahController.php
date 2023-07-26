@@ -255,9 +255,9 @@ class NasabahController extends Controller
             }
         }
 
-        // Create new enkripsi Mitra
+        // Create new enkripsi
         $getKriptor = DB::table('users')
-            ->where('id', $id_user)
+            ->where('iduser', $iduser)
             ->first();
         $kriptorone = $getKriptor->kriptorone;
         $kriptortwo = $getKriptor->kriptortwo;

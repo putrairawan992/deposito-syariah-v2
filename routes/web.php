@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 // View
 $router->get('/', function () use ($router) {
-    // return $router->app->version();
+    // return [$router->app->version(),phpversion()];
     return view('welcome');
     // return view('auth.login');
 });
@@ -56,6 +56,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     // Fix Function
     $router->get('/userprofile', 'AuthController@userprofile');
     $router->post('/ceklogin', 'AuthController@ceklogin');
+    $router->post('/cekloginmobile', 'AuthController@cekloginmobile');
     $router->post('/login', 'AuthController@login');
     $router->get('/showpromo', 'PromoController@show');
     $router->get('/promo/{id}', 'PromoController@detail');

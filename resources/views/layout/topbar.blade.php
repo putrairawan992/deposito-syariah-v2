@@ -35,15 +35,10 @@
                     Hubungi Kami
                 </a>
             </li>
-            <a id="signIn" href="#"
+            <a id="signIn" href="/login"
                 class="items-center middle none center hidden rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none md:flex"
                 data-ripple-light="true">
                 <i class="fas fa-sign-in-alt mr-2 text-lg"></i>Masuk
-            </a>
-            <a id="signUp" href="#"
-                class="items-center middle none center hidden rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none md:flex"
-                data-ripple-light="true">
-                <i class="fas fa-user-plus mr-2 text-lg"></i>Register
             </a>
         </ul>
         <ul style="display: none" id="menuBar"
@@ -79,21 +74,13 @@
                     Hubungi Kami
                 </a>
             </li>
-            <a id="signInBar" href="#"
+            <a id="signInBar" href="/"
                 class="my-1 items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 
                 py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all 
                 hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none 
                 disabled:opacity-50 disabled:shadow-none flex"
                 data-ripple-light="true">
                 <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Masuk
-            </a>
-            <a id="signUpBar" href="#"
-                class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 
-                py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all 
-                hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none 
-                disabled:opacity-50 disabled:shadow-none flex"
-                data-ripple-light="true">
-                <i class="fas fa-user-plus mr-2 text-xs"></i>Register
             </a>
         </ul>
         <button onclick="showMenu()"

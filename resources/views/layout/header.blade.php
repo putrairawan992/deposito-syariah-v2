@@ -24,8 +24,6 @@
         crossorigin="anonymous" />
 
     <link rel="icon" type="image/x-icon" href="/img/Favicon Harta Insan Karimah.png">
-
-    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
 </head>
 
 <body class="bg-gradient-to-l h-screen from-green-900 to-green-800">

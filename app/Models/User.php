@@ -20,7 +20,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $table = 'dbo.users';
-    protected $fillable = ['email', 'username', 'otp', 'phone'];
+    protected $fillable = ['id', 'iduser', 'idmitra', 'email', 'username', 'otp', 'phone'];
 
     /**
      * The attributes excluded from the model's JSON form.
