@@ -22,6 +22,8 @@ CREATE TABLE komplain (
   keterangan INT NOT NULL,
   predecessor_komplain INT NOT NULL,
   record_voice varchar(255) default null,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp(),
   CONSTRAINT fk_komp_nasabah FOREIGN KEY (id_nasabah) REFERENCES db_main.users(id),
   CONSTRAINT fk_komp_admincs FOREIGN KEY (id_admin_cs) REFERENCES db_main.users(id),
@@ -37,7 +39,8 @@ CREATE TABLE messages (
   id_receiver INT NOT NULL,
   id_komplain INT NOT NULL,
   message TEXT NOT NULL,
-  id_kriptor int default NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp(),
   CONSTRAINT fk_msg_usersender FOREIGN KEY (id_sender) REFERENCES db_main.users(id),
   CONSTRAINT fk_msg_userreceiver FOREIGN KEY (id_receiver) REFERENCES db_main.users(id),
@@ -53,11 +56,11 @@ CREATE TABLE log_cs (
   keterangan varchar(255) not null,
   data_change varchar(255) not null,
   notifikasi int default 0,
-  id_kriptor int default null,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp(),
   CONSTRAINT fk_logcs_user FOREIGN KEY (id_user) REFERENCES db_main.users(id),
-  CONSTRAINT fk_logcs_komplain FOREIGN KEY (id_komplain) REFERENCES komplain(id),
-  CONSTRAINT fk_logcs_kriptor FOREIGN KEY (id_kriptor) REFERENCES db_enkriptor.enkripsi(id)
+  CONSTRAINT fk_logcs_komplain FOREIGN KEY (id_komplain) REFERENCES komplain(id)
 );
 
 -- --------------------------------------------------------

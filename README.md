@@ -31,6 +31,7 @@ $ php artisan jwt:secret
 $ php artisan migrate
 $ php artisan serve --host=localhost --port=8000
 $ php artisan serve --host=0.0.0.0 --port=8000
+$ npx tailwindcss -i ./input.css -o ./public/output.css --watch
 ```
 
 To test application follow the tutorial bellow.

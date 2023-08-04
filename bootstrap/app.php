@@ -64,9 +64,10 @@ $app->configure('auth');
 */
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
-    'operator' => App\Http\Middleware\Operator::class,
+    'nasabah' => App\Http\Middleware\Nasabah::class,
+    'mitra' => App\Http\Middleware\Mitra::class,
     'admin' => App\Http\Middleware\Admin::class,
+    'owner' => App\Http\Middleware\Owner::class,
 ]);
 
 /*

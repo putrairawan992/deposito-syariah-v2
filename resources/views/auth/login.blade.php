@@ -1,102 +1,264 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends ('layout.nasabah')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sipakat | Login</title>
+@section('content')
+    <script src="js/layout.js"></script>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="css/adminlte.min.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-</head>
+    <head>
+        <title>Login - Deposito Syariah</title>
+    </head>
 
-<body class="hold-transition">
-    <section class="">
-        <div class="container-fluid h-custom" style="background-color: #044500">
-            <div class="row d-flex justify-content-center align-items-center vh-100">
-                <div class="col-5 text-white d-none d-xl-block text-center">
-                    <img class="img-fluid" src="img/loginbaznas.png" width="180px" alt="">
-                    <div class="text-center text-bold text-xl">BAZNAS</div>
-                    <div class="text-center" style="margin-top: -10px">Kota Parepare</div>
-                </div>
-                <div class="col-9 col-sm-7 col-md-6 col-lg-3 col-xl-3 offset-xl-1 px-3 pt-2 mb-10 text-center"
-                    style="border-radius: 10px;background-color: #A0de98">
-                    <form>
-                        <div class="mb-4 mt-4">
-                            <img class="img-fluid m-2" src="img/loginbaznas.png" width="70px" alt="">
-                            <img class="img-fluid" src="img/dsada.png" width="90px" alt="">
-                            <div class="text-center text-bold mt-1">BAZNAS Kota Parepare</div>
-                            <h5 class="text-center fw-bold mx-3 mb-0">Login</h5>
+    <div class="flex items-center justify-center h-4/5">
+        <div
+            class="p-3 relative flex w-5/6 sm:w-3/5 md:w-2/5 flex-col rounded-xl bg-white bg-clip-border
+            text-gray-700 shadow-sm shadow-white">
+            <div class="flex items-center justify-center">
+                <img class="h-8 md:h-10 lg:h-16" src="/img/Logo Harta Insan Karimah.png" alt="Logo HIK">
+            </div>
+            <div class="text-center text-md md:text-xl font-semibold mt-2">Selamat Datang</div>
+            <div class="text-center text-xs lg:text-sm" id="textLogin">Silahkan masukan nomor handphone. </div>
+
+            <div id="form-login" class="-mt-2">
+                <div class="px-3">
+                    <div id="formUsernameLogin" class="mx-0 lg:mx-5">
+                        <div id="username" class="mb-6 relative h-10 w-full min-w-[100px] my-4">
+                            <input name="username" id="usernameNa"
+                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent 
+                                px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 
+                                transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 
+                                placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-800 
+                                focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                placeholder=" " />
+                            <label
+                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-800 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-800 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-800 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                                Phone
+                            </label>
                         </div>
-
-                        <form action="index3.html" method="post">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Username / Email"
-                                    id="email">
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <span class="fas fa-envelope"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="password" class="form-control" placeholder="Password" id="password">
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <span class="fas fa-lock"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="g-recaptcha" data-sitekey="6LcLKrYlAAAAABr-VA-lOLHICWEdyw6IHlOk00qH"
-                                data-callback='doSomething' data-expired-callback="expireCaptcha"
-                                style="transform: scale(0.89); -webkit-transform: scale(0.89); transform-origin: 0 0; -webkit-transform-origin: 0 0;">
-                            </div>
-                            <hr>
-                            <div class="row d-flex justify-content-between">
-                                <div class="col-4">
-                                    <button type="button" class="btn-sm btn btn-success btn-block" id="submit"
-                                        onclick="login()">Sign
-                                        In</button>
-                                </div>
-                                <div class="col-5">
-                                    <div class="icheck-primary">
-                                        <a href="#" class="text-xs text-right" nowrap>
-                                            Lupa Password ?
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-                        <div class="social-auth-links text-center mt-2 mb-3">
-                            <a href="/register" class="btn-sm btn btn-block btn-outline-success">
-                                Daftar Baru
-                            </a>
+                        <div id="passwordInput" class="hidden mb-10 relative h-10 w-full min-w-[100px] mt-4">
+                            <input id="password" name="password" type="password"
+                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent 
+                                px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 
+                                transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 
+                                placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-800 
+                                focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                placeholder=" " />
+                            <label
+                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-800 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-800 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-800 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                                Password
+                            </label>
+                            <label class="mb-6 text-xs italic">Anda lupa password ? <a href="#"
+                                    class="underline">Klik</a></label>
                         </div>
-                    </form>
+                    </div>
+
+                    <div id="formOTPLogin" class="hidden flex-col mt-7">
+                        <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                            <div class="w-9 h-12">
+                                <input
+                                    class="w-full h-full flex flex-col items-center justify-center text-center 
+                                    px-1 outline-none rounded-md border border-gray-200 text-sm bg-white 
+                                    focus:bg-gray-50 focus:ring-1 ring-green-700"
+                                    type="text" maxlength="1" id="otp1">
+                            </div>
+                            <div class="w-9 h-12">
+                                <input
+                                    class="w-full h-full flex flex-col items-center justify-center text-center 
+                                    px-1 outline-none rounded-md border border-gray-200 text-sm bg-white 
+                                    focus:bg-gray-50 focus:ring-1 ring-green-700"
+                                    type="text" maxlength="1" id="otp2">
+                            </div>
+                            <div class="w-9 h-12">
+                                <input
+                                    class="w-full h-full flex flex-col items-center justify-center text-center 
+                                    px-1 outline-none rounded-md border border-gray-200 text-sm bg-white 
+                                    focus:bg-gray-50 focus:ring-1 ring-green-700"
+                                    type="text" maxlength="1" id="otp3">
+                            </div>
+                            <div class="mx-2 text-lg">-</div>
+                            <div class="w-9 h-12">
+                                <input
+                                    class="w-full h-full flex flex-col items-center justify-center text-center 
+                                    px-1 outline-none rounded-md border border-gray-200 text-sm bg-white 
+                                    focus:bg-gray-50 focus:ring-1 ring-green-700"
+                                    type="text" maxlength="1" id="otp4">
+                            </div>
+                            <div class="w-9 h-12">
+                                <input
+                                    class="w-full h-full flex flex-col items-center justify-center text-center 
+                                    px-1 outline-none rounded-md border border-gray-200 text-sm bg-white 
+                                    focus:bg-gray-50 focus:ring-1 ring-green-700"
+                                    type="text" maxlength="1" id="otp5">
+                            </div>
+                            <div class="w-9 h-12">
+                                <input
+                                    class="w-full h-full flex flex-col items-center justify-center text-center 
+                                    px-1 outline-none rounded-md border border-gray-200 text-sm bg-white 
+                                    focus:bg-gray-50 focus:ring-1 ring-green-700"
+                                    type="text" maxlength="1" id="otp6">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center my-4">
+                        <button id="nextBtn" onclick="nextLogin()"
+                            class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 
+                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all 
+                            hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none 
+                            disabled:opacity-50 disabled:shadow-none flex"
+                            data-ripple-light="true">
+                            <i class="fas fa-arrow-right mr-2 text-xs"></i>Lanjut
+                        </button>
+                        <button id="backBtn" onclick="backLogin()"
+                            class="hidden pr-2 pl-4 mr-1 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 
+                            py-2 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all 
+                            hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none 
+                            disabled:opacity-50 disabled:shadow-none"
+                            data-ripple-light="true">
+                            <i class="fas fa-arrow-left mr-2 text-xs"></i>
+                        </button>
+                        <button id="loginBtn" onclick="loginUser()"
+                            class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 
+                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all 
+                            hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none 
+                            disabled:opacity-50 disabled:shadow-none flex"
+                            data-ripple-light="true">
+                            <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Login
+                        </button>
+                        <button id="loginOTPBtn" onclick="loginOTP()"
+                            class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 
+                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all 
+                            hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none 
+                            disabled:opacity-50 disabled:shadow-none flex"
+                            data-ripple-light="true">
+                            <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Login
+                        </button>
+                        <button id="loadingBtn"
+                            class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 
+                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all 
+                            hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none 
+                            disabled:opacity-50 disabled:shadow-none flex"
+                            data-ripple-light="true">
+                            <div style="border-top-color:transparent"
+                                class="w-5 h-5 border-4 border-green-50 rounded-full animate-spin"></div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- /.login-box -->
 
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="js/adminlte.min.js"></script>
-    <!-- Sweetalert2 App -->
-    <script src="plugins/sweetalert.min.js"></script>
-    <script src="js/auth/login.js"></script>
-</body>
+    </div>
+    </div>
+    <div class="md:hidden flex justify-center items-center w-full text-xs absolute bottom-16 sm:bottom-10 text-green-100">
+        <div>Tercatat dan diawasi oleh OJK &nbsp;</div>
+        <div class="font-semibold">No.S-123/MS.123/122/2023</div>
+    </div>
+    <div class="hidden md:block absolute text-xs bottom-12 left-8 text-green-100">
+        <div>Tercatat dan diawasi oleh OJK</div>
+        <div class="font-semibold">No.S-123/MS.123/122/2023</div>
+    </div>
 
-</html>
+    <script>
+        $("#signIn").css('pointer-events', 'none')
+        $("#signInBar").css('pointer-events', 'none')
+        $('#textLogin').text('Silahkan masukan nomor handphone.')
+        $('#loginOTPBtn').hide()
+        $('#loginBtn').hide()
+        $('#loadingBtn').hide()
+
+        document.getElementById("usernameNa").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") nextLogin()
+        });
+
+        document.getElementById("password").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") loginUser()
+        });
+
+        function nextLogin() {
+            $('#usernameNa').prop('disabled', true)
+            if ($('#usernameNa').val().length > 5) {
+                ajaxCall(serverApi + "ceklogin", JSON.stringify({
+                    'username': $("#usernameNa").val(),
+                }), "POST", "jenisLogin")
+            } else {
+                swalGagal("Perhatian", "Dimohon untuk mengisi dengan lengkap")
+            }
+            $('#nextBtn').hide()
+            $('#loadingBtn').fadeIn()
+        }
+
+        function jenisLogin(data) {
+            $('#loadingBtn').hide()
+            if (data == "password") {
+                $('#textLogin').text('Silahkan masukan password anda.')
+                $('#username').hide()
+                $('#loginOTPBtn').hide()
+                $('#backBtn').fadeIn()
+                $('#passwordInput').fadeIn()
+                $('#loginBtn').fadeIn()
+            } else if (data == "otp") {
+                $('#textLogin').text('Silahkan masukan OTP yang kami kirimkan.')
+                $('#username').hide()
+                $('#loginBtn').hide()
+                $('#formOTPLogin').fadeIn()
+                $('#loginOTPBtn').fadeIn()
+                $('#backBtn').fadeIn()
+            }
+        }
+
+        function backLogin() {
+            $('#usernameNa').prop('disabled', false)
+            $('#loadingBtn').hide()
+            $('#textLogin').text('Silahkan masukan nomor handphone.')
+            $('#nextBtn').fadeIn()
+            $('#username').fadeIn()
+            $('#backBtn').hide()
+            $('#passwordInput').hide()
+            $('#loginOTPBtn').hide()
+            $('#loginBtn').hide()
+            $('#formOTPLogin').hide()
+            $("#password").val() = ''
+        }
+
+        function loginUser() {
+            dataNa = {
+                'username': $("#usernameNa").val(),
+                'password': $("#password").val(),
+            }
+            ajaxCall(serverApi + "login", JSON.stringify(dataNa), "POST", "afterLogin")
+        }
+
+        function loginOTP() {
+            passNa = $('#otp1').val() + $('#otp2').val() + $('#otp3').val() + $('#otp4').val() + $('#otp5').val() + $(
+                '#otp6').val()
+            dataNa = {
+                'username': $("#usernameNa").val(),
+                'password': passNa,
+            }
+            ajaxCall(serverApi + "login", JSON.stringify(dataNa), "POST", "afterLogin")
+        }
+
+        function afterLogin(data) {
+            var icon = "success";
+            var title = "Login Berhasil";
+            var text = "Menuju Dashboard";
+
+            swal({
+                icon: icon,
+                title: title,
+                text: text,
+                button: false,
+            });
+
+            if (data["status"] == "success") {
+                window.localStorage.setItem("jwttoken", data["token"]);
+                setTimeout(function() {
+                    token = window.localStorage.getItem("jwttoken");
+                    ajaxCall(serverApi + "userprofile", null, "GET", "userprofile");
+                }, 1000);
+            }
+        }
+
+        function afterLoginFailed(text) {
+            swalGagal("Perhatian", text)
+        }
+    </script>
+@endsection

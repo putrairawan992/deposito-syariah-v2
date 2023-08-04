@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
-class Admin
+class Mitra
 {
     /**
      * The authentication guard factory instance.
@@ -36,13 +36,13 @@ class Admin
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            return response(['status' => 'error', 'message' => 'Unauthorized Access.']);
+            return response(['status' => 'error', 'message' => 'Unauthorized.']);
         }
 
-        if (auth()->user()->role == 1 || auth()->user()->role == 99) {
+        if ((auth()->user()->role == 2 && auth()->user()->status == 1) || (auth()->user()->role == 1 && auth()->user()->status == 1) || auth()->user()->role == 99) {
             return $next($request);
         } else {
-            return response(['status' => 'error', 'message' => 'You are Not Admin.']);
+            return response(['status' => 'error', 'message' => 'You are Not Mitra.']);
         }
     }
 }

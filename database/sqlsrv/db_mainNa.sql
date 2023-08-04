@@ -1,199 +1,253 @@
-CREATE TABLE Bank (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE users (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  iduser varchar(255) DEFAULT NULL,
+  idmitra varchar(255) DEFAULT NULL,
+  username varchar(255) DEFAULT NULL,
+  email varchar(255) DEFAULT NULL,
+  phone varchar(255) DEFAULT NULL,
+  [otp] varchar(255) DEFAULT Null,
+  pin varchar(255) DEFAULT Null,
+  [password] varchar(255) DEFAULT Null,
+  store_token text DEFAULT NULL,
+  reset_token text DEFAULT NULL,
+  [role] int NOT NULL DEFAULT 0,
+  [status] int NOT NULL DEFAULT 0,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
+  created_otp datetime DEFAULT NULL,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT iduser UNIQUE (iduser)
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE bank (
+  id INT IDENTITY(1,1) PRIMARY KEY,
   nama VARCHAR(255),
   kode VARCHAR(10),
-  alamat VARCHAR(255)
+  alamat VARCHAR(255),
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE kota (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  kota varchar(255) not null ,
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  kota varchar(255) not null,
   provinsi varchar(255) not null,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   CONSTRAINT kota_na UNIQUE (kota)
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE coa (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  kode INT NOT NULL,
-  created_at datetime DEFAULT current_timestamp()
-);
-
--- --------------------------------------------------------
-
-CREATE TABLE users (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  username varchar(255) NOT NULL,
-  email varchar(255) NOT NULL,
-  phone varchar(255) DEFAULT NULL,
-  otp varchar(255) DEFAULT '00',
-  password varchar(255) DEFAULT '00',
-  store_token varchar(255) DEFAULT NULL,
-  reset_token varchar(255) DEFAULT NULL,
-  role int NOT NULL DEFAULT 0,
-  status int NOT NULL DEFAULT 1,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
-  created_otp_reset datetime DEFAULT NULL,
-  created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp()
+  id int IDENTITY(1,1) PRIMARY KEY,
+  kode varchar(10) NOT NULL,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT kode_na UNIQUE (kode)
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE nasabah (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  id_user INT NOT NULL,
-  id_validator INT NOT NULL,
-  nama varchar(255) NOT NULL,
-  ktp int DEFAULT NULL,
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  id_user varchar(255) NOT NULL,
+  id_validator varchar(255) default NULL,
+  nama varchar(255) default NULL,
+  ktp varchar(255) DEFAULT NULL,
   image_ktp varchar(255) DEFAULT NULL,
   image_selfie varchar(255) DEFAULT NULL,
   tmpt_lahir varchar(255) DEFAULT NULL,
-  tgl_lahir date DEFAULT NULL,
+  tgl_lahir varchar(255) DEFAULT NULL,
   ibu_kandung varchar(255) DEFAULT NULL,
-  id_privy varchar(255) default null,
+  id_privy varchar(255) NULL,
   id_bank int DEFAULT NULL,
   norek varchar(255) DEFAULT NULL,
-  status_pernikahan int default null,
+  status_pernikahan int NULL,
+  jenis_pekerjaan int NULL,
   alamat varchar(255) DEFAULT NULL,
-  jenis_pekerjaan int default null,
   alamat_kerja varchar(255) DEFAULT NULL,
-  penghasilan int default null,
+  penghasilan int NULL,
   nama_ahli_waris varchar(255) DEFAULT NULL,
-  ktp_ahli_waris INT DEFAULT NULL,
+  ktp_ahli_waris varchar(255) DEFAULT NULL,
   image_ktp_ahli_waris varchar(255) DEFAULT NULL,
-  hub_ahli_waris INT DEFAULT NULL,
+  hub_ahli_waris varchar(255) DEFAULT NULL,
   phone_ahli_waris varchar(255) DEFAULT NULL,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
   validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid
-  created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  CONSTRAINT fk_nasabah_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
-  CONSTRAINT fk_nasabah_user FOREIGN KEY (id_user) REFERENCES users(id),
-  CONSTRAINT fk_nasabah_validator FOREIGN KEY (id_validator) REFERENCES users(id)
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT idnasabah UNIQUE (idnasabah)
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE mitra (
-  id int AUTO_INCREMENT PRIMARY KEY,
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  idmitra varchar(255) not null,
   nama varchar(255) NOT NULL,
-  email varchar(255) NOT NULL,
-  kode_bank varchar(255) not NULL,
-  no_npwp varchar(255) not NULL,
-  no_akta_pendirian varchar(255) not NULL,
+  kode_bank varchar(255) default NULL,
+  no_npwp varchar(255) default NULL,
+  no_akta_pendirian varchar(255) default NULL,
   tgl_pendirian date default NULL,
   no_pengesahan_akta varchar(255) default NULL,
-  tgl_pengesahan_akta date not NULL,
+  tgl_pengesahan_akta date default NULL,
   nama_notaris varchar(255) default NULL,
   lokasi_notaris varchar(255) default NULL,
   no_ijin varchar(255) default NULL,
   tgl_ijin date default NULL,
-  provinsi int default NULL,
-  kota int default NULL,
+  kota int NULL,
   alamat varchar(255) default NULL,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
-  npwp_provinsi int default NULL,
-  npwp_kota int default NULL,
+  npwp_provinsi varchar(255) default NULL,
+  npwp_kota varchar(255) default NULL,
   npwp_alamat varchar(255) default NULL,
-  phone varchar(255) DEFAULT NULL,
-  website varchar(255) DEFAULT NULL,
-  mulai_beroperasi date DEFAULT NULL,
-  nama_pengurus varchar(255) default null,
-  jabatan_pengurus varchar(255) default null,
-  phone_pengurus varchar(255) default null,
-  id_bank int default null,
-  norek_bank varchar(255) default null,
-  id_privy varchar(255) default null,
-  logo varchar(255) default null,
-  validasi int default 0,
-  id_validator INT NOT NULL,
+  website varchar(255) default NULL,
+  mulai_beroperasi date default NULL,
+  nama_pengurus varchar(255) default NULL,
+  jabatan_pengurus varchar(255) default NULL,
+  phone_pengurus varchar(255) default NULL,
+  id_bank int default NULL,
+  norek_bank varchar(255) default NULL,
+  id_privy varchar(255) default NULL,
+  logo varchar(255) default NULL,
+  validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid
+  id_validator varchar(255) NOT NULL,
   keterangan varchar(255) default null,
-  db_name varchar(255) NULL,
-  created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  CONSTRAINT fk_mitra_validator FOREIGN KEY (id_validator) REFERENCES users(id),
-  CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
+  db_name varchar(255)  default NULL,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT idmitra UNIQUE (idmitra)
+  -- CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE norek_mitra (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  id_mitra int not null,
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  id_mitra varchar(255) not null,
   id_bank int not null,
   atas_nama varchar(255) not null,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
-  created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  CONSTRAINT fk_norekmitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id),
-  CONSTRAINT fk_norekmitra_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
-);
-
--- --------------------------------------------------------
-
-CREATE TABLE admin_bpr (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  id_user INT NOT NULL,
-  id_mitra INT DEFAULT NULL,
-  created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  CONSTRAINT fk_admin_user FOREIGN KEY (id_user) REFERENCES users(id),
-  CONSTRAINT fk_admin_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT fk_norekmitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE neraca (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  id_mitra INT NOT NULL,
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  id_mitra varchar(255) NOT NULL,
   asset INT DEFAULT 0,
   kewajiban INT DEFAULT 0,
   ekuitas INT DEFAULT 0,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE splash_screen (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  id_admin varchar(255) NOT NULL,
+  image varchar(255) DEFAULT 0,
+  deskripsi varchar(255) DEFAULT 0,
+  status INT DEFAULT 1,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
-  created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  CONSTRAINT fk_neraca_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
+  kriptortwo varchar(255) default NULL
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE promo (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  id_mitra varchar(255) NOT NULL,
+  image varchar(255) DEFAULT null,
+  deskripsi varchar(255) not null,
+  status INT DEFAULT 1,
+  end_date date not null,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE produk (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  id_mitra INT NOT NULL,
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  id_mitra varchar(255) NOT NULL,
   no_produk varchar(255) NOT NULL,
-  minimal int default null,
-  target int default null,
-  komisi int default null,
-  tenor int default null,
-  start_date date DEFAULT null,
-  end_date date DEFAULT null,
+  minimal varchar(255) NULL,
+  target varchar(255) NULL,
+  bagi_hasil varchar(255) NULL,
+  tenor varchar(255) NULL,
+  start_date date NULL,
+  end_date date NULL,
+  status INT DEFAULT 1,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
-  created_at datetime DEFAULT current_timestamp(),
-  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  CONSTRAINT fk_produk_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
+  kriptortwo varchar(255) default NULL
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE log_app (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  id_user int not null,
-  keterangan varchar(255) not null,
-  notifikasi int default 0,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
-  created_at datetime DEFAULT current_timestamp(),
-  CONSTRAINT fk_logapp_user FOREIGN KEY (id_user) REFERENCES users(id)
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  id_user varchar(255) not null,
+  keterangan text not null,
+  notifikasi int DEFAULT 0,
+  created_at datetime DEFAULT GETDATE()
 );
 
 -- --------------------------------------------------------
@@ -313,16 +367,16 @@ INSERT INTO kota (provinsi, kota) VALUES
   ('Papua', 'Merauke'),
   ('Papua', 'Biak'),
   ('Papua', 'Nabire'),
-  ('Nusa Tenggara Barat',	'Mataram'),
-  ('Nusa Tenggara Barat',	'Bima'),
+  ('Nusa Tenggara Barat', 'Mataram'),
+  ('Nusa Tenggara Barat', 'Bima'),
   ('Nusa Tenggara Barat', 'Praya'),
-  ('Nusa Tenggara Barat',	'Selong'),
-  ('Nusa Tenggara Barat',	'Gerung'),
-  ('Nusa Tenggara Timur',	'Kupang'),
-  ('Nusa Tenggara Timur',	'Ende'),
+  ('Nusa Tenggara Barat', 'Selong'),
+  ('Nusa Tenggara Barat', 'Gerung'),
+  ('Nusa Tenggara Timur', 'Kupang'),
+  ('Nusa Tenggara Timur', 'Ende'),
   ('Nusa Tenggara Timur', 'Maumere'),
-  ('Nusa Tenggara Timur',	'Ruteng'),
-  ('Nusa Tenggara Timur',	'Soe'),
+  ('Nusa Tenggara Timur', 'Ruteng'),
+  ('Nusa Tenggara Timur', 'Soe'),
   ('Sulawesi Barat', 'Mamuju'),
   ('Sulawesi Barat', 'Polewali Mandar'),
   ('Sulawesi Barat', 'Majene'),

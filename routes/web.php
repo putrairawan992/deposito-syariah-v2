@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
@@ -15,38 +16,14 @@
 
 // View
 $router->get('/', function () use ($router) {
-    return $router->app->version();
-    // return view('welcome');
+    // return [$router->app->version(),phpversion()];
+    return view('welcome');
     // return view('auth.login');
 });
 
 // Main Page
 $router->get('/dashboard', function () use ($router) {
-    return view('admin.dashboard');
-});
-$router->get('/donasi', function () use ($router) {
-    return view('admin.donasi');
-});
-$router->get('/penyalur', function () use ($router) {
-    return view('admin.penyalur');
-});
-$router->get('/donatur', function () use ($router) {
-    return view('admin.donatur');
-});
-$router->get('/masjid', function () use ($router) {
-    return view('admin.masjid');
-});
-$router->get('/zismustahik', function () use ($router) {
-    return view('admin.zismustahik');
-});
-$router->get('/users', function () use ($router) {
-    return view('admin.users');
-});
-$router->get('/laporan', function () use ($router) {
-    return view('admin.laporan');
-});
-$router->get('/pengaturan', function () use ($router) {
-    return view('admin.pengaturan');
+    return view('nasabah.dashboard');
 });
 
 // Auth
@@ -71,124 +48,98 @@ $router->get('/test', function () {
 
 // Api
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('/ceklogin', 'AuthController@ceklogin');
-    $router->post('/register', 'AuthController@register');
-    $router->post('/login', 'AuthController@login');
     $router->get('/user', 'AuthController@index');
+    $router->get('/nasabah', 'AuthController@nasabah');
+    $router->get('/mitra', 'AuthController@mitra');
+    $router->get('/produk', 'ProductController@index');
 
-    // Admin
+    // Fix Function
+    $router->get('/userprofile', 'AuthController@userprofile');
+    $router->post('/ceklogin', 'AuthController@ceklogin');
+    $router->post('/cekloginmobile', 'AuthController@cekloginmobile');
+    $router->post('/login', 'AuthController@login');
+    $router->get('/showpromo', 'PromoController@show');
+    $router->get('/promo/{id}', 'PromoController@detail');
+    $router->get('/showproduk', 'ProductController@show');
+    $router->get('/produk/{id}', 'ProductController@detail');
+
+    $router->get('/delall', 'AuthController@deleteall');
+
+    // Test create DB Fixed
+    $router->post('/createdb/{dbname}', 'DatabaseController@generateDb');
+    $router->get('/cekdb/{dbname}', 'DatabaseController@checkDatabaseName');
+
     $router->group(['middleware' => 'admin'], function () use ($router) {
-        // $router->get('/user', 'AuthController@index');
-        // $router->post('/adduser', 'AuthController@adduser');
-        // $router->put('/update', 'AuthController@update');
-        // $router->get('/jeniszis', 'JeniszisController@index');
-        // $router->post('/jeniszis', 'JeniszisController@store');
-        // $router->put('/jeniszis', 'JeniszisController@update');
-        // $router->delete('/user', 'AuthController@destroy');
-        // $router->delete('/jeniszis', 'JeniszisController@destroy');
-        // $router->delete('/lokasi', 'LokasiController@destroy');
-        // $router->delete('/userzis', 'UserzisController@destroy');
+        // Admin Section
+        $router->post('/regadmin', 'AuthController@regadmin');
+        $router->put('/updateadmin', 'AuthController@update');
+        $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');
+
+        // Mitra Section
+        $router->post('/regmitra', 'MitraController@store');
+        $router->put('/regmitra', 'MitraController@update');
+        $router->put('/validasimitra', 'MitraController@validasi');
+        $router->put('/restoremitra/{id}', 'MitraController@restore');
+        $router->delete('/hapusmitra/{id}', 'MitraController@delete');
+
+        // Nasabah Section
+        $router->put('/validasinasabah', 'NasabahController@validasinasabah');
+        $router->put('/restorenasabah/{id}', 'NasabahController@restore');
+        $router->delete('/hapusnasabah/{id}', 'NasabahController@delete');
+
+        // Splash Section
+        $router->get('/splash', 'SplashController@index');
+        $router->post('/splash', 'SplashController@store');
+        $router->post('/updatesplash', 'SplashController@update');
+        $router->put('/splashaktivasi/{id}', 'SplashController@aktivasi');
+        $router->put('/splashrestore/{id}', 'SplashController@restore');
+        $router->put('/splashdelete/{id}', 'SplashController@delete');
+
+        // Validasi Pembelian
+        $router->put('/validasipembelian', 'ProductController@buyvalidasi');
     });
 
-    $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->get('/userprofile', 'AuthController@userprofile');
-        $router->post('/logout', 'AuthController@logout');
+    $router->group(['middleware' => 'nasabah'], function () use ($router) {
+        // Akses Nasabah
+        $router->get('/refreshtoken', 'AuthController@refresh');
+        $router->post('/regnasabah', 'NasabahController@store');
+        $router->put('/updatenasabah', 'NasabahController@update');
 
-        // Masjid
-        $router->get('/masjid', 'MasjidController@index');
-        $router->get('/masjid/{id}', 'MasjidController@detail');
-        $router->post('/masjid', 'MasjidController@store');
-        $router->post('/upmasjid', 'MasjidController@upload');
-        $router->put('/masjid', 'MasjidController@update');
-        $router->put('/masjid/{id}', 'MasjidController@aktivasi');
-        $router->delete('/masjid/{id}', 'MasjidController@destroy');
+        // Promo Splash Screen
+        $router->get('/showsplash', 'SplashController@show');
+        $router->get('/splash/{id}', 'SplashController@detail');
 
-        // Donatur
-        $router->get('/donatur', 'DonaturController@index');
-        $router->get('/donatur/{id}', 'DonaturController@detail');
-        $router->post('/donatur', 'DonaturController@store');
-        $router->post('/updonatur', 'DonaturController@upload');
-        $router->put('/donatur', 'DonaturController@update');
-        $router->put('/donatur/{id}', 'DonaturController@aktivasi');
-        $router->delete('/donatur/{id}', 'DonaturController@destroy');
+        // Pembelian
+        $router->get('/pembelian', 'ProductController@buyshow');
+        $router->post('/pembeliandetail', 'ProductController@buydetail');
+        $router->post('/pembelian', 'ProductController@buystore');
+        $router->put('/pembelian', 'ProductController@buyupdate');
+        $router->put('/pembeliancancel', 'ProductController@buycancel');
+    });
 
-        // Petugas
-        $router->get('/petugas', 'PetugasController@index');
-        $router->get('/petugas/{id}', 'PetugasController@detail');
-        $router->get('/petugasna/{id}', 'PetugasController@detailna');
-        $router->post('/petugas', 'PetugasController@store');
-        $router->post('/uppetugas', 'PetugasController@upload');
-        $router->put('/petugas', 'PetugasController@update');
-        $router->put('/petugas/{id}', 'DonaturController@aktivasi');
-        $router->delete('/petugas/{id}', 'PetugasController@destroy');
+    $router->group(['middleware' => 'mitra'], function () use ($router) {
+        // Akses BPR
+        $router->post('/neraca', 'MitraController@storeneraca');
+        $router->put('/neraca', 'MitraController@updateneraca');
 
-        // Donasi
-        $router->get('/donasi', 'DonasiController@index');
-        $router->get('/donasi/{id}', 'DonasiController@detail');
-        $router->get('/donasi/{masjid}/{zis}', 'DonasiController@rekap');
-        $router->post('/donasi', 'DonasiController@store');
-        $router->put('/donasi', 'DonasiController@update');
-        $router->put('/donasi/{id}', 'DonasiController@aktivasi');
-        $router->delete('/donasi/{id}', 'DonasiController@destroy');
+        // Promo
+        $router->get('/promo', 'PromoController@index');
+        $router->post('/promo', 'PromoController@store');
+        $router->post('/updatepromo', 'PromoController@update');
+        $router->put('/promoaktivasi/{id}', 'PromoController@aktivasi');
+        $router->put('/promorestore/{id}', 'PromoController@restore');
+        $router->put('/promodelete/{id}', 'PromoController@delete');
 
-        // Jeniszis
-        $router->get('/jeniszis', 'JeniszisController@index');
-        $router->get('/jeniszis/{id}', 'JeniszisController@detail');
-        $router->post('/jeniszis', 'JeniszisController@store');
-        $router->put('/jeniszis', 'JeniszisController@update');
-        // $router->put('/jeniszis/{id}', 'JeniszisController@aktivasi');
+        // Produk
+        $router->post('/produk', 'ProductController@store');
+        $router->post('/updateproduk', 'ProductController@update');
+        $router->put('/produkaktivasi/{id}', 'ProductController@aktivasi');
+        $router->put('/produkrestore/{id}', 'ProductController@restore');
+        $router->put('/produkdelete/{id}', 'ProductController@delete');
+    });
 
-        // JenisTransaksi
-        $router->get('/jenistransaksi', 'JenisTransaksiController@index');
-        $router->get('/jenistransaksi/{id}', 'JenisTransaksiController@detail');
-        $router->post('/jenistransaksi', 'JenisTransaksiController@store');
-        $router->put('/jenistransaksi', 'JenisTransaksiController@update');
-        // $router->put('/jenistransaksi/{id}', 'JenisTransaksiController@aktivasi');
-
-        // JenisProgram
-        $router->get('/jenisprogram', 'JenisProgramController@index');
-        $router->get('/jenisprogram/{id}', 'JenisProgramController@detail');
-        $router->post('/jenisprogram', 'JenisProgramController@store');
-        $router->put('/jenisprogram', 'JenisProgramController@update');
-        // $router->put('/jenisprogram/{id}', 'JenisProgramController@aktivasi');
-
-        // JenisMustahik
-        $router->get('/jenismustahik', 'JenisMustahikController@index');
-        $router->get('/jenismustahik/{id}', 'JenisMustahikController@detail');
-        $router->post('/jenismustahik', 'JenisMustahikController@store');
-        $router->put('/jenismustahik', 'JenisMustahikController@update');
-        // $router->put('/jenismustahik/{id}', 'JenisMustahikController@aktivasi');
-
-        // Mustahik
-        $router->get('/mustahik', 'MustahikController@index');
-        $router->get('/mustahik/{id}', 'MustahikController@detail');
-        $router->post('/mustahik', 'MustahikController@store');
-        $router->post('/upmustahik', 'MustahikController@upload');
-        $router->put('/mustahik', 'MustahikController@update');
-        $router->put('/mustahik/{id}', 'MustahikController@aktivasi');
-        $router->delete('/mustahik/{id}', 'MustahikController@destroy');
-
-        // Penyalur
-        $router->get('/penyalur', 'PenyalurController@index');
-        $router->get('/penyalur/{id}', 'PenyalurController@detail');
-        $router->get('/penyalur/{masjid}/{program}', 'PenyalurController@rekap');
-        $router->post('/penyalur', 'PenyalurController@store');
-        $router->post('/uppenyalur', 'PenyalurController@upload');
-        $router->put('/penyalur', 'PenyalurController@update');
-        $router->put('/penyalur/{id}', 'PenyalurController@aktivasi');
-        $router->delete('/penyalur/{id}', 'PenyalurController@destroy');
-
-        // JenisMustahik
-        $router->get('/jenismustahik', 'JenisMustahikController@index');
-        // $router->get('/jenismustahik/{id}', 'JenisMustahikController@detail');
-        // $router->post('/jenismustahik', 'JenisMustahikController@store');
-        // $router->put('/jenismustahik', 'JenisMustahikController@update');
-        // $router->put('/jenismustahik/{id}', 'JenisMustahikController@aktivasi');
-
-        // Laporan
-        $router->post('/lapdonasi', 'LaporanController@donasi');
-
-        // Rekap Donasi Penyalur
+    $router->group(['middleware' => 'owner'], function () use ($router) {
+        // Akses Owner
         $router->post('/rekapdonasi', 'LaporanController@rekapDonasi');
         $router->post('/rekappenyalur', 'LaporanController@rekapPenyalur');
     });
