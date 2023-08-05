@@ -53,6 +53,13 @@
                                 Promo
                             </a>
                         </li>
+                        <li id="linkProduk"
+                            class="hover:shadow-lg hover:border hover:border-green-900
+                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                            <a class="flex items-center" href="/produk">
+                                Produk
+                            </a>
+                        </li>
                         <li id="linkPortofolio"
                             class="hover:shadow-lg hover:border hover:border-green-900
                             hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
@@ -134,6 +141,12 @@
                             class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
                             <a class="flex items-center" href="/promo">
                                 Promo
+                            </a>
+                        </li>
+                        <li id="linkProdukBar"
+                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                            <a class="flex items-center" href="/produk">
+                                Produk
                             </a>
                         </li>
                         <li id="linkPortofolioBar"
