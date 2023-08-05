@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Http\Request;
 
 /** @var \Laravel\Lumen\Routing\Router $router */
@@ -35,15 +36,6 @@ $router->get('/register', function () use ($router) {
 });
 $router->get('/forgotpassword', function () use ($router) {
     return view('auth.forgotpassword');
-});
-
-$router->get('/test', function () {
-    try {
-        $results = DB::select('SELECT * from users');
-        return response()->json($results);
-    } catch (Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
 });
 
 // Api

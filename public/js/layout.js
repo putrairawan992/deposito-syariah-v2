@@ -6,9 +6,9 @@ var role = null;
 var token = null;
 if (window.localStorage.getItem("jwttoken")) {
     token = window.localStorage.getItem("jwttoken");
-    ajaxCall(serverApi + "userprofile", null, "GET", "userprofile");
+    countToken = window.localStorage.getItem("countToken");
+    if (countToken == 0) { ajaxCall(serverApi + "userprofile", null, "GET", "userprofile"); }
 } else {
-    window.localStorage.removeItem("jwttoken");
     if (!window.location.href.includes('login')) { window.open(serverURL + "login", "_self"); }
 }
 
@@ -33,27 +33,35 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else swalBerhasil()
         },
         error: function (xhr, XMLHttpRequest, textStatus, errorThrown) {
-            if (goto == "afterLogin") { afterLoginFailed(xhr.responseText) }
-            else if (goto == "jenisLogin") {
+            if (xhr.status == 0) {
                 swal({
                     icon: "warning",
-                    title: "Perhatian",
-                    text: xhr.responseText,
+                    title: "Koneksi Internet",
+                    text: "Tidak ada koneksi ke server",
                     button: false,
                 })
-                $('#loadingBtn').hide()
-                $('#nextBtn').fadeIn()
-                $('#usernameNa').prop('disabled', false)
-            }
-            else if (goto == "userprofile") {
-                swal({
-                    icon: "warning",
-                    title: "Masa Anda sudah habis",
-                    text: "Dimohon untuk login kembali",
-                    button: false,
-                })
-                window.localStorage.removeItem("jwttoken");
-                if (!window.location.href.includes('login')) { window.open(serverURL + "login", "_self"); }
+            } else {
+                if (goto == "afterLogin") { afterLoginFailed(xhr.responseText) }
+                else if (goto == "jenisLogin") {
+                    swal({
+                        icon: "warning",
+                        title: "Perhatian",
+                        text: xhr.responseText,
+                        button: false,
+                    })
+                    $('#loadingBtn').hide()
+                    $('#nextBtn').fadeIn()
+                    $('#usernameNa').prop('disabled', false)
+                }
+                else if (goto == "userprofile") {
+                    swal({
+                        icon: "warning",
+                        title: "Masa Anda sudah habis",
+                        text: "Dimohon untuk login kembali",
+                        button: false,
+                    })
+                    if (!window.location.href.includes('login')) { window.open(serverURL + "login", "_self"); }
+                }
             }
         },
     });

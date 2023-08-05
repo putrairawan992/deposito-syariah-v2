@@ -23,7 +23,7 @@ return [
         'db2' => [
             'driver' => 'sqlsrv',
             'host' => '141.136.47.196',
-            'database' => 'coba',
+            'database' => 'ds_main',
             'username' => 'sa',
             'password' => 'DataSains123',
             'port' => '1433',

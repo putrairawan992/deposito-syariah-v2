@@ -532,11 +532,11 @@ class AuthController extends Controller
 
                     // Login OTP
                     if ($idNa != null) {
-                        $dateTime = strtotime('-5 minutes', strtotime(date('Y-m-d H:i:s')));
                         $cekOtp = User::where('phone', $enkripPhone)->firstorfail();
 
                         if ($cekOtp) {
-                            if ($cekOtp->created_otp > $dateTime) {
+                            // return response()->json([$cekOtp->created_otp, date('Y-m-d H:i:s')], 400);
+                            if ($cekOtp->created_otp > date('Y-m-d H:i:s')) {
                                 return response()->json('OTP anda Expire, Silahkan tekan kirim ulang OTP', 400);
                             }
                             if ($cekOtp->otp != $password) {
@@ -753,9 +753,23 @@ class AuthController extends Controller
 
     protected function createotp($enkripPhone)
     {
+        // Temp Generate
+        $detailUser = DB::table('users')
+            ->where('phone', $enkripPhone)
+            ->first();
+
+        $kriptorone = $detailUser->kriptorone;
+        $kriptortwo = $detailUser->kriptortwo;
+        $getPhone = dekripsina($detailUser->phone, $kriptorone, $kriptortwo);
+
+        $randNum = substr($getPhone, 0, 3) . substr($getPhone, -3, 3);
+
+        // $randNum = rand(100000, 999999);
+        $futureDate = strtotime(date('Y-m-d H:i:s')) + 60 * 5;
+        $otpDate = date('Y-m-d H:i:s', $futureDate);
         $updateOTP = [
-            'otp' => rand(100000, 999999),
-            'created_otp' => date('Y-m-d h:i:s'),
+            'otp' => $randNum,
+            'created_otp' => $otpDate,
         ];
 
         try {
