@@ -105,7 +105,7 @@
                                     </button>
                                 </div>
                                 <ul tabindex="0"
-                                    class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-box w-52"
                                     id="listNotif">
                                     <li><a>Item 1</a></li>
                                     <li><a>Item 2</a></li>
@@ -121,7 +121,7 @@
                                     <div class="text-sm" id="namaNasabah">Nasabah</div>
                                 </button>
                                 <ul tabindex="0"
-                                    class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-40">
+                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-box w-40">
                                     <li><a class="hover:bg-green-50"><i class="fas fa-id-card"></i> Profil</a></li>
                                     <li><a class="hover:bg-green-50"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
                                 </ul>
@@ -239,50 +239,5 @@
         }
     </script>
 </body>
-
-{{-- <style>
-    /* Preloader styles */
-    .preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #fff;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .loader {
-        border: 6px solid whitesmoke;
-        /* Light grey border */
-        border-top: 6px solid #3498db;
-        /* Blue border for the loader animation */
-        border-radius: 50%;
-        width: 74px;
-        height: 74px;
-        animation: spin 1.5s linear infinite;
-        /* Animation for the loader */
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style> --}}
-
-<script>
-    const preloader = document.querySelector('.preloader');
-    setTimeout(function() {
-        $('#preloader').fadeOut()
-    }, 1500);
-</script>
 
 </html>

@@ -23,11 +23,14 @@ $router->get('/', function () use ($router) {
 });
 
 // Main Page
+$router->get('/dashboard', function () use ($router) {
+    return view('nasabah.dashboard');
+});
 $router->get('/produk', function () use ($router) {
     return view('nasabah.produk');
 });
-$router->get('/dashboard', function () use ($router) {
-    return view('nasabah.dashboard');
+$router->get('/profil', function () use ($router) {
+    return view('nasabah.profil');
 });
 
 // Auth

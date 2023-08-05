@@ -6,9 +6,9 @@
 
     <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">
         <div style="max-width: 1100px">
-            <div class="bg-white rounded-lg p-4 mb-2">
-                <div class="flex items-center justify-center">
-                    <div class="w-52 mr-2">
+            <div class="bg-white rounded-lg p-4 mb-2 w-80 sm:w-full">
+                <div class="sm:flex sm:items-center sm:justify-center">
+                    <div class="w-full sm:w-52 mr-0 sm:mr-2">
                         <div class="relative h-10 w-full min-w-[200px]">
                             <div
                                 class="absolute top-2/4 right-3 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500">
@@ -23,7 +23,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="relative h-10 w-52 mr-2 min-w-[200px]">
+                    <div class="my-2 sm:my-0 relative h-10 w-full sm:w-52 mr-0 sm:mr-2 min-w-[200px]">
                         <select
                             class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-green-700 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
                             <option value="brazil">Brazil</option>
@@ -36,7 +36,7 @@
                             Bagi Hasil
                         </label>
                     </div>
-                    <div class="relative h-10 w-52 mr-2 min-w-[200px]">
+                    <div class="relative h-10 w-full sm:w-52 mr-0 sm:mr-2 min-w-[200px]">
                         <select
                             class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-green-700 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
                             <option value="brazil">Brazil</option>
@@ -374,4 +374,13 @@
         </div>
     </div>
     <div class="sm:h-12 h-16"></div>
+
+    <script>
+        $("#linkProduk").css('pointer-events', 'none')
+        $("#linkProduk").addClass('bg-gradient-to-tr from-green-600 to-green-400 text-white py-1')
+        $('#linkProdukBar').hide()
+
+        $('#signIn').hide()
+        $('#signInBar').hide()
+    </script>
 @endsection

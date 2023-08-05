@@ -108,7 +108,7 @@
                             <div class="h-full flex items-center">
                                 <button
                                     class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    data-ripple-light="true" href="/produk">
+                                    data-ripple-light="true">
                                     Detail
                                 </button>
                             </div>
@@ -161,7 +161,7 @@
                             <div class="h-full flex items-center">
                                 <button
                                     class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    data-ripple-light="true" href="/produk">
+                                    data-ripple-light="true">
                                     Detail
                                 </button>
                             </div>
@@ -214,7 +214,7 @@
                             <div class="h-full flex items-center">
                                 <button
                                     class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    data-ripple-light="true" href="/produk">
+                                    data-ripple-light="true">
                                     Detail
                                 </button>
                             </div>
@@ -267,7 +267,7 @@
                             <div class="h-full flex items-center">
                                 <button
                                     class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    data-ripple-light="true" href="/produk">
+                                    data-ripple-light="true">
                                     Detail
                                 </button>
                             </div>
@@ -320,7 +320,7 @@
                             <div class="h-full flex items-center">
                                 <button
                                     class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    data-ripple-light="true" href="/produk">
+                                    data-ripple-light="true">
                                     Detail
                                 </button>
                             </div>
@@ -373,7 +373,7 @@
                             <div class="h-full flex items-center">
                                 <button
                                     class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    data-ripple-light="true" href="/produk">
+                                    data-ripple-light="true">
                                     Detail
                                 </button>
                             </div>
@@ -393,4 +393,13 @@
         </div>
     </div>
     <div class="sm:h-12 h-16"></div>
+
+    <script>
+        $("#linkDashboard").css('pointer-events', 'none')
+        $("#linkDashboard").addClass('bg-gradient-to-tr from-green-600 to-green-400 text-white py-1')
+        $('#linkDashboardBar').hide()
+
+        $('#signIn').hide()
+        $('#signInBar').hide()
+    </script>
 @endsection
