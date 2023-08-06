@@ -29,6 +29,9 @@ $router->get('/dashboard', function () use ($router) {
 $router->get('/produk', function () use ($router) {
     return view('nasabah.produk');
 });
+$router->get('/portofolio', function () use ($router) {
+    return view('nasabah.portofolio');
+});
 $router->get('/profil', function () use ($router) {
     return view('nasabah.profil');
 });
