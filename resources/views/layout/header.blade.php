@@ -225,6 +225,184 @@
         </div>
     </div>
 
+    <!-- Put this part before </body> tag -->
+    <input type="checkbox" id="modalProduk" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box bg-white text-gray-800">
+            <div class="text-white text-xs font-sans">
+                <div class="flex flex-row">
+                    <div class="w-2/3 bg-gradient-to-l from-green-900 to-green-800 rounded-md p-2">
+                        <div class="mb-3">BPR Kencana A</div>
+                        <div class="flex flex-row">
+                            <div class="w-1/2">
+                                <div class="flex flex-row">
+                                    <div class="mr-3">
+                                        <div>Kode OJK</div>
+                                        <div>No SK</div>
+                                        <div>Alamat</div>
+                                        <div>Website</div>
+                                    </div>
+                                    <div>
+                                        <div>32342325</div>
+                                        <div>SK0896565</div>
+                                        <div>Jakarta</div>
+                                        <div>bpr.net</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-1/2">
+                                <div class="flex flex-row mb-2">
+                                    <div class="mr-3">
+                                        <div>No Telepon</div>
+                                        <div>Mulai Beroperasi</div>
+                                    </div>
+                                    <div>
+                                        <div>(021) 893792892</div>
+                                        <div>3 Maret 2020</div>
+                                    </div>
+                                </div>
+                                <button data-ripple-light="true"
+                                    class="text-xs sm:text-sm hover:shadow-lg border bg-gradient-to-tr
+                                from-green-600 to-green-400 text-white
+                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                                lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                                    Lihat Profil</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-1/3 bg-gradient-to-l from-green-900 to-green-800 rounded-md p-2 ml-1">
+                        <div class="mb-3">Neraca Keuangan Juli 2023</div>
+                        <div class="flex flex-row">
+                            <div class="mr-4">
+                                <div>Asset</div>
+                                <div>Kewajiban</div>
+                                <div>Ekuitas</div>
+                            </div>
+                            <div>
+                                <div>Rp 10.000.000.000</div>
+                                <div>Rp 2.000.000</div>
+                                <div>Rp 1.000.000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="text-black my-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs sm:text-sm">
+                    <div class="flex justify-between text-xs items-center">
+                        <div class="mr-5">
+                            <div>Nilai Deposito</div>
+                            <div>Rp 10.000.000</div>
+                        </div>
+                        <div class="mr-5">
+                            <div>Bagi Hasil Setara</div>
+                            <div>5% / Tahun</div>
+                        </div>
+                        <div class="mr-5">
+                            <div>Nisbah</div>
+                            <div>40 : 60</div>
+                        </div>
+                        <div class="mr-5">
+                            <div>Estimasi Bagi Hasil</div>
+                            <div>Rp 125.000</div>
+                        </div>
+                        <div class="mr-5">
+                            <div>Tenor</div>
+                            <div>6 Bulan</div>
+                        </div>
+                        <div class="mr-5">
+                            <div>Tanggal Jatuh Tempo</div>
+                            <div>18 September 2023</div>
+                        </div>
+                    </div>
+                    <div class="grid sm:hidden grid-cols-2 gap-2 text-xs mt-2 items-center">
+                        <div class="mr-0">
+                            <div>Bagi Hasil Setara</div>
+                            <div>5% / Tahun</div>
+                        </div>
+                        <div class="mr-0">
+                            <div>Nisbah</div>
+                            <div>40 : 60</div>
+                        </div>
+                        <div class="mr-0">
+                            <div>Tenor</div>
+                            <div>6 Bulan</div>
+                        </div>
+                        <div class="mr-0">
+                            <div>Tanggal Berakhir</div>
+                            <div>18 Agustus 2023</div>
+                        </div>
+                        <div class="mr-0">
+                            <div>Minimal Deposito</div>
+                            <div>Rp 1.000.000</div>
+                        </div>
+                        <div class="mr-0">
+                            <div>Target</div>
+                            <div>Rp 500.000.000</div>
+                        </div>
+                        <div class="mr-0">
+                            <div>Dana Terkumpul</div>
+                            <div>Rp 50.000.000 (10%)</div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-row text-black my-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs sm:text-sm">
+                    <div class="w-1/2 mx-3 text-xs">
+                        <div class="my-2 relative h-10 w-full min-w-[200px]">
+                            <input
+                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                placeholder=" " />
+                            <label
+                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                                Masukkan Nominal Deposito Anda
+                            </label>
+                        </div>
+                        <div class="flex justify-center">
+                            <button data-ripple-light="true"
+                                class="bg-gradient-to-tr from-green-600 to-green-400 text-sm mr-2 hover:shadow-lg
+                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                                lg:px-5 block p-1 leading-normal text-inherit antialiased text-white">
+                                Ajukan</button>
+                        </div>
+                    </div>
+                    <div class="w-1/2 mx-3 text-xs">
+                        <div>Estimasi Perhitungan Bagi Hasil</div>
+                        <div class="flex flex-col my-1">
+                            <div class="h-1 w-1 rounded-full bg-black"></div>
+                            <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
+                        </div>
+                        <div class="flex justify-between">
+                            <div>
+                                <div>Penempatan Dana</div>
+                                <div>Bagi Hasil</div>
+                            </div>
+                            <div>
+                                <div>Rp 10.000.000</div>
+                                <div>Rp 41.000</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col my-1">
+                            <div class="h-1 w-1 rounded-full bg-black"></div>
+                            <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
+                        </div>
+                        <div class="flex justify-between">
+                            <div>Estimasi Total Pengembalian</div>
+                            <div>Rp 10.041.000</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-action">
+                <label for="modalProduk" data-ripple-light="true"
+                    class="border border-gray-500 cursor-pointer text-sm mr-2 hover:shadow-lg
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                        lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                    Close</label>
+            </div>
+        </div>
+    </div>
+
     <script>
         let menuStatus = 0
 

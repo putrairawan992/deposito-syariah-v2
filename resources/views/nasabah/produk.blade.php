@@ -4,6 +4,22 @@
     <script src="js/layout.js"></script>
     <script></script>
 
+    <head>
+        <title>Produk - Deposito Syariah</title>
+
+        <style>
+            .modal-box {
+                width: 100%;
+            }
+
+            @media (min-width: 640px) {
+                .modal-box {
+                    max-width: 50rem;
+                }
+            }
+        </style>
+    </head>
+
     <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">
         <div style="max-width: 1100px">
             <div class="bg-white rounded-lg p-4 mb-2 w-80 sm:w-full">
@@ -26,23 +42,26 @@
                     <div class="my-2 sm:my-0 relative h-10 w-full sm:w-52 mr-0 sm:mr-2 min-w-[200px]">
                         <select
                             class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-green-700 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
-                            <option value="brazil">Brazil</option>
-                            <option value="bucharest">Bucharest</option>
-                            <option value="london">London</option>
-                            <option value="washington">Washington</option>
+                            <option value="">-- Pilih Bagi Hasil --</option>
+                            <option value="7">7%</option>
+                            <option value="6">6%</option>
+                            <option value="5">5%</option>
+                            <option value="4">4%</option>
                         </select>
                         <label
                             class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-800 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                            Bagi Hasil
+                            Bagi Hasil Setara
                         </label>
                     </div>
                     <div class="relative h-10 w-full sm:w-52 mr-0 sm:mr-2 min-w-[200px]">
                         <select
                             class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-green-700 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
-                            <option value="brazil">Brazil</option>
-                            <option value="bucharest">Bucharest</option>
-                            <option value="london">London</option>
-                            <option value="washington">Washington</option>
+                            <option value="">-- Pilih Tenor --</option>
+                            <option value="3">3 Bulan</option>
+                            <option value="6">6 Bulan</option>
+                            <option value="12">12 Bulan</option>
+                            <option value="18">18 Bulan</option>
+                            <option value="24">24 Bulan</option>
                         </select>
                         <label
                             class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-800 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
@@ -87,11 +106,11 @@
                                 <div>50 Transaksi</div>
                             </div>
                             <div class="h-full flex items-center">
-                                <button
-                                    class="items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                <label for="modalProduk"
+                                    class="cursor-pointer items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-1 sm:py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                     data-ripple-light="true" href="/produk">
                                     Detail
-                                </button>
+                                </label>
                             </div>
                         </div>
                         <div

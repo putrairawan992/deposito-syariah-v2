@@ -24,6 +24,17 @@
 
     <head>
         <title>Dashboard - Deposito Syariah</title>
+        <style>
+            .modal-box {
+                width: 100%;
+            }
+
+            @media (min-width: 640px) {
+                .modal-box {
+                    max-width: 50rem;
+                }
+            }
+        </style>
     </head>
 
     <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">

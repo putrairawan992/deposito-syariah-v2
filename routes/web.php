@@ -22,7 +22,7 @@ $router->get('/', function () use ($router) {
     // return view('auth.login');
 });
 
-// Main Page
+// Nasabah Page
 $router->get('/dashboard', function () use ($router) {
     return view('nasabah.dashboard');
 });
@@ -34,6 +34,12 @@ $router->get('/portofolio', function () use ($router) {
 });
 $router->get('/profil', function () use ($router) {
     return view('nasabah.profil');
+});
+$router->get('/promo', function () use ($router) {
+    return view('nasabah.promo');
+});
+$router->get('/pemberitahuan', function () use ($router) {
+    return view('nasabah.pemberitahuan');
 });
 
 // Auth

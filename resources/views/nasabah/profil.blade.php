@@ -3,6 +3,10 @@
 @section('content')
     <script src="js/layout.js"></script>
 
+    <head>
+        <title>My Profil - Deposito Syariah</title>
+    </head>
+
     <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex justify-center">
         <div style="max-width: 900px" class="bg-white rounded-lg p-4 mb-2 w-80 sm:w-full">
             <div class="mx-0 sm:mx-4 font-semibold text-xl">Profil Anda</div>

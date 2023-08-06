@@ -4,6 +4,10 @@
     <script src="js/layout.js"></script>
     <script></script>
 
+    <head>
+        <title>Portofolio - Deposito Syariah</title>
+    </head>
+
     <div class="mx-1 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">
         <div style="max-width: 1100px">
             <div class="font-sans bg-white rounded-lg p-2 sm:p-4 mb-2 w-80 sm:w-full">
@@ -466,17 +470,19 @@
 
             <div class="modal-action flex justify-center items-center">
                 <button data-ripple-light="true"
-                    class="text-xs sm:text-sm mr-2 hover:shadow-lg border bg-gradient-to-tr from-green-600 to-green-400 text-white
-                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                        lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                    class="text-xs sm:text-sm hover:shadow-lg border bg-gradient-to-tr
+                    from-green-600 to-green-400 text-white
+                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                    lg:px-5 block p-1 leading-normal text-inherit antialiased">
                     Penarikan</button>
                 <button data-ripple-light="true"
-                    class="text-xs sm:text-sm mr-2 hover:shadow-lg border bg-gradient-to-tr from-green-600 to-green-400 text-white
+                    class="text-xs sm:text-sm hover:shadow-lg border bg-gradient-to-tr
+                        from-green-600 to-green-400 text-white
                         hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
                         lg:px-5 block p-1 leading-normal text-inherit antialiased">
                     Pembatalan</button>
                 <label for="modalPortofolio" data-ripple-light="true"
-                    class="text-xs sm:text-sm mr-2 hover:shadow-lg border hover:cursor-pointer bg-gray-500
+                    class="text-xs sm:text-sm hover:shadow-lg border hover:cursor-pointer bg-gray-500
                         hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 text-white
                         lg:px-5 block p-1 leading-normal text-inherit antialiased">
                     Close</label>
