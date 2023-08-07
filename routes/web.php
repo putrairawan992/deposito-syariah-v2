@@ -110,7 +110,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         // Akses Nasabah
         $router->get('/refreshtoken', 'AuthController@refresh');
         $router->post('/regnasabah', 'NasabahController@store');
-        $router->put('/updatenasabah', 'NasabahController@update');
+        $router->post('/updatenasabah', 'NasabahController@update');
 
         // Promo Splash Screen
         $router->get('/showsplash', 'SplashController@show');
@@ -149,5 +149,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         // Akses Owner
         $router->post('/rekapdonasi', 'LaporanController@rekapDonasi');
         $router->post('/rekappenyalur', 'LaporanController@rekapPenyalur');
+    });
+
+    $router->group(['middleware' => 'authuser'], function () use ($router) {
+        // Update Pass PIN Email Username Phone
+        $router->put('/upuser', 'AuthController@update');
     });
 });

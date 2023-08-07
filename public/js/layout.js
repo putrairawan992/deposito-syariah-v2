@@ -30,6 +30,7 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
 
             else if (goto == "jenisLogin") jenisLogin(data)
             else if (goto == "afterLogin") afterLogin(data)
+            else if (goto == "updatePINPass") updatePINPass(data)
             else swalBerhasil()
         },
         error: function (xhr, XMLHttpRequest, textStatus, errorThrown) {
@@ -67,10 +68,10 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
     });
 }
 
-function swalBerhasil() {
+function swalBerhasil(title = 'Berhasil', text="Data Berhasil di Proses") {
     swal({
-        title: "Berhasil",
-        text: "Data Berhasil di Proses",
+        title: title,
+        text: text,
         buttons: false,
         icon: "success",
         closeOnClickOutside: true,

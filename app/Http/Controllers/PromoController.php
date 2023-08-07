@@ -62,7 +62,7 @@ class PromoController extends Controller
         $uploadFilename = newenkripsinaFile($request->file('image'), $kriptor['randnum'], $kriptor['randomBytes'], promoPath());
 
         $mitraId = DB::table('mitra')
-            ->where('id_user', auth()->user()->id)
+            ->where('id_user', auth()->user()->iduser)
             ->first();
 
         $insertData = [
@@ -70,7 +70,7 @@ class PromoController extends Controller
             'image' => $uploadFilename,
             'deskripsi' => $deskripsi,
             'end_date' => $request->end_date,
-            'user_created' => auth()->user()->id,
+            'user_created' => auth()->user()->iduser,
             'kriptorone' => $kriptor['kriptorone'],
             'kriptortwo' => $kriptor['kriptortwo'],
         ];
@@ -106,7 +106,7 @@ class PromoController extends Controller
         }
 
         $updateData['updated_at'] = date('Y-m-d H:i:s');
-        $updateData['user_updated'] = auth()->user()->id;
+        $updateData['user_updated'] = auth()->user()->iduser;
 
         try {
             DB::table('promo')
@@ -135,7 +135,7 @@ class PromoController extends Controller
         try {
             $promoNa->update([
                 'status' => $status,
-                'user_updated' => auth()->user()->id,
+                'user_updated' => auth()->user()->iduser,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json($msg, 200);
@@ -154,7 +154,7 @@ class PromoController extends Controller
         try {
             $promoNa->update([
                 'status' => 0,
-                'user_updated' => auth()->user()->id,
+                'user_updated' => auth()->user()->iduser,
                 'updated_at' => date('Y-m-d H:i:s'),
                 'user_deleted' => null,
                 'deleted_at' => null,
@@ -175,7 +175,7 @@ class PromoController extends Controller
         try {
             $promoNa->update([
                 'status' => 3,
-                'user_deleted' => auth()->user()->id,
+                'user_deleted' => auth()->user()->iduser,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Hapus Berhasil', 200);

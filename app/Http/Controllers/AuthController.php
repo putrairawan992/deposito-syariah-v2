@@ -28,6 +28,9 @@ class AuthController extends Controller
             if ($value->phone != null) {
                 $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
             }
+            if ($value->pin != null) {
+                $value->pin = dekripsina($value->pin, $kriptorone, $kriptortwo);
+            }
             if ($value->store_token != null) {
                 $value->store_token = dekripsina($value->store_token, $kriptorone, $kriptortwo);
             }
@@ -43,7 +46,7 @@ class AuthController extends Controller
     {
         $alluser = DB::table('users')
             ->wherein('role', [0, 10])
-            ->leftjoin('nasabah', 'users.id', 'nasabah.id_user')
+            ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
             ->get();
         foreach ($alluser as $key => $value) {
             $kriptorone = $value->kriptorone;
@@ -105,7 +108,7 @@ class AuthController extends Controller
     {
         $alluser = DB::table('users')
             ->where('role', 2)
-            ->leftjoin('mitra', 'users.id', 'mitra.id_user')
+            ->leftjoin('mitra', 'users.iduser', 'mitra.id_user')
             ->get();
         foreach ($alluser as $key => $value) {
             $kriptorone = $value->kriptorone;
@@ -270,31 +273,59 @@ class AuthController extends Controller
     {
         $username = $request->username;
         $email = $request->email;
+        $pin = $request->pin;
         $password = $request->password;
         $phone = $request->phone;
 
-        // Check if field is empty
-        if (empty($email) or empty($username) or empty($password)) {
-            return response()->json('Semua Kolom harus terisi', 400);
+        if (!empty($phone)) {
+            $cekHP = mb_substr($phone, 0, 3);
+            switch ($cekHP) {
+                case '081':
+                    break;
+                case '082':
+                    break;
+                case '085':
+                    break;
+                case '087':
+                    break;
+                case '088':
+                    break;
+                case '089':
+                    break;
+                default:
+                    return response()->json('No Handphone yang ada inputkan tidak valid', 400);
+                    break;
+            }
         }
 
         // Check if email is valid
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return response()->json('Email tidak Valid', 400);
         }
 
-        // Check if password is greater than 5 character
-        if (strlen($password) < 6) {
-            return response()->json('Password Kurang Dari 6 Digit', 400);
+        // Check if password is greater than 8 character
+        if (!empty($password)) {
+            if (strlen($password) < 8) {
+                return response()->json('Password Kurang Dari 8 Digit', 400);
+            }
+        }
+
+        // Check if pin is greater than 6 character
+        if (!empty($pin)) {
+            if (strlen($pin) < 6) {
+                return response()->json('PIN Kurang Dari 6 Digit', 400);
+            }
         }
 
         // Check if password is greater than 5 character
-        if (strlen($phone) < 10) {
+        if (!empty($phone) && strlen($phone) < 10) {
             return response()->json('Password Kurang Dari 6 Digit', 400);
         }
 
         // Check if username, email, phone already exist
-        $cekData = User::where('iduser', '!=', auth()->user()->iduser)->all();
+        $cekData = DB::table('users')
+            ->where('iduser', '!=', auth()->user()->iduser)
+            ->get();
         foreach ($cekData as $key => $value) {
             $dekripEmail = null;
             $dekripUsername = null;
@@ -311,44 +342,48 @@ class AuthController extends Controller
                 $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
             }
 
-            if ($email == $dekripEmail) {
-                return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
+            if (!empty($email)) {
+                if ($email == $dekripEmail) {
+                    return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
             }
 
-            if ($username == $dekripUsername) {
-                return response()->json('Username sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
+            if (!empty($username)) {
+                if ($username == $dekripUsername) {
+                    return response()->json('Username sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
             }
 
-            if ($phone == $dekripPhone) {
-                return response()->json('No Telp sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
+            if (!empty($phone)) {
+                if ($phone == $dekripPhone) {
+                    return response()->json('No Telp sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
             }
         }
 
-        // Create new user
-        $kriptor = generatekriptor();
-        $kriptorone = $kriptor['randnum'];
-        $kriptortwo = $kriptor['randomBytes'];
-        $enkripUsername = newenkripsina($username, $kriptorone, $kriptortwo);
-        $enkripEmail = newenkripsina($email, $kriptorone, $kriptortwo);
-        $enkripPhone = newenkripsina($phone, $kriptorone, $kriptortwo);
+        // Get KriptorCode
+        $myUser = DB::table('users')
+            ->where('id', auth()->user()->id)
+            ->first();
+        $kriptorone = $myUser->kriptorone;
+        $kriptortwo = $myUser->kriptortwo;
+
+        !empty($username) ? ($updateData['username'] = oldenkripsina($username, $kriptorone, $kriptortwo)) : null;
+        !empty($email) ? ($updateData['email'] = oldenkripsina($email, $kriptorone, $kriptortwo)) : null;
+        !empty($phone) ? ($updateData['phone'] = oldenkripsina($phone, $kriptorone, $kriptortwo)) : null;
+        !empty($pin) ? ($updateData['pin'] = oldenkripsina($pin, $kriptorone, $kriptortwo)) : null;
+        !empty($password) ? ($updateData['password'] = app('hash')->make($password)) : null;
 
         try {
-            $user = User::where('iduser', $request->iduser);
-            !empty($request->username) ? ($user->username = $enkripUsername) : null;
-            !empty($request->email) ? ($user->email = $enkripEmail) : null;
-            !empty($request->phone) ? ($user->phone = $enkripPhone) : null;
-            !empty($request->password) ? ($user->password = app('hash')->make($password)) : null;
-            $user->updated_at = auth()->user()->id;
-            $user->user_updated = date('Y-m-d H:i:s');
-
-            if ($user->save()) {
-                return response()->json('Register Admin Berhasil', 200);
-            }
+            DB::table('users')
+                ->where('id', auth()->user()->id)
+                ->update($updateData);
+            return response()->json('Update Berhasil', 200);
         } catch (\Exception $e) {
-            return response()->json($e, 400);
+            return response()->json($e->getMessage(), 400);
         }
     }
 
@@ -372,7 +407,7 @@ class AuthController extends Controller
             $user->update([
                 'status' => $status,
                 'updated_at' => date('Y-m-d H:i:s'),
-                'user_updated' => auth()->user()->id,
+                'user_updated' => auth()->user()->iduser,
             ]);
             return response()->json($res, 200);
         } catch (\Throwable $th) {
@@ -534,15 +569,33 @@ class AuthController extends Controller
                     if ($idNa != null) {
                         $cekOtp = User::where('phone', $enkripPhone)->firstorfail();
 
-                        if ($cekOtp) {
-                            // return response()->json([$cekOtp->created_otp, date('Y-m-d H:i:s')], 400);
-                            if ($cekOtp->created_otp > date('Y-m-d H:i:s')) {
+                        if (empty($cekOtp->password)) {
+                            if ($cekOtp->created_otp < date('Y-m-d H:i:s')) {
                                 return response()->json('OTP anda Expire, Silahkan tekan kirim ulang OTP', 400);
                             }
                             if ($cekOtp->otp != $password) {
                                 return response()->json('Kode OTP Anda Salah', 400);
                             }
                             $token = JWTAuth::fromUser($cekOtp);
+                            if ($oldToken != null) {
+                                $this->revoke($oldToken);
+                            }
+
+                            $this->storeToken($idNa, $token, $kriptorone, $kriptortwo);
+                            return $this->respondWithToken($token);
+                        } else {
+                            return response()->json('isi pass', 400);
+                            request()->merge([$loginType => $username]);
+                            $credentials = request([$loginType, 'password']);
+
+                            if (!($token = auth()->attempt($credentials))) {
+                                return response()->json(['status' => 'failed', 'message' => 'Username atau Password Salah']);
+                            }
+
+                            if (auth()->user()->role == 0) {
+                                return response()->json(['status' => 'error', 'message' => 'Akun Anda Belum Aktif, Pastikan data anda lengkap']);
+                            }
+
                             if ($oldToken != null) {
                                 $this->revoke($oldToken);
                             }
@@ -612,9 +665,29 @@ class AuthController extends Controller
         }
     }
 
+    public function isiPassPIN(Request $request)
+    {
+        $password = $request->password;
+        $pin = $request->pin;
+
+        try {
+            $user = User::where('id', auth()->user()->id);
+            !empty($request->pin) ? ($user->pin = $enkripPin) : null;
+            !empty($request->password) ? ($user->password = app('hash')->make($password)) : null;
+            $user->updated_at = auth()->user()->id;
+            $user->user_updated = date('Y-m-d H:i:s');
+
+            if ($user->save()) {
+                return response()->json('Register Admin Berhasil', 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
+
     public function logout()
     {
-        $id = auth()->user()->id;
+        $id = auth()->user()->iduser;
         auth()->logout();
         $del = DB::table('users')
             ->where('id', $id)
@@ -625,19 +698,19 @@ class AuthController extends Controller
     public function refresh()
     {
         $user = DB::table('users')
-            ->where('id', auth()->user()->id)
+            ->where('id', auth()->user()->iduser)
             ->first();
         $oldToken = dekripsina($user->store_token, $user->kriptorone, $user->kriptortwo);
         $newToken = auth()->refresh();
         $this->revoke($oldToken);
-        $this->storeToken(auth()->user()->id, $newToken, $user->kriptorone, $user->kriptortwo);
+        $this->storeToken(auth()->user()->iduser, $newToken, $user->kriptorone, $user->kriptortwo);
         return response()->json($newToken, 200);
     }
 
     public function userprofile()
     {
         $detailUser = DB::table('users')
-            ->where('id', auth()->user()->id)
+            ->where('iduser', auth()->user()->iduser)
             ->select('username', 'email', 'phone', 'role', 'status', 'kriptorone', 'kriptortwo')
             ->first();
 

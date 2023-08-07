@@ -296,7 +296,7 @@
             <h3 class="font-bold text-lg">Isikan Password dan PIN Anda</h3>
             <div class="w-full mt-4">
                 <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                    <input
+                    <input id="pass"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
                     <label
@@ -305,7 +305,7 @@
                     </label>
                 </div>
                 <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                    <input
+                    <input id="konfirmasipass"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
                     <label
@@ -318,7 +318,7 @@
                     <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                 </div>
                 <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                    <input
+                    <input id="pin"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
                     <label
@@ -327,7 +327,7 @@
                     </label>
                 </div>
                 <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                    <input
+                    <input id="konfirmasipin"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
                     <label
@@ -340,19 +340,19 @@
                     <p class="text-xs p-2">
                         Silahkan mengisi password yang akan digunakan untuk login, dan PIN yang akan digunakan untuk
                         transaksi.<br>
-                        Apabila sudah mengisi bisa diabaikan, jika ingin mengganti silahkan isikan yang akan diganti.<br>
+                        Apabila sudah mengisi bisa diabaikan, jika ingin mengganti silahkan isikan yang akan diganti.
                         Terimakasih
                     </p>
                 </div>
             </div>
 
             <div class="modal-action">
-                <button data-ripple-light="true"
+                <button data-ripple-light="true" onclick="simpanPINPass()"
                     class="bg-gradient-to-tr from-green-600 to-green-400 text-sm mr-2 hover:shadow-lg
                     hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
                     lg:px-5 block p-1 leading-normal text-inherit antialiased text-white">
                     Simpan</button>
-                <label for="modalPIN" data-ripple-light="true"
+                <label for="modalPIN" data-ripple-light="true" id="closePIN"
                     class="text-sm mr-2 hover:shadow-lg border border-green-900 hover:cursor-pointer
                     hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5
                     block p-1 leading-normal text-inherit antialiased">
@@ -364,5 +364,48 @@
     <script>
         $('#signIn').hide()
         $('#signInBar').hide()
+
+        function updatePINPass(data) {
+            swalBerhasil("Berhasil", data)
+            $('#pass').val('')
+            $('#konfirmasipass').val('')
+            $('#pin').val('')
+            $('#konfirmasipin').val('')
+            $('#closePIN').click()
+        }
+
+        function simpanPINPass() {
+            var pass = null
+            var pin = null
+
+            if ($('#pass').val() != '') {
+                if ($('#pass').val().length < 8) {
+                    swalGagal('Password', 'Password yang anda input kurang dari 8 digit')
+                } else {
+                    if ($('#pass').val() != $('#konfirmasipass').val()) {
+                        swalGagal('Password', 'Password yang anda input tidak sama')
+                    } else {
+                        pass = $('#pass').val()
+                    }
+                }
+            }
+
+            if ($('#pin').val() != '') {
+                if ($('#pin').val() != $('#konfirmasipin').val()) {
+                    swalGagal('PIN', 'PIN yang anda input tidak sama')
+                } else {
+                    pin = $('#pin').val()
+                }
+            }
+
+            dataNa = {
+                'password': pass,
+                'pin': pin
+            }
+
+            if (dataNa.password != null || dataNa.pin != null) {
+                ajaxCall(serverApi + 'upuser', JSON.stringify(dataNa), "PUT", "updatePINPass")
+            }
+        }
     </script>
 @endsection

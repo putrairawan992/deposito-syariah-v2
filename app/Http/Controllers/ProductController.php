@@ -69,7 +69,7 @@ class ProductController extends Controller
     {
         if (auth()->user()->role == 2) {
             $mitraId = DB::table('mitra')
-                ->where('id_user', auth()->user()->id)
+                ->where('id_user', auth()->user()->iduser)
                 ->first();
             $mitraIDNa = $mitraId->id;
         } else {
@@ -112,7 +112,7 @@ class ProductController extends Controller
             'tenor' => $tenor,
             'start_date' => $start_date,
             'end_date' => $request->end_date,
-            'user_created' => auth()->user()->id,
+            'user_created' => auth()->user()->iduser,
             'kriptorone' => $kriptor['kriptorone'],
             'kriptortwo' => $kriptor['kriptortwo'],
         ];
@@ -152,7 +152,7 @@ class ProductController extends Controller
         !empty($end_date) ? ($updateData['end_date'] = $end_date) : null;
 
         $updateData['updated_at'] = date('Y-m-d H:i:s');
-        $updateData['user_updated'] = auth()->user()->id;
+        $updateData['user_updated'] = auth()->user()->iduser;
 
         try {
             DB::table('produk')
@@ -181,7 +181,7 @@ class ProductController extends Controller
         try {
             $produkNa->update([
                 'status' => $status,
-                'user_updated' => auth()->user()->id,
+                'user_updated' => auth()->user()->iduser,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json($msg, 200);
@@ -200,7 +200,7 @@ class ProductController extends Controller
         try {
             $produkNa->update([
                 'status' => 0,
-                'user_updated' => auth()->user()->id,
+                'user_updated' => auth()->user()->iduser,
                 'updated_at' => date('Y-m-d H:i:s'),
                 'user_deleted' => null,
                 'deleted_at' => null,
@@ -221,7 +221,7 @@ class ProductController extends Controller
         try {
             $produkNa->update([
                 'status' => 3,
-                'user_deleted' => auth()->user()->id,
+                'user_deleted' => auth()->user()->iduser,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Hapus Berhasil', 200);
@@ -234,7 +234,7 @@ class ProductController extends Controller
     {
         $connection = 'db2';
         $listDbTrx = DB::table('mitra')
-            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->leftjoin('users', 'mitra.id_user', 'users.iduser')
             ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
             ->get();
 
@@ -247,11 +247,11 @@ class ProductController extends Controller
 
             // Get transaksi every db transaksi
             // Jenis = 3 (Pembelian)
-            if (auth()->user()->id == 1 || auth()->user()->id == 99) {
+            if (auth()->user()->iduser == 1 || auth()->user()->iduser == 99) {
                 $getTrx = DB::table('transaksi')->get();
             } else {
                 $getTrx = DB::table('transaksi')
-                    ->where('id_nasabah', auth()->user()->id)
+                    ->where('id_nasabah', auth()->user()->iduser)
                     ->where('jenis', 3)
                     ->get();
             }
@@ -277,7 +277,7 @@ class ProductController extends Controller
 
         $getMitra = DB::table('mitra')
             ->where('mitra.id', $req->id_mitra)
-            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->leftjoin('users', 'mitra.id_user', 'users.iduser')
             ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
             ->first();
 
@@ -300,7 +300,7 @@ class ProductController extends Controller
     {
         $produk = DB::table('produk')
             ->leftjoin('mitra', 'produk.id_mitra', 'mitra.id')
-            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->leftjoin('users', 'mitra.id_user', 'users.iduser')
             ->where('produk.id', $req->id)
             ->select('produk.id_mitra', 'db_name', 'users.kriptorone', 'users.kriptortwo', 'produk.kriptorone as kriptoroneProduk', 'produk.kriptortwo as kriptortwoProduk', 'id_mitra', 'bagi_hasil', 'tenor')
             ->first();
@@ -335,7 +335,7 @@ class ProductController extends Controller
         $tenor = newenkripsina($tenorDekrip, $kriptor['randnum'], $kriptor['randomBytes']);
 
         $insertData = [
-            'id_nasabah' => auth()->user()->id,
+            'id_nasabah' => auth()->user()->iduser,
             'id_mitra' => $produk->id_mitra,
             'id_coa' => '',
             'id_produk' => $req->id,
@@ -351,7 +351,7 @@ class ProductController extends Controller
         ];
 
         $cekTransaksi = DB::table('transaksi')
-            ->where('id_nasabah', auth()->user()->id)
+            ->where('id_nasabah', auth()->user()->iduser)
             ->where('id_produk', $req->id)
             ->where('jenis', 3)
             ->where('status', 1)
@@ -377,7 +377,7 @@ class ProductController extends Controller
 
         $getMitra = DB::table('mitra')
             ->where('mitra.id', $req->id_mitra)
-            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->leftjoin('users', 'mitra.id_user', 'users.iduser')
             ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
             ->first();
 
@@ -406,7 +406,7 @@ class ProductController extends Controller
 
         $getMitra = DB::table('mitra')
             ->where('mitra.id', $req->id_mitra)
-            ->leftjoin('users', 'mitra.id_user', 'users.id')
+            ->leftjoin('users', 'mitra.id_user', 'users.iduser')
             ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
             ->first();
 

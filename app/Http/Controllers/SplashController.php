@@ -61,10 +61,10 @@ class SplashController extends Controller
         $uploadFilename = newenkripsinaFile($request->file('image'), $kriptor['randnum'], $kriptor['randomBytes'], splashPath());
 
         $insertData = [
-            'id_admin' => auth()->user()->id,
+            'id_admin' => auth()->user()->iduser,
             'image' => $uploadFilename,
             'deskripsi' => $deskripsi,
-            'user_created' => auth()->user()->id,
+            'user_created' => auth()->user()->iduser,
             'kriptorone' => $kriptor['kriptorone'],
             'kriptortwo' => $kriptor['kriptortwo'],
         ];
@@ -98,7 +98,7 @@ class SplashController extends Controller
         }
 
         $updateData['updated_at'] = date('Y-m-d H:i:s');
-        $updateData['user_updated'] = auth()->user()->id;
+        $updateData['user_updated'] = auth()->user()->iduser;
 
         try {
             DB::table('splash_screen')
@@ -127,7 +127,7 @@ class SplashController extends Controller
         try {
             $splashNa->update([
                 'status' => $status,
-                'user_updated' => auth()->user()->id,
+                'user_updated' => auth()->user()->iduser,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json($msg, 200);
@@ -146,7 +146,7 @@ class SplashController extends Controller
         try {
             $splashNa->update([
                 'status' => 0,
-                'user_updated' => auth()->user()->id,
+                'user_updated' => auth()->user()->iduser,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Restore Berhasil', 200);
@@ -165,7 +165,7 @@ class SplashController extends Controller
         try {
             $splashNa->update([
                 'status' => 3,
-                'user_deleted' => auth()->user()->id,
+                'user_deleted' => auth()->user()->iduser,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Hapus Berhasil', 200);

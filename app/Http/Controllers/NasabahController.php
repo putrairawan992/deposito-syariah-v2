@@ -13,7 +13,7 @@ class NasabahController extends Controller
     public function store(Request $request)
     {
         $email = $request->email;
-        $id_user = auth()->user()->id;
+        $id_user = auth()->user()->iduser;
         $nama = $request->nama;
         $ktp = $request->ktp;
         $image_ktp = $request->image_ktp;
@@ -143,7 +143,7 @@ class NasabahController extends Controller
             'jenis_pekerjaan' => $jenis_pekerjaan,
             'penghasilan' => $penghasilan,
             'hub_ahli_waris' => $hub_ahli_waris,
-            'user_created' => auth()->user()->id,
+            'user_created' => auth()->user()->iduser,
         ];
 
         try {
@@ -159,10 +159,8 @@ class NasabahController extends Controller
 
     public function update(Request $request)
     {
-        $dbname = bestConnection();
-
         $email = $request->email;
-        $id_user = auth()->user()->id;
+        $id_user = auth()->user()->iduser;
         $nama = $request->nama;
         $ktp = $request->ktp;
         $image_ktp = $request->image_ktp;
@@ -227,9 +225,9 @@ class NasabahController extends Controller
 
         // Check nasabah already exist
         $cekNasabah = DB::table('users')
-            ->where('users.id', '!=', $id_user)
+            ->where('users.iduser', '!=', $id_user)
             ->wherein('role', [0, 10])
-            ->leftjoin('nasabah', 'users.id', 'nasabah.id_user')
+            ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
             ->get();
         foreach ($cekNasabah as $key => $value) {
             $dekripKtp = null;
@@ -363,7 +361,7 @@ class NasabahController extends Controller
         try {
             $nasabah->update([
                 'validasi' => $request->validasi,
-                'id_validator' => auth()->user()->id,
+                'id_validator' => auth()->user()->iduser,
             ]);
             return response()->json($res, 200);
         } catch (\Throwable $th) {
@@ -381,7 +379,7 @@ class NasabahController extends Controller
         try {
             $nasabah->update([
                 'validasi' => 3,
-                'user_deleted' => auth()->user()->id,
+                'user_deleted' => auth()->user()->iduser,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Restore Berhasil', 200);
@@ -400,7 +398,7 @@ class NasabahController extends Controller
         try {
             $nasabah->update([
                 'validasi' => 4,
-                'user_deleted' => auth()->user()->id,
+                'user_deleted' => auth()->user()->iduser,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Hapus Berhasil', 200);

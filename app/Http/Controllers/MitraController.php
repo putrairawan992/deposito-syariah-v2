@@ -51,7 +51,7 @@ class MitraController extends Controller
         $id_bank = $request->id_bank;
         $logo = $request->logo;
         $validasi = $request->validasi;
-        $id_validator = auth()->user()->id;
+        $id_validator = auth()->user()->iduser;
 
         // Check if field is empty
         if (empty($email) or empty($username) or empty($password) or empty($phone)) {
@@ -103,7 +103,7 @@ class MitraController extends Controller
         // Check mitra already exist
         $cekMitra = DB::table('users')
             ->where('role', 2)
-            ->leftjoin('mitra', 'users.id', 'mitra.id_user')
+            ->leftjoin('mitra', 'users.iduser', 'mitra.id_user')
             ->get();
         foreach ($cekMitra as $key => $value) {
             $dekripnama = null;
@@ -366,7 +366,7 @@ class MitraController extends Controller
         $id_bank = $request->id_bank;
         $logo = $request->logo;
         $validasi = $request->validasi;
-        $id_validator = auth()->user()->id;
+        $id_validator = auth()->user()->iduser;
 
         // Check if username, email, phone already exist
         $cekData = DB::table('users')
@@ -404,9 +404,9 @@ class MitraController extends Controller
 
         // Check mitra already exist
         $cekMitra = DB::table('users')
-            ->where('users.id', '!=', $idUser)
+            ->where('users.iduser', '!=', $idUser)
             ->where('role', 2)
-            ->leftjoin('mitra', 'users.id', 'mitra.id_user')
+            ->leftjoin('mitra', 'users.iduser', 'mitra.id_user')
             ->get();
         foreach ($cekMitra as $key => $value) {
             $dekripnama = null;
@@ -681,9 +681,9 @@ class MitraController extends Controller
         }
 
         $updateData['validasi'] = $validasi;
-        $updateData['id_validator'] = auth()->user()->id;
+        $updateData['id_validator'] = auth()->user()->iduser;
         $updateData['updated_at'] = date('Y-m-d H:i:s');
-        $updateData['user_updated'] = auth()->user()->id;
+        $updateData['user_updated'] = auth()->user()->iduser;
 
         switch ($validasi) {
             case 0:
@@ -725,7 +725,7 @@ class MitraController extends Controller
         try {
             $mitra->update([
                 'validasi' => 3,
-                'user_deleted' => auth()->user()->id,
+                'user_deleted' => auth()->user()->iduser,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Restore Berhasil', 200);
@@ -744,7 +744,7 @@ class MitraController extends Controller
         try {
             $mitra->update([
                 'validasi' => 4,
-                'user_deleted' => auth()->user()->id,
+                'user_deleted' => auth()->user()->iduser,
                 'deleted_at' => date('Y-m-d H:i:s'),
             ]);
             return response()->json('Hapus Berhasil', 200);
