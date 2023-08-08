@@ -78,8 +78,8 @@ CREATE TABLE coa (
 
 CREATE TABLE nasabah (
   id int IDENTITY(1,1) PRIMARY KEY,
-  id_user INT NOT NULL,
-  id_validator INT default NULL,
+  id_user varchar(255) NOT NULL,
+  id_validator varchar(255) default NULL,
   nama varchar(255) default NULL,
   ktp varchar(255) DEFAULT NULL,
   image_ktp varchar(255) DEFAULT NULL,
@@ -88,8 +88,6 @@ CREATE TABLE nasabah (
   tgl_lahir varchar(255) DEFAULT NULL,
   ibu_kandung varchar(255) DEFAULT NULL,
   id_privy nvarchar(255) NULL,
-  id_bank int DEFAULT NULL,
-  norek varchar(255) DEFAULT NULL,
   status_pernikahan int NULL,
   jenis_pekerjaan int NULL,
   alamat varchar(255) DEFAULT NULL,
@@ -110,7 +108,25 @@ CREATE TABLE nasabah (
   FOREIGN KEY (user_created) REFERENCES users(id),
   FOREIGN KEY (user_updated) REFERENCES users(id),
   FOREIGN KEY (user_deleted) REFERENCES users(id),
-  FOREIGN KEY (id_validator) REFERENCES users(id),
+  FOREIGN KEY (id_validator) REFERENCES users(id)
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE norek_nasabah (
+  id int IDENTITY(1,1) PRIMARY KEY,
+  id_user INT NOT NULL,
+  id_bank int NOT NULL,
+  norek varchar(255) NOT NULL,
+  atas_nama varchar(255) DEFAULT NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created int DEFAULT NULL,
+  user_updated int DEFAULT NULL,
+  user_deleted int DEFAULT NULL,
   CONSTRAINT fk_nasabah_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 

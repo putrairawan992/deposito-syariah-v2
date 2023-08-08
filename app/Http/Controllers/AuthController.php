@@ -81,9 +81,6 @@ class AuthController extends Controller
             if ($value->ibu_kandung != null) {
                 $value->ibu_kandung = dekripsina($value->ibu_kandung, $kriptorone, $kriptortwo);
             }
-            if ($value->norek != null) {
-                $value->norek = dekripsina($value->norek, $kriptorone, $kriptortwo);
-            }
             if ($value->alamat != null) {
                 $value->alamat = dekripsina($value->alamat, $kriptorone, $kriptortwo);
             }
@@ -571,10 +568,10 @@ class AuthController extends Controller
 
                         if (empty($cekOtp->password)) {
                             if ($cekOtp->created_otp < date('Y-m-d H:i:s')) {
-                                return response()->json('OTP anda Expire, Silahkan tekan kirim ulang OTP', 400);
+                                return response()->json('OTP anda Expire, Silahkan tekan kirim ulang OTP', 403);
                             }
                             if ($cekOtp->otp != $password) {
-                                return response()->json('Kode OTP Anda Salah', 400);
+                                return response()->json('Kode OTP Anda Salah', 403);
                             }
                             $token = JWTAuth::fromUser($cekOtp);
                             if ($oldToken != null) {
@@ -584,7 +581,7 @@ class AuthController extends Controller
                             $this->storeToken($idNa, $token, $kriptorone, $kriptortwo);
                             return $this->respondWithToken($token);
                         } else {
-                            return response()->json('isi pass', 400);
+                            // return response()->json('isi pass', 403);
                             request()->merge([$loginType => $username]);
                             $credentials = request([$loginType, 'password']);
 

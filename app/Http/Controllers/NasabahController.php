@@ -10,6 +10,15 @@ use App\Http\helpers;
 
 class NasabahController extends Controller
 {
+    public function detail($iduser)
+    {
+        $getNasabah = DB::table('users')
+            ->wherein('users.iduser', $iduser)
+            ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
+            ->first();
+        return response()->json($getNasabah, 200);
+    }
+
     public function store(Request $request)
     {
         $email = $request->email;
@@ -22,11 +31,10 @@ class NasabahController extends Controller
         $tgl_lahir = $request->tgl_lahir;
         $ibu_kandung = $request->ibu_kandung;
         $id_privy = $request->id_privy;
-        $id_bank = $request->id_bank;
-        $norek = $request->norek;
         $status_pernikahan = $request->status_pernikahan;
         $jenis_pekerjaan = $request->jenis_pekerjaan;
         $alamat = $request->alamat;
+        $nama_perusahaan = $request->nama_perusahaan;
         $alamat_kerja = $request->alamat_kerja;
         $penghasilan = $request->penghasilan;
         $nama_ahli_waris = $request->nama_ahli_waris;
@@ -34,6 +42,10 @@ class NasabahController extends Controller
         $image_ktp_ahli_waris = $request->image_ktp_ahli_waris;
         $hub_ahli_waris = $request->hub_ahli_waris;
         $phone_ahli_waris = $request->phone_ahli_waris;
+
+        $id_bank = $request->id_bank;
+        $norek = $request->norek;
+        $atas_nama = $request->atas_nama;
 
         // Check if field is empty
         if (empty($email) or empty($nama) or empty($ktp)) {
@@ -64,7 +76,10 @@ class NasabahController extends Controller
             }
         }
 
-        $cekNasabah = DB::table('nasabah')->get();
+        $cekNasabah = DB::table('users')
+            ->wherein('role', [0, 10])
+            ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
+            ->get();
         foreach ($cekNasabah as $key => $value) {
             $dekripKTP = null;
             if ($value->ktp != null) {
@@ -79,7 +94,7 @@ class NasabahController extends Controller
 
         // Start Enkrip Data
         $getNasabah = DB::table('users')
-            ->where('id', $id_user)
+            ->where('iduser', $id_user)
             ->first();
         $kriptorone = $getNasabah->kriptorone;
         $kriptortwo = $getNasabah->kriptortwo;
@@ -121,6 +136,13 @@ class NasabahController extends Controller
             $phone_ahli_waris = oldenkripsina($phone_ahli_waris, $kriptorone, $kriptortwo);
         }
 
+        $insertDataBank = [
+            'id_bank' => $id_bank,
+            'norek' => $norek,
+            'atas_nama' => $atas_nama,
+            'user_created' => auth()->user()->iduser,
+        ];
+
         $insertData = [
             'id_user' => $id_user,
             'nama' => $nama,
@@ -128,7 +150,6 @@ class NasabahController extends Controller
             'tmpt_lahir' => $tmpt_lahir,
             'tgl_lahir' => $tgl_lahir,
             'ibu_kandung' => $ibu_kandung,
-            'norek' => $norek,
             'alamat' => $alamat,
             'alamat_kerja' => $alamat_kerja,
             'nama_ahli_waris' => $nama_ahli_waris,
@@ -138,7 +159,6 @@ class NasabahController extends Controller
             'image_selfie' => $image_selfie,
             'image_ktp_ahli_waris' => $image_ktp_ahli_waris,
             'id_privy' => $id_privy,
-            'id_bank' => $id_bank,
             'status_pernikahan' => $status_pernikahan,
             'jenis_pekerjaan' => $jenis_pekerjaan,
             'penghasilan' => $penghasilan,
@@ -146,9 +166,10 @@ class NasabahController extends Controller
             'user_created' => auth()->user()->iduser,
         ];
 
+        // return response()->json([$insertData, $insertDataBank], 400);
         try {
             DB::table('users')
-                ->where('id', $id_user)
+                ->where('iduser', $id_user)
                 ->update(['email' => $email, 'role' => 10, 'updated_at' => date('Y-m-d h:i:s')]);
             DB::table('nasabah')->insert($insertData);
             return response()->json('Register Succesfully', 200);
@@ -169,8 +190,6 @@ class NasabahController extends Controller
         $tgl_lahir = $request->tgl_lahir;
         $ibu_kandung = $request->ibu_kandung;
         $id_privy = $request->id_privy;
-        $id_bank = $request->id_bank;
-        $norek = $request->norek;
         $status_pernikahan = $request->status_pernikahan;
         $jenis_pekerjaan = $request->jenis_pekerjaan;
         $alamat = $request->alamat;
@@ -182,24 +201,21 @@ class NasabahController extends Controller
         $hub_ahli_waris = $request->hub_ahli_waris;
         $phone_ahli_waris = $request->phone_ahli_waris;
 
-        // Check if field is empty
-        if (empty($email) or empty($nama) or empty($ktp)) {
-            return response()->json('Email, Nama, KTP harus terisi', 400);
-        }
-
         // Check if email is valid
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return response()->json('Email tidak Valid', 400);
         }
 
         // Check if password is greater than 5 character
-        if (strlen($ktp) < 12) {
-            return response()->json('No KTP anda belum lengkap', 400);
+        if (!empty($ktp)) {
+            if (strlen($ktp) < 12) {
+                return response()->json('No KTP anda belum lengkap', 400);
+            }
         }
 
         // Check if username, email, phone already exist
         $cekData = DB::table('users')
-            ->where('id', '!=', $id_user)
+            ->where('iduser', '!=', $id_user)
             ->wherein('role', [0, 10])
             ->get();
         foreach ($cekData as $key => $value) {
@@ -208,18 +224,12 @@ class NasabahController extends Controller
             if ($value->email != null) {
                 $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
             }
-            if ($email == $dekripEmail) {
-                return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
-            }
 
-            if ($value->phone != null) {
-                $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
-            }
-
-            if ($phone == $dekripPhone) {
-                return response()->json('No Telepon sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
+            if (!empty($email)) {
+                if ($email == $dekripEmail) {
+                    return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 403);
+                    break;
+                }
             }
         }
 
@@ -255,75 +265,56 @@ class NasabahController extends Controller
 
         // Create new enkripsi
         $getKriptor = DB::table('users')
-            ->where('iduser', $iduser)
+            ->where('iduser', $id_user)
             ->first();
         $kriptorone = $getKriptor->kriptorone;
         $kriptortwo = $getKriptor->kriptortwo;
+
         if ($email != null) {
-            $email = oldenkripsina($email, $kriptorone, $kriptortwo);
+            $updateUser['email'] = oldenkripsina($email, $kriptorone, $kriptortwo);
         }
         if ($nama != null) {
-            $nama = oldenkripsina($nama, $kriptorone, $kriptortwo);
+            $updateData['nama'] = oldenkripsina($nama, $kriptorone, $kriptortwo);
         }
         if ($ktp != null) {
-            $ktp = oldenkripsina($ktp, $kriptorone, $kriptortwo);
+            $updateUser['ktp'] = oldenkripsina($ktp, $kriptorone, $kriptortwo);
         }
         if ($tmpt_lahir != null) {
-            $tmpt_lahir = oldenkripsina($tmpt_lahir, $kriptorone, $kriptortwo);
+            $updateData['tmpt_lahir'] = oldenkripsina($tmpt_lahir, $kriptorone, $kriptortwo);
         }
         if ($tgl_lahir != null) {
-            $tgl_lahir = oldenkripsina($tgl_lahir, $kriptorone, $kriptortwo);
+            $updateData['tgl_lahir'] = oldenkripsina($tgl_lahir, $kriptorone, $kriptortwo);
         }
         if ($ibu_kandung != null) {
-            $ibu_kandung = oldenkripsina($ibu_kandung, $kriptorone, $kriptortwo);
-        }
-        if ($norek != null) {
-            $norek = oldenkripsina($norek, $kriptorone, $kriptortwo);
+            $updateData['ibu_kandung'] = oldenkripsina($ibu_kandung, $kriptorone, $kriptortwo);
         }
         if ($alamat != null) {
-            $alamat = oldenkripsina($alamat, $kriptorone, $kriptortwo);
+            $updateData['alamat'] = oldenkripsina($alamat, $kriptorone, $kriptortwo);
         }
         if ($alamat_kerja != null) {
-            $alamat_kerja = oldenkripsina($alamat_kerja, $kriptorone, $kriptortwo);
+            $updateData['alamat_kerja'] = oldenkripsina($alamat_kerja, $kriptorone, $kriptortwo);
         }
         if ($nama_ahli_waris != null) {
-            $nama_ahli_waris = oldenkripsina($nama_ahli_waris, $kriptorone, $kriptortwo);
+            $updateData['nama_ahli_waris'] = oldenkripsina($nama_ahli_waris, $kriptorone, $kriptortwo);
         }
         if ($ktp_ahli_waris != null) {
-            $ktp_ahli_waris = oldenkripsina($ktp_ahli_waris, $kriptorone, $kriptortwo);
+            $updateData['ktp_ahli_waris'] = oldenkripsina($ktp_ahli_waris, $kriptorone, $kriptortwo);
         }
         if ($phone_ahli_waris != null) {
-            $phone_ahli_waris = oldenkripsina($phone_ahli_waris, $kriptorone, $kriptortwo);
+            $updateData['phone_ahli_waris'] = oldenkripsina($phone_ahli_waris, $kriptorone, $kriptortwo);
         }
 
-        $updateData = [
-            'nama' => $nama,
-            'ktp' => $ktp,
-            'tmpt_lahir' => $tmpt_lahir,
-            'tgl_lahir' => $tgl_lahir,
-            'ibu_kandung' => $ibu_kandung,
-            'norek' => $norek,
-            'alamat' => $alamat,
-            'alamat_kerja' => $alamat_kerja,
-            'nama_ahli_waris' => $nama_ahli_waris,
-            'ktp_ahli_waris' => $ktp_ahli_waris,
-            'phone_ahli_waris' => $phone_ahli_waris,
-            'image_ktp' => $image_ktp,
-            'image_selfie' => $image_selfie,
-            'image_ktp_ahli_waris' => $image_ktp_ahli_waris,
-            'id_privy' => $id_privy,
-            'id_bank' => $id_bank,
-            'status_pernikahan' => $status_pernikahan,
-            'jenis_pekerjaan' => $jenis_pekerjaan,
-            'penghasilan' => $penghasilan,
-            'hub_ahli_waris' => $hub_ahli_waris,
-            'updated_at' => date('Y-m-d h:i:s'),
-        ];
+        $updateUser['user_updated'] = $id_user;
+        $updateUser['updated_at'] = date('Y-m-d h:i:s');
 
+        $updateData['user_updated'] = $id_user;
+        $updateData['updated_at'] = date('Y-m-d h:i:s');
+
+        // return response()->json([$updateData, $updateUser], 400);
         try {
             DB::table('users')
-                ->where('id', $id_user)
-                ->update(['email' => $email, 'updated_at' => date('Y-m-d h:i:s')]);
+                ->where('iduser', $id_user)
+                ->update($updateUser);
             DB::table('nasabah')
                 ->where('id_user', $id_user)
                 ->update($updateData);

@@ -109,6 +109,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['middleware' => 'nasabah'], function () use ($router) {
         // Akses Nasabah
         $router->get('/refreshtoken', 'AuthController@refresh');
+        $router->get('/nasabah/{iduser}', 'NasabahController@detail');
         $router->post('/regnasabah', 'NasabahController@store');
         $router->post('/updatenasabah', 'NasabahController@update');
 
