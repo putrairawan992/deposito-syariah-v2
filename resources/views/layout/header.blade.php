@@ -99,16 +99,26 @@
                                     <span class="indicator-item badge bg-red-900 text-white text-xs "
                                         id="countNotif">&#8734;</span>
                                     <button tabindex="0"
-                                        class="bg-opacity-0 btn-circle btn -m-2 hover:shadow-lg hover:border hover:border-green-900
+                                        class="bg-opacity-0 btn-circle btn -m-2 hover:shadow-lg hover:bg-green-100 hover:border hover:border-green-900
                                         hover:shadow-green-500/40 active:opacity-[0.85]">
                                         <i class="text-xl far fa-bell text-green-900"></i>
                                     </button>
                                 </div>
                                 <ul tabindex="0"
-                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-box w-52"
+                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md w-72 mt-5 font-sans text-gray-700"
                                     id="listNotif">
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
+                                    <li><a
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
+                                            1</a></li>
+                                    <li><a
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
+                                            1</a></li>
+                                    <li><a
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
+                                            1</a></li>
+                                    <li><a
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
+                                            2</a></li>
                                 </ul>
                             </div>
                             <div class="dropdown dropdown-bottom dropdown-end">
@@ -121,10 +131,13 @@
                                     <div class="text-sm" id="namaNasabah">Nasabah</div>
                                 </button>
                                 <ul tabindex="0"
-                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-box w-40">
-                                    <li><a href="/profil" class="hover:bg-gray-50"><i class="fas fa-id-card"></i>
+                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md mt-5 w-52 text-gray-700">
+                                    <li><a href="/profil"
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
+                                                class="fas fa-id-card"></i>
                                             Profil</a></li>
-                                    <li><a onclick="logoutUser()" class="hover:bg-gray-50"><i
+                                    <li><a onclick="logoutUser()"
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
                                                 class="fas fa-sign-out-alt"></i> Keluar</a></li>
                                 </ul>
                             </div>

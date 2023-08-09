@@ -4,6 +4,7 @@ let thisYear = parseInt(new Date().getFullYear());
 
 var role = null;
 var token = null;
+var userna = null;
 if (window.localStorage.getItem("jwttoken")) {
     token = window.localStorage.getItem("jwttoken");
     countToken = window.localStorage.getItem("countToken");
@@ -104,6 +105,7 @@ function swalTunggu() {
 }
 
 function userProfileNa(data) {
+    userna = data.userProfile;
     role = data.userProfile.role;
     if (window.location.href.includes("login") && (role == 0 || role == 10)) {
         window.open(serverURL + "dashboard", "_self");
@@ -124,17 +126,23 @@ function userProfileNa(data) {
     }
 
     switch (role) {
-        case 99:
+        case "99":
+            $("#namaAdminKanan").text(data.userProfile.username);
+            $("#namaAdminKiri").text(data.userProfile.email);
             break;
-        case 1:
+        case "1":
+            $("#namaAdminKanan").text(data.userProfile.username);
+            $("#namaAdminKiri").text(data.userProfile.email);
             break;
-        case 2:
+        case "2":
+            $("#namaAdminKanan").text(data.userProfile.username);
+            $("#namaAdminKiri").text(data.userProfile.email);
             break;
-        case 3:
+        case "3":
             break;
-        case 0:
+        case "0":
             break;
-        case 10:
+        case "10":
             break;
         default:
             break;
