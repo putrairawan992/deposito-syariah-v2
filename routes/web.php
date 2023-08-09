@@ -22,6 +22,14 @@ $router->get('/', function () use ($router) {
     // return view('auth.login');
 });
 
+// Admin Page
+$router->get('/admin', function () use ($router) {
+    return view('admin.dashboard');
+});
+$router->get('/admin/dashboard', function () use ($router) {
+    return view('admin.dashboard');
+});
+
 // Nasabah Page
 $router->get('/dashboard', function () use ($router) {
     return view('nasabah.dashboard');
@@ -56,8 +64,8 @@ $router->get('/forgotpassword', function () use ($router) {
 // Api
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/user', 'AuthController@index');
-    $router->get('/nasabah', 'AuthController@nasabah');
-    $router->get('/mitra', 'AuthController@mitra');
+    $router->get('/listnasabah', 'AuthController@nasabah');
+    $router->get('/listmitra', 'AuthController@mitra');
     $router->get('/produk', 'ProductController@index');
 
     // Fix Function
@@ -109,9 +117,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['middleware' => 'nasabah'], function () use ($router) {
         // Akses Nasabah
         $router->get('/refreshtoken', 'AuthController@refresh');
-        $router->get('/nasabah/{iduser}', 'NasabahController@detail');
+        $router->get('/nasabah', 'NasabahController@detail');
         $router->post('/regnasabah', 'NasabahController@store');
-        $router->post('/updatenasabah', 'NasabahController@update');
 
         // Promo Splash Screen
         $router->get('/showsplash', 'SplashController@show');
@@ -155,5 +162,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['middleware' => 'authuser'], function () use ($router) {
         // Update Pass PIN Email Username Phone
         $router->put('/upuser', 'AuthController@update');
+        $router->get('/logout', 'AuthController@logout');
     });
 });

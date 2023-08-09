@@ -124,7 +124,8 @@
                                     class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-box w-40">
                                     <li><a href="/profil" class="hover:bg-gray-50"><i class="fas fa-id-card"></i>
                                             Profil</a></li>
-                                    <li><a class="hover:bg-gray-50"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+                                    <li><a onclick="logoutUser()" class="hover:bg-gray-50"><i
+                                                class="fas fa-sign-out-alt"></i> Keluar</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -201,9 +202,9 @@
                             </li>
                             <a id="signOutBar" href="#"
                                 class="my-1 items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                        py-1 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
-                        hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
-                        disabled:opacity-50 disabled:shadow-none flex"
+                                py-1 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
+                                hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
+                                disabled:opacity-50 disabled:shadow-none flex"
                                 data-ripple-light="true">
                                 <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Keluar
                             </a>

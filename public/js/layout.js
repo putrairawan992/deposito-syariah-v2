@@ -31,6 +31,7 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
         },
         success: function (data) {
             if (goto == "userprofile") userProfileNa(data);
+            else if (goto == "showProfile") showProfile(data);
             else if (goto == "jenisLogin") jenisLogin(data);
             else if (goto == "afterLogin") afterLogin(data);
             else if (goto == "updatePINPass") updatePINPass(data);
@@ -118,7 +119,7 @@ function userProfileNa(data) {
     }
 
     if (data["message"] == "Unauthorized.") {
-        window.localStorage.removeItem("jwttoken");
+        // window.localStorage.removeItem("jwttoken");
         window.open(serverURL + "login", "_self");
     }
 
@@ -204,15 +205,15 @@ function buildDataTable(
 function logoutUser() {
     swal({
         icon: "warning",
-        title: "Logout Sistem",
+        title: "Logout",
         text: "Anda melakukan logout Aplikasi",
-        button: true,
+        button: false,
     });
+    ajaxCall(serverApi + "logout", null, "GET");
     window.localStorage.removeItem("jwttoken");
-    ajaxCall(serverApi + "logout", null, "POST");
     setTimeout(function () {
         window.open("/login", "_self");
-    }, 1000);
+    }, 1500);
 }
 
 function excelFileToJSON(file, goto) {

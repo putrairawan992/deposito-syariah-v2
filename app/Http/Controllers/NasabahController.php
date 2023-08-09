@@ -10,12 +10,71 @@ use App\Http\helpers;
 
 class NasabahController extends Controller
 {
-    public function detail($iduser)
+    public function detail()
     {
         $getNasabah = DB::table('users')
-            ->wherein('users.iduser', $iduser)
+            ->where('users.iduser', auth()->user()->iduser)
             ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
             ->first();
+
+        $kriptorone = $getNasabah->kriptorone;
+        $kriptortwo = $getNasabah->kriptortwo;
+        if ($getNasabah->email != null) {
+            $getNasabah->email = dekripsina($getNasabah->email, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->username != null) {
+            $getNasabah->username = dekripsina($getNasabah->username, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->phone != null) {
+            $getNasabah->phone = dekripsina($getNasabah->phone, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->store_token != null) {
+            $getNasabah->store_token = dekripsina($getNasabah->store_token, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->reset_token != null) {
+            $getNasabah->reset_token = dekripsina($getNasabah->reset_token, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->nama != null) {
+            $getNasabah->nama = dekripsina($getNasabah->nama, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->ktp != null) {
+            $getNasabah->ktp = dekripsina($getNasabah->ktp, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->tmpt_lahir != null) {
+            $getNasabah->tmpt_lahir = dekripsina($getNasabah->tmpt_lahir, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->tgl_lahir != null) {
+            $getNasabah->tgl_lahir = dekripsina($getNasabah->tgl_lahir, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->ibu_kandung != null) {
+            $getNasabah->ibu_kandung = dekripsina($getNasabah->ibu_kandung, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->alamat != null) {
+            $getNasabah->alamat = dekripsina($getNasabah->alamat, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->alamat_kerja != null) {
+            $getNasabah->alamat_kerja = dekripsina($getNasabah->alamat_kerja, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->nama_ahli_waris != null) {
+            $getNasabah->nama_ahli_waris = dekripsina($getNasabah->nama_ahli_waris, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->ktp_ahli_waris != null) {
+            $getNasabah->ktp_ahli_waris = dekripsina($getNasabah->ktp_ahli_waris, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->phone_ahli_waris != null) {
+            $getNasabah->phone_ahli_waris = dekripsina($getNasabah->phone_ahli_waris, $kriptorone, $kriptortwo);
+        }
+
+        unset($getNasabah->otp);
+        unset($getNasabah->pin);
+        unset($getNasabah->password);
+        unset($getNasabah->store_token);
+        unset($getNasabah->reset_token);
+        unset($getNasabah->role);
+        unset($getNasabah->status);
+        unset($getNasabah->kriptorone);
+        unset($getNasabah->kriptortwo);
+
         return response()->json($getNasabah, 200);
     }
 
@@ -25,8 +84,6 @@ class NasabahController extends Controller
         $id_user = auth()->user()->iduser;
         $nama = $request->nama;
         $ktp = $request->ktp;
-        $image_ktp = $request->image_ktp;
-        $image_selfie = $request->image_selfie;
         $tmpt_lahir = $request->tmpt_lahir;
         $tgl_lahir = $request->tgl_lahir;
         $ibu_kandung = $request->ibu_kandung;
@@ -39,9 +96,12 @@ class NasabahController extends Controller
         $penghasilan = $request->penghasilan;
         $nama_ahli_waris = $request->nama_ahli_waris;
         $ktp_ahli_waris = $request->ktp_ahli_waris;
-        $image_ktp_ahli_waris = $request->image_ktp_ahli_waris;
         $hub_ahli_waris = $request->hub_ahli_waris;
         $phone_ahli_waris = $request->phone_ahli_waris;
+
+        $image_ktp = $request->image_ktp;
+        $image_selfie = $request->image_selfie;
+        $image_ktp_ahli_waris = $request->image_ktp_ahli_waris;
 
         $id_bank = $request->id_bank;
         $norek = $request->norek;
@@ -58,37 +118,48 @@ class NasabahController extends Controller
         }
 
         // Check if password is greater than 5 character
-        if (strlen($ktp) < 12) {
-            return response()->json('No KTP anda belum lengkap', 400);
+        if (!empty($ktp)) {
+            if (strlen($ktp) < 12) {
+                return response()->json('No KTP anda belum lengkap', 400);
+            }
         }
 
         // Check if username, email, phone already exist
-        $cekData = User::all();
+        $cekData = DB::table('users')
+            ->where('iduser', '!=', $id_user)
+            ->wherein('role', [0, 10])
+            ->get();
         foreach ($cekData as $key => $value) {
             $dekripEmail = null;
             if ($value->email != null) {
                 $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
             }
 
-            if ($email == $dekripEmail) {
-                return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
+            if (!empty($email)) {
+                if ($email == $dekripEmail) {
+                    return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 403);
+                    break;
+                }
             }
         }
 
+        // Check nasabah already exist
         $cekNasabah = DB::table('users')
+            ->where('users.iduser', '!=', $id_user)
             ->wherein('role', [0, 10])
             ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
             ->get();
         foreach ($cekNasabah as $key => $value) {
-            $dekripKTP = null;
-            if ($value->ktp != null) {
-                $dekripKTP = dekripsina($value->ktp, $value->kriptorone, $value->kriptortwo);
-            }
+            $dekripKtp = null;
+            $kriptorone = $value->kriptorone;
+            $kriptortwo = $value->kriptortwo;
 
-            if ($ktp == $dekripKTP) {
-                return response()->json('No KTP sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
+            if (!empty($value->ktp)) {
+                $dekripKtp = dekripsina($value->nama, $kriptorone, $kriptortwo);
+                if ($ktp == $dekripKtp) {
+                    return response()->json('No KTP sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
             }
         }
 
@@ -136,14 +207,14 @@ class NasabahController extends Controller
             $phone_ahli_waris = oldenkripsina($phone_ahli_waris, $kriptorone, $kriptortwo);
         }
 
-        $insertDataBank = [
+        $dataBank = [
             'id_bank' => $id_bank,
             'norek' => $norek,
             'atas_nama' => $atas_nama,
             'user_created' => auth()->user()->iduser,
         ];
 
-        $insertData = [
+        $dataNasabah = [
             'id_user' => $id_user,
             'nama' => $nama,
             'ktp' => $ktp,
@@ -163,16 +234,30 @@ class NasabahController extends Controller
             'jenis_pekerjaan' => $jenis_pekerjaan,
             'penghasilan' => $penghasilan,
             'hub_ahli_waris' => $hub_ahli_waris,
-            'user_created' => auth()->user()->iduser,
         ];
 
-        // return response()->json([$insertData, $insertDataBank], 400);
+        $cekDataNasabah = DB::table('users')
+            ->where('users.iduser', $id_user)
+            ->first();
+
         try {
-            DB::table('users')
-                ->where('iduser', $id_user)
-                ->update(['email' => $email, 'role' => 10, 'updated_at' => date('Y-m-d h:i:s')]);
-            DB::table('nasabah')->insert($insertData);
-            return response()->json('Register Succesfully', 200);
+            if ($cekDataNasabah) {
+                $dataNasabah['user_created'] = $id_user;
+                DB::table('users')
+                    ->where('iduser', $id_user)
+                    ->update(['email' => $email, 'role' => 10, 'user_updated' => $id_user, 'updated_at' => date('Y-m-d h:i:s')]);
+                DB::table('nasabah')->insert($dataNasabah);
+                return response()->json('Register Succesfully', 200);
+            } else {
+                $dataNasabah['user_updated'] = $id_user;
+                $dataNasabah['updated_at'] = date('Y-m-d h:i:s');
+                DB::table('users')
+                    ->where('iduser', $id_user)
+                    ->update(['email' => $email, 'user_updated' => $id_user, 'updated_at' => date('Y-m-d h:i:s')]);
+                DB::table('nasabah')
+                    ->where('id_user', $id_user)
+                    ->update($updateUser);
+            }
         } catch (\Exception $e) {
             return response()->json([$e->getMessage(), $insertData], 400);
         }
@@ -220,7 +305,6 @@ class NasabahController extends Controller
             ->get();
         foreach ($cekData as $key => $value) {
             $dekripEmail = null;
-            $dekripPhone = null;
             if ($value->email != null) {
                 $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
             }
@@ -241,8 +325,6 @@ class NasabahController extends Controller
             ->get();
         foreach ($cekNasabah as $key => $value) {
             $dekripKtp = null;
-            $dekripIdprivy = null;
-
             $kriptorone = $value->kriptorone;
             $kriptortwo = $value->kriptortwo;
 
@@ -250,14 +332,6 @@ class NasabahController extends Controller
                 $dekripKtp = dekripsina($value->nama, $kriptorone, $kriptortwo);
                 if ($ktp == $dekripKtp) {
                     return response()->json('No KTP sudah digunakan, Silahkan gunakan yang lain', 404);
-                    break;
-                }
-            }
-
-            if (!empty($value->id_privy)) {
-                $dekripIdprivy = dekripsina($value->kode_bank, $kriptorone, $kriptortwo);
-                if ($id_privy == $dekripIdprivy) {
-                    return response()->json('ID Privy sudah digunakan, Silahkan gunakan yang lain', 404);
                     break;
                 }
             }
@@ -307,9 +381,6 @@ class NasabahController extends Controller
         $updateUser['user_updated'] = $id_user;
         $updateUser['updated_at'] = date('Y-m-d h:i:s');
 
-        $updateData['user_updated'] = $id_user;
-        $updateData['updated_at'] = date('Y-m-d h:i:s');
-
         // return response()->json([$updateData, $updateUser], 400);
         try {
             DB::table('users')
@@ -317,7 +388,7 @@ class NasabahController extends Controller
                 ->update($updateUser);
             DB::table('nasabah')
                 ->where('id_user', $id_user)
-                ->update($updateData);
+                ->update($updateUser);
             return response()->json('Update Succesfully', 200);
         } catch (\Exception $e) {
             return response()->json([$e->getMessage(), $insertData], 400);

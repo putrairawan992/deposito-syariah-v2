@@ -581,16 +581,21 @@ class AuthController extends Controller
                             $this->storeToken($idNa, $token, $kriptorone, $kriptortwo);
                             return $this->respondWithToken($token);
                         } else {
-                            // return response()->json('isi pass', 403);
-                            request()->merge([$loginType => $username]);
+                            foreach ($cekRole as $value) {
+                                $kriptorone = $value->kriptorone;
+                                $kriptortwo = $value->kriptortwo;
+                                $dekripPhone = dekripsina($value->phone, $kriptorone, $kriptortwo);
+                                if ($username == $dekripPhone) {
+                                    $loginPhone = $value->phone;
+                                    break;
+                                }
+                            }
+
+                            request()->merge([$loginType => $loginPhone]);
                             $credentials = request([$loginType, 'password']);
 
                             if (!($token = auth()->attempt($credentials))) {
-                                return response()->json(['status' => 'failed', 'message' => 'Username atau Password Salah']);
-                            }
-
-                            if (auth()->user()->role == 0) {
-                                return response()->json(['status' => 'error', 'message' => 'Akun Anda Belum Aktif, Pastikan data anda lengkap']);
+                                return response()->json('Username atau Password Salah', 403);
                             }
 
                             if ($oldToken != null) {
@@ -646,11 +651,7 @@ class AuthController extends Controller
             $credentials = request([$loginType, 'password']);
 
             if (!($token = auth()->attempt($credentials))) {
-                return response()->json(['status' => 'failed', 'message' => 'Username atau Password Salah']);
-            }
-
-            if (auth()->user()->role == 0) {
-                return response()->json(['status' => 'error', 'message' => 'Akun Anda Belum Aktif, Pastikan data anda lengkap']);
+                return response()->json('Username atau Password Salah', 403);
             }
 
             if ($oldToken != null) {
@@ -687,7 +688,7 @@ class AuthController extends Controller
         $id = auth()->user()->iduser;
         auth()->logout();
         $del = DB::table('users')
-            ->where('id', $id)
+            ->where('iduser', $id)
             ->update(['store_token' => null]);
         return response()->json(['message' => 'Successfully logged out']);
     }
