@@ -29,6 +29,12 @@ $router->get('/admin', function () use ($router) {
 $router->get('/admin/dashboard', function () use ($router) {
     return view('admin.dashboard');
 });
+$router->get('/admin/nasabah', function () use ($router) {
+    return view('admin.nasabah');
+});
+$router->get('/admin/mitra', function () use ($router) {
+    return view('admin.mitra');
+});
 
 // Nasabah Page
 $router->get('/dashboard', function () use ($router) {

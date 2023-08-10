@@ -108,16 +108,16 @@
             </svg>
         </div>
         <!-- MAX SIDEBAR-->
-        <div class="max hidden text-white pr-2 mt-20 flex-col space-y-2 w-full h-[calc(100vh)]">
+        <div class="max hidden text-white pr-2 mt-16 flex-col space-y-2 w-full h-[calc(100vh)]">
             <a href="#"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div> Dashboard</div><i class="fas fa-tachometer-alt pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/mitra"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Mitra</div><i class="fas fa-handshake pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/nasabah"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Nasabah</div><i class="fas fa-users pr-5"></i>
             </a>
@@ -151,16 +151,16 @@
             </a>
         </div>
         <!-- MINI SIDEBAR-->
-        <div class="mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]">
+        <div class="mini mt-16 flex flex-col space-y-2 w-full h-[calc(100vh)]">
             <a href="#"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-tachometer-alt"></i>
             </a>
-            <a href="#"
+            <a href="/admin/mitra"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-handshake"></i>
             </a>
-            <a href="#"
+            <a href="/admin/nasabah"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-users"></i>
             </a>
