@@ -16,9 +16,9 @@ CREATE TABLE users (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL
 );
 
 -- --------------------------------------------------------
@@ -31,12 +31,9 @@ CREATE TABLE bank (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id)
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL
 );
 
 -- --------------------------------------------------------
@@ -48,12 +45,9 @@ CREATE TABLE kota (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   CONSTRAINT kota_na UNIQUE (kota)
 );
 
@@ -65,12 +59,9 @@ CREATE TABLE coa (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   CONSTRAINT kode_na UNIQUE (kode)
 );
 
@@ -89,7 +80,7 @@ CREATE TABLE nasabah (
   ibu_kandung varchar(255) DEFAULT NULL,
   id_privy nvarchar(255) NULL,
   status_pernikahan int NULL,
-  jenis_pekerjaan int NULL,
+  jenis_pekerjaan nvarchar(255) NULL,
   alamat varchar(255) DEFAULT NULL,
   alamat_kerja varchar(255) DEFAULT NULL,
   penghasilan int NULL,
@@ -102,32 +93,25 @@ CREATE TABLE nasabah (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
-  FOREIGN KEY (id_validator) REFERENCES users(id)
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE norek_nasabah (
   id int IDENTITY(1,1) PRIMARY KEY,
-  id_user INT NOT NULL,
-  id_bank int NOT NULL,
+  id_user varchar(255) NOT NULL,
+  bank varchar(255) NOT NULL,
   norek varchar(255) NOT NULL,
   atas_nama varchar(255) DEFAULT NULL,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  CONSTRAINT fk_nasabah_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL
 );
 
 -- --------------------------------------------------------
@@ -167,13 +151,9 @@ CREATE TABLE mitra (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
-  FOREIGN KEY (id_validator) REFERENCES users(id)
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL
   -- CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 
@@ -187,12 +167,9 @@ CREATE TABLE norek_mitra (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   CONSTRAINT fk_norekmitra_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id),
   CONSTRAINT fk_norekmitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
@@ -208,12 +185,9 @@ CREATE TABLE neraca (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   CONSTRAINT fk_neraca_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
 );
 
@@ -228,14 +202,11 @@ CREATE TABLE splash_screen (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
   CONSTRAINT fk_splash FOREIGN KEY (id_admin) REFERENCES users(id)
 );
 
@@ -251,14 +222,11 @@ CREATE TABLE promo (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
   CONSTRAINT fk_promo_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
 );
 
@@ -278,14 +246,11 @@ CREATE TABLE produk (
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
-  user_created int DEFAULT NULL,
-  user_updated int DEFAULT NULL,
-  user_deleted int DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,
-  FOREIGN KEY (user_created) REFERENCES users(id),
-  FOREIGN KEY (user_updated) REFERENCES users(id),
-  FOREIGN KEY (user_deleted) REFERENCES users(id),
   CONSTRAINT fk_produk_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
 );
 
@@ -293,11 +258,10 @@ CREATE TABLE produk (
 
 CREATE TABLE log_app (
   id INT IDENTITY(1,1) PRIMARY KEY,
-  id_user int not null,
+  id_user varchar(255) not null,
   keterangan text not null,
   notifikasi int DEFAULT 0,
-  created_at datetime DEFAULT GETDATE(),
-  CONSTRAINT fk_logapp_user FOREIGN KEY (id_user) REFERENCES users(id)
+  created_at datetime DEFAULT GETDATE()
 );
 
 -- --------------------------------------------------------

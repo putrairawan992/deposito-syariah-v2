@@ -53,14 +53,14 @@
                         <ul tabindex="0"
                             class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md w-72 mt-5 font-sans text-gray-700"
                             id="listNotif">
-                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                    1</a></li>
-                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                    1</a></li>
-                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                    1</a></li>
-                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                    2</a></li>
+                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                    Nasabah No 00001 menunggu Validasi</a></li>
+                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                    Nasabah No 00001 menunggu Validasi</a></li>
+                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                    Nasabah No 00001 menunggu Validasi</a></li>
+                            <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                    Nasabah No 00001 menunggu Validasi</a></li>
                         </ul>
                     </div>
                     <div class="dropdown dropdown-bottom dropdown-end">
@@ -109,7 +109,7 @@
         </div>
         <!-- MAX SIDEBAR-->
         <div class="max hidden text-white pr-2 mt-16 flex-col space-y-2 w-full h-[calc(100vh)]">
-            <a href="#"
+            <a href="/admin/dashboard"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div> Dashboard</div><i class="fas fa-tachometer-alt pr-5"></i>
             </a>
@@ -152,7 +152,7 @@
         </div>
         <!-- MINI SIDEBAR-->
         <div class="mini mt-16 flex flex-col space-y-2 w-full h-[calc(100vh)]">
-            <a href="#"
+            <a href="/admin/dashboard"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-tachometer-alt"></i>
             </a>

@@ -104,6 +104,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/hapusmitra/{id}', 'MitraController@delete');
 
         // Nasabah Section
+        $router->get('/allnasabah', 'NasabahController@index');
+        $router->get('/nasabah/{id}', 'NasabahController@getDetail');
         $router->put('/validasinasabah', 'NasabahController@validasinasabah');
         $router->put('/restorenasabah/{id}', 'NasabahController@restore');
         $router->delete('/hapusnasabah/{id}', 'NasabahController@delete');

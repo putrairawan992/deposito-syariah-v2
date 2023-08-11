@@ -10,6 +10,155 @@ use App\Http\helpers;
 
 class NasabahController extends Controller
 {
+    public function index()
+    {
+        $alluser = DB::table('users')
+            ->where('role', 10)
+            ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
+            ->get();
+        foreach ($alluser as $key => $value) {
+            $kriptorone = $value->kriptorone;
+            $kriptortwo = $value->kriptortwo;
+            if ($value->email != null) {
+                $value->email = dekripsina($value->email, $kriptorone, $kriptortwo);
+            }
+            if ($value->username != null) {
+                $value->username = dekripsina($value->username, $kriptorone, $kriptortwo);
+            }
+            if ($value->phone != null) {
+                $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
+            }
+            if ($value->store_token != null) {
+                $value->store_token = dekripsina($value->store_token, $kriptorone, $kriptortwo);
+            }
+            if ($value->reset_token != null) {
+                $value->reset_token = dekripsina($value->reset_token, $kriptorone, $kriptortwo);
+            }
+            if ($value->nama != null) {
+                $value->nama = dekripsina($value->nama, $kriptorone, $kriptortwo);
+            }
+            if ($value->ktp != null) {
+                $value->ktp = dekripsina($value->ktp, $kriptorone, $kriptortwo);
+            }
+            if ($value->tmpt_lahir != null) {
+                $value->tmpt_lahir = dekripsina($value->tmpt_lahir, $kriptorone, $kriptortwo);
+            }
+            if ($value->tgl_lahir != null) {
+                $value->tgl_lahir = dekripsina($value->tgl_lahir, $kriptorone, $kriptortwo);
+            }
+            if ($value->ibu_kandung != null) {
+                $value->ibu_kandung = dekripsina($value->ibu_kandung, $kriptorone, $kriptortwo);
+            }
+            if ($value->alamat != null) {
+                $value->alamat = dekripsina($value->alamat, $kriptorone, $kriptortwo);
+            }
+            if ($value->alamat_kerja != null) {
+                $value->alamat_kerja = dekripsina($value->alamat_kerja, $kriptorone, $kriptortwo);
+            }
+            if ($value->nama_ahli_waris != null) {
+                $value->nama_ahli_waris = dekripsina($value->nama_ahli_waris, $kriptorone, $kriptortwo);
+            }
+            if ($value->ktp_ahli_waris != null) {
+                $value->ktp_ahli_waris = dekripsina($value->ktp_ahli_waris, $kriptorone, $kriptortwo);
+            }
+            if ($value->phone_ahli_waris != null) {
+                $value->phone_ahli_waris = dekripsina($value->phone_ahli_waris, $kriptorone, $kriptortwo);
+            }
+
+            unset($value->otp);
+            unset($value->pin);
+            unset($value->password);
+            unset($value->store_token);
+            unset($value->reset_token);
+            unset($value->role);
+            unset($value->kriptorone);
+            unset($value->kriptortwo);
+        }
+
+        return response()->json($alluser, 200);
+    }
+
+    public function getDetail($id)
+    {
+        $getNasabah = DB::table('users')
+            ->where('iduser', $id)
+            ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
+            ->first();
+
+        $getNasabahBank = DB::table('norek_nasabah')
+            ->where('id_user', $id)
+            ->get();
+
+        $kriptorone = $getNasabah->kriptorone;
+        $kriptortwo = $getNasabah->kriptortwo;
+
+        if (!empty($getNasabahBank)) {
+            foreach ($getNasabahBank as $value) {
+                $value->norek = dekripsina($value->norek, $kriptorone, $kriptortwo);
+                $value->atas_nama = dekripsina($value->atas_nama, $kriptorone, $kriptortwo);
+            }
+        }
+        $getNasabah->listbank = $getNasabahBank;
+
+        if ($getNasabah->email != null) {
+            $getNasabah->email = dekripsina($getNasabah->email, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->username != null) {
+            $getNasabah->username = dekripsina($getNasabah->username, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->phone != null) {
+            $getNasabah->phone = dekripsina($getNasabah->phone, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->store_token != null) {
+            $getNasabah->store_token = dekripsina($getNasabah->store_token, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->reset_token != null) {
+            $getNasabah->reset_token = dekripsina($getNasabah->reset_token, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->nama != null) {
+            $getNasabah->nama = dekripsina($getNasabah->nama, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->ktp != null) {
+            $getNasabah->ktp = dekripsina($getNasabah->ktp, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->tmpt_lahir != null) {
+            $getNasabah->tmpt_lahir = dekripsina($getNasabah->tmpt_lahir, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->tgl_lahir != null) {
+            $getNasabah->tgl_lahir = dekripsina($getNasabah->tgl_lahir, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->ibu_kandung != null) {
+            $getNasabah->ibu_kandung = dekripsina($getNasabah->ibu_kandung, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->alamat != null) {
+            $getNasabah->alamat = dekripsina($getNasabah->alamat, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->alamat_kerja != null) {
+            $getNasabah->alamat_kerja = dekripsina($getNasabah->alamat_kerja, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->nama_ahli_waris != null) {
+            $getNasabah->nama_ahli_waris = dekripsina($getNasabah->nama_ahli_waris, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->ktp_ahli_waris != null) {
+            $getNasabah->ktp_ahli_waris = dekripsina($getNasabah->ktp_ahli_waris, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->phone_ahli_waris != null) {
+            $getNasabah->phone_ahli_waris = dekripsina($getNasabah->phone_ahli_waris, $kriptorone, $kriptortwo);
+        }
+
+        unset($getNasabah->otp);
+        unset($getNasabah->pin);
+        unset($getNasabah->password);
+        unset($getNasabah->store_token);
+        unset($getNasabah->reset_token);
+        unset($getNasabah->role);
+        unset($getNasabah->status);
+        unset($getNasabah->kriptorone);
+        unset($getNasabah->kriptortwo);
+
+        return response()->json($getNasabah, 200);
+    }
+
     public function detail()
     {
         $getNasabah = DB::table('users')
@@ -103,7 +252,7 @@ class NasabahController extends Controller
         $image_selfie = $request->image_selfie;
         $image_ktp_ahli_waris = $request->image_ktp_ahli_waris;
 
-        $id_bank = $request->id_bank;
+        $bank = $request->bank;
         $norek = $request->norek;
         $atas_nama = $request->atas_nama;
 
@@ -208,9 +357,10 @@ class NasabahController extends Controller
         }
 
         $dataBank = [
-            'id_bank' => $id_bank,
-            'norek' => $norek,
-            'atas_nama' => $atas_nama,
+            'bank' => $bank,
+            'norek' => oldenkripsina($norek, $kriptorone, $kriptortwo),
+            'atas_nama' => oldenkripsina($atas_nama, $kriptorone, $kriptortwo),
+            'id_user' => auth()->user()->iduser,
             'user_created' => auth()->user()->iduser,
         ];
 
@@ -247,6 +397,7 @@ class NasabahController extends Controller
                     ->where('iduser', $id_user)
                     ->update(['email' => $email, 'role' => 10, 'user_updated' => $id_user, 'updated_at' => date('Y-m-d h:i:s')]);
                 DB::table('nasabah')->insert($dataNasabah);
+                DB::table('norek_nasabah')->insert($dataBank);
                 return response()->json('Register Succesfully', 200);
             } else {
                 $dataNasabah['user_updated'] = $id_user;

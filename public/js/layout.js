@@ -35,7 +35,9 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "showProfile") showProfile(data);
             else if (goto == "jenisLogin") jenisLogin(data);
             else if (goto == "afterLogin") afterLogin(data);
+            else if (goto == "showAllNasabah") showAllNasabah(data);
             else if (goto == "updatePINPass") updatePINPass(data);
+            else if (goto == "getNasabah") getNasabah(data);
             else swalBerhasil();
         },
         error: function (xhr, XMLHttpRequest, textStatus, errorThrown) {
@@ -149,65 +151,21 @@ function userProfileNa(data) {
     }
 }
 
-function buildDataTable(
-    table,
-    elementId,
-    title,
-    columns,
-    columnDefs = [
-        {
-            searchable: false,
-            orderable: false,
-            targets: 0,
-        },
-    ]
-) {
-    var destination = "#" + elementId;
-    if ($.fn.dataTable.isDataTable(destination)) {
-        $(destination).DataTable().destroy();
-    }
-
+function buildTableNoExport(table, elementId) {
     document.getElementById(elementId).innerHTML += table;
-
-    var t = $(destination).DataTable({
+    new DataTable("#" + elementId, {
         dom: "Bfrtip",
         buttons: [
+            // 'excel', 'pdf', 'print',
             {
-                extend: "excelHtml5",
-                exportOptions: {
-                    columns: [":visible :not(:last-child)"],
-                },
-                title: title,
-                exportOptions: {
-                    columns: columns,
+                text: "Reload",
+                className: "buttons-reload",
+                action: function () {
+                    reloadData();
                 },
             },
-            {
-                extend: "pdfHtml5",
-                exportOptions: {
-                    columns: [":visible :not(:last-child)"],
-                },
-                title: title,
-                exportOptions: {
-                    columns: columns,
-                },
-            },
-            "colvis",
         ],
-        columnDefs: columnDefs,
-        // order: [[1, "asc"]],
     });
-
-    t.on("order.dt search.dt", function () {
-        let i = 1;
-
-        t.cells(null, 0, { search: "applied", order: "applied" }).every(
-            function (cell) {
-                this.data(i++);
-            }
-        );
-    }).draw();
-    $(destination).fadeIn();
 }
 
 function logoutUser() {

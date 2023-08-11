@@ -108,17 +108,17 @@
                                     class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md w-72 mt-5 font-sans text-gray-700"
                                     id="listNotif">
                                     <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                            1</a></li>
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
                                     <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                            1</a></li>
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
                                     <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                            1</a></li>
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
                                     <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">Item
-                                            2</a></li>
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
                                 </ul>
                             </div>
                             <div class="dropdown dropdown-bottom dropdown-end">
