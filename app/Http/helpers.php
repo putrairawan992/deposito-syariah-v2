@@ -5,6 +5,11 @@ function promoPath()
     return 'upload/promo/';
 }
 
+function nasabahPath()
+{
+    return 'upload/dok_nasabah/';
+}
+
 function splashPath()
 {
     return 'upload/splash/';
@@ -140,7 +145,9 @@ function oldenkripsinaFile($uploadedFile, $kriptorone, $kriptortwo, $pathNa, $ol
     // return [$randnum, $kriptortwo];
     $opensslFile = convertToOpensllFile($uploadedFile, $randomBytes, $pathNa);
     $fileAscii = fileToAscii($opensslFile, $randnum, $pathNa);
-    unlink($oldFilePath);
+    if (file_exists($oldFilePath)) {
+        unlink($oldFilePath);
+    }
     return $fileAscii;
 }
 

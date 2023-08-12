@@ -315,9 +315,21 @@ class NasabahController extends Controller
         // Start Enkrip Data
         $getNasabah = DB::table('users')
             ->where('iduser', $id_user)
+            ->leftjoin('nasabah', 'users.iduser', 'nasabah.id_user')
             ->first();
         $kriptorone = $getNasabah->kriptorone;
         $kriptortwo = $getNasabah->kriptortwo;
+
+        // Upload File Function
+        if ($request->hasFile('image_ktp')) {
+            $image_ktp = oldenkripsinaFile($request->file('image_ktp'), $kriptorone, $kriptortwo, nasabahPath(), $getNasabah->image_ktp);
+        }
+        if ($request->hasFile('image_selfie')) {
+            $image_selfie = oldenkripsinaFile($request->file('image_selfie'), $kriptorone, $kriptortwo, nasabahPath(), $getNasabah->image_selfie);
+        }
+        if ($request->hasFile('image_ktp_ahli_waris')) {
+            $image_ktp_ahli_waris = oldenkripsinaFile($request->file('image_ktp_ahli_waris'), $kriptorone, $kriptortwo, nasabahPath(), $getNasabah->image_ktp_ahli_waris);
+        }
 
         if ($email != null) {
             $email = oldenkripsina($email, $kriptorone, $kriptortwo);
@@ -356,50 +368,73 @@ class NasabahController extends Controller
             $phone_ahli_waris = oldenkripsina($phone_ahli_waris, $kriptorone, $kriptortwo);
         }
 
-        $dataBank = [
-            'bank' => $bank,
-            'norek' => oldenkripsina($norek, $kriptorone, $kriptortwo),
-            'atas_nama' => oldenkripsina($atas_nama, $kriptorone, $kriptortwo),
-            'id_user' => auth()->user()->iduser,
-            'user_created' => auth()->user()->iduser,
-        ];
+        if (!empty($bank)) {
+            $dataBank = [
+                'bank' => $bank,
+                'norek' => oldenkripsina($norek, $kriptorone, $kriptortwo),
+                'atas_nama' => oldenkripsina($atas_nama, $kriptorone, $kriptortwo),
+                'id_user' => auth()->user()->iduser,
+                'user_created' => auth()->user()->iduser,
+            ];
+        }
 
-        $dataNasabah = [
-            'id_user' => $id_user,
-            'nama' => $nama,
-            'ktp' => $ktp,
-            'tmpt_lahir' => $tmpt_lahir,
-            'tgl_lahir' => $tgl_lahir,
-            'ibu_kandung' => $ibu_kandung,
-            'alamat' => $alamat,
-            'alamat_kerja' => $alamat_kerja,
-            'nama_ahli_waris' => $nama_ahli_waris,
-            'ktp_ahli_waris' => $ktp_ahli_waris,
-            'phone_ahli_waris' => $phone_ahli_waris,
-            'image_ktp' => $image_ktp,
-            'image_selfie' => $image_selfie,
-            'image_ktp_ahli_waris' => $image_ktp_ahli_waris,
-            'id_privy' => $id_privy,
-            'status_pernikahan' => $status_pernikahan,
-            'jenis_pekerjaan' => $jenis_pekerjaan,
-            'penghasilan' => $penghasilan,
-            'hub_ahli_waris' => $hub_ahli_waris,
-        ];
-
-        $cekDataNasabah = DB::table('users')
-            ->where('users.iduser', $id_user)
-            ->first();
+        $cekDataNasabah = DB::table('nasabah')
+            ->where('id_user', $id_user)
+            ->get();
 
         try {
-            if ($cekDataNasabah) {
+            if (count($cekDataNasabah) == 0) {
+                $dataNasabah = [
+                    'id_user' => $id_user,
+                    'nama' => $nama,
+                    'ktp' => $ktp,
+                    'tmpt_lahir' => $tmpt_lahir,
+                    'tgl_lahir' => $tgl_lahir,
+                    'ibu_kandung' => $ibu_kandung,
+                    'alamat' => $alamat,
+                    'alamat_kerja' => $alamat_kerja,
+                    'nama_ahli_waris' => $nama_ahli_waris,
+                    'ktp_ahli_waris' => $ktp_ahli_waris,
+                    'phone_ahli_waris' => $phone_ahli_waris,
+                    'image_ktp' => $image_ktp,
+                    'image_selfie' => $image_selfie,
+                    'image_ktp_ahli_waris' => $image_ktp_ahli_waris,
+                    'id_privy' => $id_privy,
+                    'status_pernikahan' => $status_pernikahan,
+                    'jenis_pekerjaan' => $jenis_pekerjaan,
+                    'penghasilan' => $penghasilan,
+                    'hub_ahli_waris' => $hub_ahli_waris,
+                    'nama_perusahaan' => $nama_perusahaan,
+                ];
                 $dataNasabah['user_created'] = $id_user;
                 DB::table('users')
                     ->where('iduser', $id_user)
                     ->update(['email' => $email, 'role' => 10, 'user_updated' => $id_user, 'updated_at' => date('Y-m-d h:i:s')]);
                 DB::table('nasabah')->insert($dataNasabah);
-                DB::table('norek_nasabah')->insert($dataBank);
+                if (!empty($bank)) {
+                    DB::table('norek_nasabah')->insert($dataBank);
+                }
                 return response()->json('Register Succesfully', 200);
             } else {
+                $updateUser['nama'] = $nama;
+                $updateUser['ktp'] = $ktp;
+                $updateUser['tmpt_lahir'] = $tmpt_lahir;
+                $updateUser['tgl_lahir'] = $tgl_lahir;
+                $updateUser['ibu_kandung'] = $ibu_kandung;
+                $updateUser['alamat'] = $alamat;
+                $updateUser['alamat_kerja'] = $alamat_kerja;
+                $updateUser['nama_perusahaan'] = $nama_perusahaan;
+                $updateUser['nama_ahli_waris'] = $nama_ahli_waris;
+                $updateUser['ktp_ahli_waris'] = $ktp_ahli_waris;
+                $updateUser['phone_ahli_waris'] = $phone_ahli_waris;
+                $updateUser['image_ktp'] = $image_ktp;
+                $updateUser['image_selfie'] = $image_selfie;
+                $updateUser['image_ktp_ahli_waris'] = $image_ktp_ahli_waris;
+                $updateUser['id_privy'] = $id_privy;
+                $updateUser['status_pernikahan'] = $status_pernikahan;
+                $updateUser['jenis_pekerjaan'] = $jenis_pekerjaan;
+                $updateUser['penghasilan'] = $penghasilan;
+                $updateUser['hub_ahli_waris'] = $hub_ahli_waris;
                 $dataNasabah['user_updated'] = $id_user;
                 $dataNasabah['updated_at'] = date('Y-m-d h:i:s');
                 DB::table('users')
@@ -408,9 +443,10 @@ class NasabahController extends Controller
                 DB::table('nasabah')
                     ->where('id_user', $id_user)
                     ->update($updateUser);
+                return response()->json('Update Succesfully', 200);
             }
         } catch (\Exception $e) {
-            return response()->json([$e->getMessage(), $insertData], 400);
+            return response()->json($e->getMessage(), 400);
         }
     }
 
@@ -548,20 +584,22 @@ class NasabahController extends Controller
 
     public function validasi(Request $request)
     {
-        $user = DB::table('nasabah')->where('id_user', $request->id);
+        $nasabah = DB::table('nasabah')->where('id_user', $request->id);
         if (empty($nasabah->first())) {
             return response()->json('Nasabah tidak ditemukan', 400);
         }
 
+        $status = 0;
         switch ($request->validasi) {
             case 0:
                 $res = 'Data Belum Lengkap';
                 break;
             case 1:
-                $res = 'Nasabah Valid';
+                $res = 'Nasabah Belum Valid';
                 break;
             case 2:
-                $res = 'Nasabah Belum Valid';
+                $res = 'Nasabah Valid';
+                $status = 1;
                 break;
             case 3:
                 $res = 'Nasabah Dinonaktifkan';
@@ -572,8 +610,12 @@ class NasabahController extends Controller
         }
 
         try {
+            DB::table('users')
+                ->where('iduser', $request->id)
+                ->update(['status' => $status]);
             $nasabah->update([
                 'validasi' => $request->validasi,
+                'ket_validasi' => $request->ket_validasi,
                 'id_validator' => auth()->user()->iduser,
             ]);
             return response()->json($res, 200);

@@ -38,6 +38,7 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "showAllNasabah") showAllNasabah(data);
             else if (goto == "updatePINPass") updatePINPass(data);
             else if (goto == "getNasabah") getNasabah(data);
+            else if (goto == "afterSimpanValidasi") afterSimpanValidasi(data);
             else swalBerhasil();
         },
         error: function (xhr, XMLHttpRequest, textStatus, errorThrown) {
@@ -152,6 +153,12 @@ function userProfileNa(data) {
 }
 
 function buildTableNoExport(table, elementId) {
+    if ($.fn.dataTable.isDataTable("#" + elementId)) {
+        $("#" + elementId)
+            .DataTable()
+            .destroy();
+    }
+
     document.getElementById(elementId).innerHTML += table;
     new DataTable("#" + elementId, {
         dom: "Bfrtip",
