@@ -171,5 +171,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         // Update Pass PIN Email Username Phone
         $router->put('/upuser', 'AuthController@update');
         $router->get('/logout', 'AuthController@logout');
+        $router->get('/clearImg', 'NasabahController@clearimg');
     });
 });

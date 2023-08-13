@@ -39,6 +39,7 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "updatePINPass") updatePINPass(data);
             else if (goto == "getNasabah") getNasabah(data);
             else if (goto == "afterSimpanValidasi") afterSimpanValidasi(data);
+            else if (goto == "clearImg") null;
             else swalBerhasil();
         },
         error: function (xhr, XMLHttpRequest, textStatus, errorThrown) {

@@ -91,7 +91,7 @@ class NasabahController extends Controller
 
         $kriptorone = $getNasabah->kriptorone;
         $kriptortwo = $getNasabah->kriptortwo;
-
+        $pathShowImg = 'upload/dok_nasabah/show/';
         if (!empty($getNasabahBank)) {
             foreach ($getNasabahBank as $value) {
                 $value->norek = dekripsina($value->norek, $kriptorone, $kriptortwo);
@@ -144,6 +144,15 @@ class NasabahController extends Controller
         }
         if ($getNasabah->phone_ahli_waris != null) {
             $getNasabah->phone_ahli_waris = dekripsina($getNasabah->phone_ahli_waris, $kriptorone, $kriptortwo);
+        }
+        if ($getNasabah->image_ktp != null) {
+            $getNasabah->image_ktp = dekripsinaFile($getNasabah->image_ktp, $kriptorone, $kriptortwo, $pathShowImg);
+        }
+        if ($getNasabah->image_selfie != null) {
+            $getNasabah->image_selfie = dekripsinaFile($getNasabah->image_selfie, $kriptorone, $kriptortwo, $pathShowImg);
+        }
+        if ($getNasabah->image_ktp_ahli_waris != null) {
+            $getNasabah->image_ktp_ahli_waris = dekripsinaFile($getNasabah->image_ktp_ahli_waris, $kriptorone, $kriptortwo, $pathShowImg);
         }
 
         unset($getNasabah->otp);
@@ -660,5 +669,13 @@ class NasabahController extends Controller
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
+    }
+
+    public function clearimg(Request $request)
+    {
+        if (file_exists($request->img)) {
+            unlink($request->img);
+        }
+        return response()->json('Done', 200);
     }
 }
