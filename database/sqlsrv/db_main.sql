@@ -129,9 +129,9 @@ CREATE TABLE mitra (
   id int IDENTITY(1,1) PRIMARY KEY,
   idmitra varchar(255) NOT NULL,
 
-  nama text NOT NULL,
-  email text NOT NULL,
-  phone text NOT NULL,
+  nama varchar(255)  NOT NULL,
+  email varchar(255)  NOT NULL,
+  phone varchar(255)  NOT NULL,
   mulai_beroperasi date default NULL,
   website varchar(255) default NULL,
   alamat varchar(255) default NULL,

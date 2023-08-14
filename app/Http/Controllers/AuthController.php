@@ -229,7 +229,7 @@ class AuthController extends Controller
         $key = true;
         while ($key) {
             $count = 0;
-            $userId = 'A' . date('y') . rand(1000, 9999) . date('m');
+            $userId = 'A' . date('y') . rand(100, 999) . date('m');
             foreach ($cekUserId as $value) {
                 $noIdNa = $value->id;
                 $noIdNa == $userId ? $count++ : null;

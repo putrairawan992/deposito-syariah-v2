@@ -42,9 +42,10 @@
     <div class="modal">
         <div class="modal-box bg-white text-gray-800">
             <div class="font-sans font-semibold -mt-2 mb-2 text-lg" id="titleModalMitra">Pendaftaran Mitra Bank</div>
-            <label for="modalMitra" class="absolute top-3 right-4 text-xl cursor-pointer"><i
+            <label for="modalMitra" class="absolute top-3 right-4 text-xl cursor-pointer" id="closeModalMitra"><i
                     class="far fa-times-circle"></i></label>
             <form id="form-mitra">
+                <input type="text" hidden id="idmitra" name="idmitra" />
                 <div class="flex flex-col sm:flex-row">
                     <div class="w-full sm:w-1/3 mx-0 sm:mx-5">
                         <div class="font-semibold">Identitas Mitra Bank</div>
@@ -80,7 +81,11 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="mulai_beroperasi" name="mulai_beroperasi"
+                            <div
+                                class="absolute top-2/4 right-2 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500">
+                                <i class="fas fa-calendar" aria-hidden="true"></i>
+                            </div>
+                            <input readonly id="mulai_beroperasi" name="mulai_beroperasi" onfocus="this.showPicker()"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 type="date" />
                             <label
@@ -291,9 +296,14 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                            <div
+                                class="absolute top-2/4 right-2 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500">
+                                <i class="fas fa-calendar" aria-hidden="true"></i>
+                            </div>
                             <input readonly id="tgl_pengesahan_akta" name="tgl_pengesahan_akta"
+                                onfocus="this.showPicker()"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                placeholder=" " />
+                                type="date" placeholder=" " />
                             <label
                                 class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                                 Tanggal Pengesahan Akta
@@ -327,9 +337,13 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="tgl_ijin" name="tgl_ijin"
+                            <div
+                                class="absolute top-2/4 right-2 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500">
+                                <i class="fas fa-calendar" aria-hidden="true"></i>
+                            </div>
+                            <input readonly id="tgl_ijin" name="tgl_ijin" onfocus="this.showPicker()"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                placeholder=" " />
+                                type="date" placeholder=" " />
                             <label
                                 class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                                 Tanggal Ijin Notaris
@@ -490,7 +504,6 @@
         }
 
         $(document).on("click", "#btnMitra", function() {
-            $('#simpanValidasi').hide()
             var row = $(this).closest("tr")
             var id = row.find(".val_iduser").text()
             ajaxCall(serverApi + 'nasabah/' + id, null, "GET", "getNasabah")
@@ -526,6 +539,37 @@
             $('#tgl_ijin').prop('readonly', false)
             $('#status').prop('readonly', false)
             $('#keterangan').prop('readonly', false)
+
+            // Clear Value
+            $('#idmitra').val('')
+            $('#nama').val('')
+            $('#email').val('')
+            $('#phone').val('')
+            $('#mulai_beroperasi').val('')
+            $('#website').val('')
+            $('#alamat').val('')
+            $('#provinsi').val('')
+            $('#kota').val('')
+            $('#id_privy').val('')
+            $('#logo').val('')
+
+            $('#no_npwp').val('')
+            $('#npwp_alamat').val('')
+            $('#provinsiNPWP').val('')
+            $('#npwp_kota').val('')
+            $('#no_akta_pendirian').val('')
+            $('#nama_pengurus').val('')
+            $('#jabatan_pengurus').val('')
+            $('#phone_pengurus').val('')
+
+            $('#no_pengesahan_akta').val('')
+            $('#tgl_pengesahan_akta').val('')
+            $('#nama_notaris').val('')
+            $('#lokasi_notaris').val('')
+            $('#no_ijin').val('')
+            $('#tgl_ijin').val('')
+            $('#status').val('')
+            $('#keterangan').val('')
         }
 
         function simpanMitra() {
@@ -549,6 +593,8 @@
                 },
                 success: function(data) {
                     swalBerhasil()
+                    $('#closeModalMitra').click()
+                    reloadData()
                 },
                 error: function(xhr, XMLHttpRequest, textStatus, errorThrown) {
                     swal({

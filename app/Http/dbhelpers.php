@@ -74,7 +74,7 @@ function generateDb($dbname)
     $createTbTransaksi = createTbTransaksi($dbname);
     if ($createDbTransaksi) {
         if ($createTbTransaksi) {
-            return 'Generate Succesfully';
+            return 'Generate DB and TB Succesfully';
         } else {
             return ['Generate DB Successfully, TB Failed', $createDbTransaksi];
         }
