@@ -23,6 +23,9 @@ CREATE TABLE users (
   user_deleted varchar(255) DEFAULT NULL
 );
 
+CREATE UNIQUE INDEX ux_iduser
+ON users (iduser);
+
 -- --------------------------------------------------------
 
 CREATE TABLE bank (
@@ -99,7 +102,8 @@ CREATE TABLE nasabah (
   deleted_at datetime DEFAULT NULL,
   user_created varchar(255) DEFAULT NULL,
   user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT fk_nasabah FOREIGN KEY (id_user) REFERENCES users(iduser)
 );
 
 -- --------------------------------------------------------
@@ -115,25 +119,26 @@ CREATE TABLE norek_nasabah (
   deleted_at datetime DEFAULT NULL,
   user_created varchar(255) DEFAULT NULL,
   user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT fk_norek_nasabah FOREIGN KEY (id_user) REFERENCES users(iduser)
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE mitra (
   id int IDENTITY(1,1) PRIMARY KEY,
-  idmitra INT NOT NULL,
+  idmitra varchar(255) NOT NULL,
 
-  nama varchar(255) NOT NULL,
-  email varchar(255) default NULL,
-  phone varchar(255) default NULL,
+  nama text NOT NULL,
+  email text NOT NULL,
+  phone text NOT NULL,
   mulai_beroperasi date default NULL,
   website varchar(255) default NULL,
   alamat varchar(255) default NULL,
   kota int NULL,
 
   no_npwp varchar(255) default NULL,
-  npwp_kota int NULL,
+  npwp_kota int default NULL,
   npwp_alamat varchar(255) default NULL,
   no_akta_pendirian varchar(255) default NULL,
   nama_pengurus varchar(255) default NULL,
@@ -151,7 +156,7 @@ CREATE TABLE mitra (
   logo varchar(255) default NULL,
 
   validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid, 3=Tidak Aktif
-  id_validator INT NOT NULL,
+  id_validator varchar(255) NOT NULL,
   keterangan varchar(255) default null,
 
   db_name varchar(255)  default NULL,
@@ -166,26 +171,30 @@ CREATE TABLE mitra (
   -- CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
 );
 
+CREATE UNIQUE INDEX ux_idmitra
+ON mitra (idmitra);
+
 -- --------------------------------------------------------
 
 CREATE TABLE norek_mitra (
   id int IDENTITY(1,1) PRIMARY KEY,
-  id_mitra int not null,
-  id_bank varchar(255) not null,
+  id_mitra varchar(255) not null,
+  nama varchar(255) not null,
   atas_nama varchar(255) not null,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
   user_created varchar(255) DEFAULT NULL,
   user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT fk_norek_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(idmitra)
 );
 
 -- --------------------------------------------------------
 
 CREATE TABLE neraca (
   id int IDENTITY(1,1) PRIMARY KEY,
-  id_mitra INT NOT NULL,
+  id_mitra varchar(255) not null,
   asset INT DEFAULT 0,
   kewajiban INT DEFAULT 0,
   ekuitas INT DEFAULT 0,
@@ -195,7 +204,27 @@ CREATE TABLE neraca (
   user_created varchar(255) DEFAULT NULL,
   user_updated varchar(255) DEFAULT NULL,
   user_deleted varchar(255) DEFAULT NULL,
-  CONSTRAINT fk_neraca_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
+  CONSTRAINT fk_neraca FOREIGN KEY (id_mitra) REFERENCES mitra(idmitra)
+);
+
+-- --------------------------------------------------------
+
+CREATE TABLE promo (
+  id int IDENTITY(1,1) PRIMARY KEY,
+  id_mitra varchar(255) not null,
+  image varchar(255) DEFAULT null,
+  deskripsi varchar(255) not null,
+  status INT DEFAULT 1,
+  end_date date not null,
+  created_at datetime DEFAULT current_timestamp,
+  updated_at datetime DEFAULT NULL,
+  deleted_at datetime DEFAULT NULL,
+  user_created varchar(255) DEFAULT NULL,
+  user_updated varchar(255) DEFAULT NULL,
+  user_deleted varchar(255) DEFAULT NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
+  CONSTRAINT fk_promo FOREIGN KEY (id_mitra) REFERENCES mitra(idmitra)
 );
 
 -- --------------------------------------------------------
@@ -215,26 +244,6 @@ CREATE TABLE splash_screen (
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,
   CONSTRAINT fk_splash FOREIGN KEY (id_admin) REFERENCES users(id)
-);
-
--- --------------------------------------------------------
-
-CREATE TABLE promo (
-  id int IDENTITY(1,1) PRIMARY KEY,
-  id_mitra INT NOT NULL,
-  image varchar(255) DEFAULT null,
-  deskripsi varchar(255) not null,
-  status INT DEFAULT 1,
-  end_date date not null,
-  created_at datetime DEFAULT current_timestamp,
-  updated_at datetime DEFAULT NULL,
-  deleted_at datetime DEFAULT NULL,
-  user_created varchar(255) DEFAULT NULL,
-  user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL,
-  kriptorone varchar(255) default NULL,
-  kriptortwo varchar(255) default NULL,
-  CONSTRAINT fk_promo_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
 );
 
 -- --------------------------------------------------------

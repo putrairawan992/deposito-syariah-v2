@@ -229,7 +229,7 @@ class AuthController extends Controller
         $key = true;
         while ($key) {
             $count = 0;
-            $userId = 'A' . date('ym') . '-' . rand(10000, 99999);
+            $userId = 'A' . date('y') . rand(1000, 9999) . date('m');
             foreach ($cekUserId as $value) {
                 $noIdNa = $value->id;
                 $noIdNa == $userId ? $count++ : null;
@@ -802,7 +802,7 @@ class AuthController extends Controller
         $key = true;
         while ($key) {
             $count = 0;
-            $userId = 'N' . date('ym') . '-' . rand(10000, 99999);
+            $userId = 'N' . date('y') . rand(1000, 9999) . date('m');
             foreach ($cekUserId as $value) {
                 $noIdNa = $value->id;
                 $noIdNa == $userId ? $count++ : null;

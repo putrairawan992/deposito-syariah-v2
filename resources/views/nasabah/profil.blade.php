@@ -29,7 +29,7 @@
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="nama"
+                            <input readonly id="nama" name="nama"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -38,7 +38,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="email"
+                            <input readonly id="email" name="email"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 type="email" placeholder=" " />
                             <label
@@ -47,7 +47,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="phone"
+                            <input readonly id="phone" name="phone"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -56,7 +56,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="alamat"
+                            <input readonly id="alamat" name="alamat"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -65,7 +65,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="id_privy"
+                            <input readonly id="id_privy" name="id_privy"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -116,7 +116,7 @@
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="ktp"
+                            <input readonly id="ktp" name="ktp"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -125,7 +125,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="tmpt_lahir"
+                            <input readonly id="tmpt_lahir" name="tmpt_lahir"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -134,7 +134,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="tgl_lahir"
+                            <input readonly id="tgl_lahir" name="tgl_lahir"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 type="date" placeholder=" " />
                             <label
@@ -143,7 +143,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="ibu_kandung"
+                            <input readonly id="ibu_kandung" name="ibu_kandung"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -164,7 +164,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="jenis_pekerjaan"
+                            <input readonly id="jenis_pekerjaan" name="jenis_pekerjaan"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -173,7 +173,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="nama_perusahaan"
+                            <input readonly id="nama_perusahaan" name="nama_perusahaan"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -182,7 +182,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="alamat_kerja"
+                            <input readonly id="alamat_kerja" name="alamat_kerja"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -213,7 +213,7 @@
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="nama_ahli_waris"
+                            <input readonly id="nama_ahli_waris" name="nama_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -222,7 +222,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="ktp_ahli_waris"
+                            <input readonly id="ktp_ahli_waris" name="ktp_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -231,7 +231,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="phone_ahli_waris"
+                            <input readonly id="phone_ahli_waris" name="phone_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -240,7 +240,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="hub_ahli_waris"
+                            <input readonly id="hub_ahli_waris" name="hub_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -536,7 +536,6 @@
                     Accept: "application/json",
                 },
                 success: function(data) {
-                    console.log(data)
                     swalBerhasil()
                 },
                 error: function(xhr, XMLHttpRequest, textStatus, errorThrown) {

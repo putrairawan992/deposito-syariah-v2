@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\helpers;
+use App\Http\dbhelpers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,63 +15,69 @@ use Illuminate\Support\Facades\Config;
 
 class MitraController extends Controller
 {
-    public function mitra()
+    public function index()
     {
-        $alluser = DB::table('users')
-            ->where('role', 2)
-            ->leftjoin('mitra', 'users.iduser', 'mitra.id_user')
-            ->get();
-        foreach ($alluser as $key => $value) {
+        $allmitra = DB::table('mitra')->get();
+        foreach ($allmitra as $value) {
             $kriptorone = $value->kriptorone;
             $kriptortwo = $value->kriptortwo;
-            if ($value->email != null) {
-                $value->email = dekripsina($value->email, $kriptorone, $kriptortwo);
-            }
-            if ($value->username != null) {
-                $value->username = dekripsina($value->username, $kriptorone, $kriptortwo);
-            }
-            if ($value->phone != null) {
-                $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
-            }
-            if ($value->store_token != null) {
-                $value->store_token = dekripsina($value->store_token, $kriptorone, $kriptortwo);
-            }
-            if ($value->reset_token != null) {
-                $value->reset_token = dekripsina($value->reset_token, $kriptorone, $kriptortwo);
-            }
             if (!empty($value->nama)) {
                 $value->nama = dekripsina($value->nama, $kriptorone, $kriptortwo);
             }
-            if (!empty($value->kode_bank)) {
-                $value->kode_bank = dekripsina($value->kode_bank, $kriptorone, $kriptortwo);
+
+            if (!empty($value->email)) {
+                $value->email = dekripsina($value->email, $kriptorone, $kriptortwo);
             }
-            if (!empty($value->no_npwp)) {
-                $value->no_npwp = dekripsina($value->no_npwp, $kriptorone, $kriptortwo);
+
+            if (!empty($value->phone)) {
+                $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
             }
-            if (!empty($value->no_akta_pendirian)) {
-                $value->no_akta_pendirian = dekripsina($value->no_akta_pendirian, $kriptorone, $kriptortwo);
-            }
-            if (!empty($value->no_pengesahan_akta)) {
-                $value->no_pengesahan_akta = dekripsina($value->no_pengesahan_akta, $kriptorone, $kriptortwo);
-            }
+
             if (!empty($value->website)) {
                 $value->website = dekripsina($value->website, $kriptorone, $kriptortwo);
             }
+
+            if (!empty($value->no_npwp)) {
+                $value->no_npwp = dekripsina($value->no_npwp, $kriptorone, $kriptortwo);
+            }
+
+            if (!empty($value->no_akta_pendirian)) {
+                $value->no_akta_pendirian = dekripsina($value->no_akta_pendirian, $kriptorone, $kriptortwo);
+            }
+
             if (!empty($value->phone_pengurus)) {
                 $value->phone_pengurus = dekripsina($value->phone_pengurus, $kriptorone, $kriptortwo);
             }
+
+            if (!empty($value->no_pengesahan_akta)) {
+                $value->no_pengesahan_akta = dekripsina($value->no_pengesahan_akta, $kriptorone, $kriptortwo);
+            }
+
+            if (!empty($value->no_ijin)) {
+                $value->no_ijin = dekripsina($value->no_ijin, $kriptorone, $kriptortwo);
+            }
+
             if (!empty($value->id_privy)) {
                 $value->id_privy = dekripsina($value->id_privy, $kriptorone, $kriptortwo);
             }
-            if (!empty($value->db_name)) {
-                $value->db_name = dekripsina($value->db_name, $kriptorone, $kriptortwo);
+
+            if (!empty($value->nama_pengurus)) {
+                $value->nama_pengurus = dekripsina($value->nama_pengurus, $kriptorone, $kriptortwo);
             }
-            if (!empty($value->norek_bank)) {
-                $value->norek_bank = dekripsina($value->norek_bank, $kriptorone, $kriptortwo);
+
+            if (!empty($value->jabatan_pengurus)) {
+                $value->jabatan_pengurus = dekripsina($value->jabatan_pengurus, $kriptorone, $kriptortwo);
             }
+
+            if (!empty($value->nama_notaris)) {
+                $value->nama_notaris = dekripsina($value->nama_notaris, $kriptorone, $kriptortwo);
+            }
+
+            unset($value->kriptorone);
+            unset($value->kriptortwo);
         }
 
-        return response()->json($alluser, 200);
+        return response()->json($allmitra, 200);
     }
 
     public function store(Request $request)
@@ -110,40 +117,21 @@ class MitraController extends Controller
             return response()->json('Email tidak Valid', 400);
         }
 
-        // Check if username, email, phone already exist
-        $cekData = DB::table('users')->get();
-        foreach ($cekData as $key => $value) {
-            $dekripEmail = null;
-            $dekripUsername = null;
-            $dekripPhone = null;
-            if (!empty($value->email)) {
-                $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
-            }
-            if ($email == $dekripEmail) {
-                return response()->json('Email sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
-            }
-
-            if (!empty($value->username)) {
-                $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);
-            }
-            if ($username == $dekripUsername) {
-                return response()->json('Username sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
-            }
-
-            if (!empty($value->phone)) {
-                $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
-            }
-
-            if ($phone == $dekripPhone) {
-                return response()->json('No Telepon sudah digunakan, Silahkan gunakan yang lain', 404);
-                break;
-            }
-        }
-
-        // Check mitra already exist
+        // Check mitra already exist, Generate DB Name, Idmitra
         $cekMitra = DB::table('mitra')->get();
+
+        $key = true;
+        while ($key) {
+            $count = 0;
+            $idmitra = 'M' . date('y') . rand(100, 999) . date('m');
+            foreach ($cekMitra as $value) {
+                $value->idmitra == $idmitra ? $count++ : null;
+            }
+            $count == 0 ? ($key = false) : null;
+        }
+        $db_name = 'ds_txm_' . $idmitra;
+        $generateDBName = 'ds_txm_' . $idmitra;
+
         foreach ($cekMitra as $key => $value) {
             $dekripnama = null;
             $dekripemail = null;
@@ -251,120 +239,159 @@ class MitraController extends Controller
         $phone = newenkripsina($phone, $kriptorone, $kriptortwo);
         $nama = newenkripsina($nama, $kriptorone, $kriptortwo);
 
+        if (!empty($nama)) {
+            $nama = newenkripsina($nama, $kriptorone, $kriptortwo);
+        }
+
+        if (!empty($email)) {
+            $email = newenkripsina($email, $kriptorone, $kriptortwo);
+        }
+
+        if (!empty($phone)) {
+            $phone = newenkripsina($phone, $kriptorone, $kriptortwo);
+        }
+
+        if (!empty($website)) {
+            $website = newenkripsina($website, $kriptorone, $kriptortwo);
+        }
+
         if (!empty($no_npwp)) {
             $no_npwp = newenkripsina($no_npwp, $kriptorone, $kriptortwo);
         }
+
         if (!empty($no_akta_pendirian)) {
             $no_akta_pendirian = newenkripsina($no_akta_pendirian, $kriptorone, $kriptortwo);
         }
-        if (!empty($no_pengesahan_akta)) {
-            $no_pengesahan_akta = newenkripsina($no_pengesahan_akta, $kriptorone, $kriptortwo);
-        }
-        if (!empty($website)) {
-            $website = newenkripsina($website, $kriptorone, $kriptortwo);
+
+        if (!empty($db_name)) {
+            $db_name = newenkripsina($db_name, $kriptorone, $kriptortwo);
         }
         if (!empty($phone_pengurus)) {
             $phone_pengurus = newenkripsina($phone_pengurus, $kriptorone, $kriptortwo);
         }
-        if (!empty($id_privy)) {
-            $id_privy = newenkripsina($id_privy, $kriptorone, $kriptortwo);
+
+        if (!empty($no_pengesahan_akta)) {
+            $no_pengesahan_akta = newenkripsina($no_pengesahan_akta, $kriptorone, $kriptortwo);
         }
-        if (!empty($db_name)) {
-            $db_name = newenkripsina($db_name, $kriptorone, $kriptortwo);
-        }
-        if (!empty($norek_bank)) {
-            $norek_bank = newenkripsina($norek_bank, $kriptorone, $kriptortwo);
-        }
-        if (!empty($nama_notaris)) {
-            $nama_notaris = newenkripsina($nama_notaris, $kriptorone, $kriptortwo);
-        }
-        if (!empty($lokasi_notaris)) {
-            $lokasi_notaris = newenkripsina($lokasi_notaris, $kriptorone, $kriptortwo);
-        }
+
         if (!empty($no_ijin)) {
             $no_ijin = newenkripsina($no_ijin, $kriptorone, $kriptortwo);
         }
-        if (!empty($alamat)) {
-            $alamat = newenkripsina($alamat, $kriptorone, $kriptortwo);
+
+        if (!empty($id_privy)) {
+            $id_privy = newenkripsina($id_privy, $kriptorone, $kriptortwo);
         }
-        if (!empty($npwp_provinsi)) {
-            $npwp_provinsi = newenkripsina($npwp_provinsi, $kriptorone, $kriptortwo);
-        }
-        if (!empty($npwp_kota)) {
-            $npwp_kota = newenkripsina($npwp_kota, $kriptorone, $kriptortwo);
-        }
-        if (!empty($npwp_alamat)) {
-            $npwp_alamat = newenkripsina($npwp_alamat, $kriptorone, $kriptortwo);
-        }
+
         if (!empty($nama_pengurus)) {
             $nama_pengurus = newenkripsina($nama_pengurus, $kriptorone, $kriptortwo);
         }
+
         if (!empty($jabatan_pengurus)) {
             $jabatan_pengurus = newenkripsina($jabatan_pengurus, $kriptorone, $kriptortwo);
         }
-        if (!empty($keterangan)) {
-            $keterangan = newenkripsina($keterangan, $kriptorone, $kriptortwo);
-        }
 
-        $insertDataUsers = [
-            'username' => $username,
-            'email' => $email,
-            'password' => $password,
-            'phone' => $phone,
-            'role' => 2,
-            'kriptorone' => $kriptor['kriptorone'],
-            'kriptortwo' => $kriptor['kriptortwo'],
-        ];
+        if (!empty($nama_notaris)) {
+            $nama_notaris = newenkripsina($nama_notaris, $kriptorone, $kriptortwo);
+        }
 
         $insertDataMitra = [
             'nama' => $nama,
-            'kode_bank' => $kode_bank,
-            'no_npwp' => $no_npwp,
-            'no_akta_pendirian' => $no_akta_pendirian,
-            'no_pengesahan_akta' => $no_pengesahan_akta,
+            'email' => $email,
+            'phone' => $phone,
+            'mulai_beroperasi' => $mulai_beroperasi,
             'website' => $website,
-            'phone_pengurus' => $phone_pengurus,
-            'id_privy' => $id_privy,
-            'db_name' => $db_name,
-            'norek_bank' => $norek_bank,
+            'alamat' => $alamat,
+            'kota' => $kota,
 
+            'no_npwp' => $no_npwp,
+            'npwp_kota' => $npwp_kota,
+            'npwp_alamat' => $npwp_alamat,
+            'no_akta_pendirian' => $no_akta_pendirian,
+            'nama_pengurus' => $nama_pengurus,
+            'jabatan_pengurus' => $jabatan_pengurus,
+            'phone_pengurus' => $phone_pengurus,
+
+            'no_pengesahan_akta' => $no_pengesahan_akta,
+            'tgl_pengesahan_akta' => $tgl_pengesahan_akta,
             'nama_notaris' => $nama_notaris,
             'lokasi_notaris' => $lokasi_notaris,
             'no_ijin' => $no_ijin,
-            'kota' => $kota,
-            'alamat' => $alamat,
-            'npwp_provinsi' => $npwp_provinsi,
-            'npwp_kota' => $npwp_kota,
-            'npwp_alamat' => $npwp_alamat,
-            'nama_pengurus' => $nama_pengurus,
-            'jabatan_pengurus' => $jabatan_pengurus,
-            'keterangan' => $keterangan,
-
-            'mulai_beroperasi' => $mulai_beroperasi,
-            'tgl_pendirian' => $tgl_pendirian,
-            'tgl_pengesahan_akta' => $tgl_pengesahan_akta,
             'tgl_ijin' => $tgl_ijin,
-            'id_bank' => $id_bank,
+
+            'id_privy' => $id_privy,
             'logo' => $logo,
+
             'validasi' => $validasi,
             'id_validator' => $id_validator,
+            'keterangan' => $keterangan,
+
+            'idmitra' => $idmitra,
+            'db_name' => $db_name,
+
+            'kriptorone' => $kriptor['kriptorone'],
+            'kriptortwo' => $kriptor['kriptortwo'],
         ];
+        // return response()->json($insertDataMitra, 400);
+        $cekMitra = DB::table('mitra')
+            ->where('idmitra', $idmitra)
+            ->get();
 
-        DB::beginTransaction();
+        // if (count($cekMitra) == 0) {
+        $checkDB = checkDatabaseName($generateDBName);
         try {
-            DB::table('users')->insert([$insertDataUsers]);
-            $getId = DB::table('users')
-                ->where('email', $email)
-                ->first();
-            $insertDataMitra['id_user'] = $getId->id;
-            DB::table('mitra')->insert([$insertDataMitra]);
-
-            DB::commit();
-            return response()->json('Register Mitra Succesfully', 200);
+            DB::table('mitra')->insert($insertDataMitra);
+            $createDB = 'DB Not Created';
+            if (!$checkDB) {
+                $createDB = generateDb($generateDBName);
+            }
+            return response()->json(['Register Mitra Succesfully', $checkDB, $createDB], 200);
         } catch (\Exception $e) {
-            DB::rollback();
             return $e->getMessage();
         }
+        // } else {
+        //     !empty($nama) ? ($updateMitra['nama'] = $nama) : null;
+        //     !empty($email) ? ($updateMitra['email'] = $email) : null;
+        //     !empty($phone) ? ($updateMitra['phone'] = $phone) : null;
+        //     !empty($mulai_beroperasi) ? ($updateMitra['mulai_beroperasi'] = $mulai_beroperasi) : null;
+        //     !empty($website) ? ($updateMitra['website'] = $website) : null;
+        //     !empty($alamat) ? ($updateMitra['alamat'] = $alamat) : null;
+        //     !empty($kota) ? ($updateMitra['kota'] = $kota) : null;
+
+        //     !empty($no_npwp) ? ($updateMitra['no_npwp'] = $no_npwp) : null;
+        //     !empty($npwp_kota) ? ($updateMitra['npwp_kota'] = $npwp_kota) : null;
+        //     !empty($npwp_alamat) ? ($updateMitra['npwp_alamat'] = $npwp_alamat) : null;
+        //     !empty($no_akta_pendirian) ? ($updateMitra['no_akta_pendirian'] = $no_akta_pendirian) : null;
+        //     !empty($nama_pengurus) ? ($updateMitra['nama_pengurus'] = $nama_pengurus) : null;
+        //     !empty($jabatan_pengurus) ? ($updateMitra['jabatan_pengurus'] = $jabatan_pengurus) : null;
+        //     !empty($phone_pengurus) ? ($updateMitra['phone_pengurus'] = $phone_pengurus) : null;
+
+        //     !empty($no_pengesahan_akta) ? ($updateMitra['no_pengesahan_akta'] = $no_pengesahan_akta) : null;
+        //     !empty($tgl_pengesahan_akta) ? ($updateMitra['tgl_pengesahan_akta'] = $tgl_pengesahan_akta) : null;
+        //     !empty($nama_notaris) ? ($updateMitra['nama_notaris'] = $nama_notaris) : null;
+        //     !empty($lokasi_notaris) ? ($updateMitra['lokasi_notaris'] = $lokasi_notaris) : null;
+        //     !empty($no_ijin) ? ($updateMitra['no_ijin'] = $no_ijin) : null;
+        //     !empty($tgl_ijin) ? ($updateMitra['tgl_ijin'] = $tgl_ijin) : null;
+
+        //     !empty($id_privy) ? ($updateMitra['id_privy'] = $id_privy) : null;
+        //     !empty($logo) ? ($updateMitra['logo'] = $logo) : null;
+
+        //     !empty($validasi) ? ($updateMitra['validasi'] = $validasi) : null;
+        //     !empty($id_validator) ? ($updateMitra['id_validator'] = $id_validator) : null;
+        //     !empty($keterangan) ? ($updateMitra['keterangan'] = $keterangan) : null;
+
+        //     $updateMitra['user_updated'] = auth()->user()->iduser;
+        //     $updateMitra['updated_at'] = date('Y-m-d H:i:s');
+        //     $updateMitra['kriptorone'] = $kriptor['kriptorone'];
+        //     $updateMitra['kriptortwo'] = $kriptor['kriptortwo'];
+        //     try {
+        //         DB::table('mitra')
+        //             ->where('$idmitra', $$idmitra)
+        //             ->update($updateMitra);
+        //         return response()->json('Update Mitra Succesfully', 200);
+        //     } catch (\Exception $e) {
+        //         return $e->getMessage();
+        //     }
+        // }
     }
 
     public function update(Request $request)
@@ -788,103 +815,5 @@ class MitraController extends Controller
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
-    }
-
-    // Generate DB
-    protected function createDbTransaksi($dbname)
-    {
-        $connection = 'db2';
-        $query = "CREATE DATABASE $dbname";
-        try {
-            DB::connection($connection)->statement($query);
-            // Switch to the new database
-            config(["database.connections.{$connection}.database" => $dbname]);
-            DB::purge($connection);
-            return true;
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
-    }
-
-    protected function createTbTransaksi($dbname)
-    {
-        try {
-            Schema::create('transaksi', function (Blueprint $table) {
-                $table->increments('id');
-                // $table->integer('id_coa');
-                $table->integer('id_coa')->nullable();
-                $table->integer('id_nasabah');
-                $table->integer('id_mitra');
-                $table->integer('id_produk');
-                $table->integer('predecessor')->default(0);
-                $table->string('no_transaksi');
-                $table->string('amount');
-                $table->string('bagi_hasil')->nullable();
-                $table->string('bukti_transfer')->nullable();
-                $table->string('tenor')->nullable();
-                $table->integer('aro')->nullable();
-                $table->datetime('tgl_approve')->nullable();
-                $table->integer('jenis')->default(0);
-                $table->integer('status')->default(0);
-                $table->string('kriptorone');
-                $table->string('kriptortwo');
-                $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            });
-            Schema::create('rekap', function (Blueprint $table) {
-                $table->increments('id');
-                // $table->integer('id_coa');
-                $table->integer('id_coa')->nullable();
-                $table->integer('id_produk');
-                $table->integer('tahun');
-                $table->integer('bulan');
-                $table->integer('jenis')->default(0);
-                $table->string('kriptorone');
-                $table->string('kriptortwo');
-                $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            });
-            Schema::create('log_transaksi', function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('id_user');
-                $table->text('keterangan');
-                $table->integer('notifikasi');
-                $table->string('kriptorone');
-                $table->string('kriptortwo');
-                $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            });
-            return true;
-        } catch (\Throwable $th) {
-            return false;
-            // return [$dbname, $th->getMessage()];
-        }
-    }
-
-    protected function generateDb($dbname)
-    {
-        $createDbTransaksi = $this->createDbTransaksi($dbname);
-        DB::reconnect();
-        $createTbTransaksi = $this->createTbTransaksi($dbname);
-
-        if ($createDbTransaksi) {
-            if ($createTbTransaksi) {
-                return 'Generate Succesfully';
-            } else {
-                return ['Generate DB Successfully, TB Failed', $createDbTransaksi];
-            }
-        } else {
-            return ['Generate DB Failed', $createDbTransaksi];
-        }
-    }
-
-    protected function checkDatabaseName($dbname)
-    {
-        // Get all database names on the current connection
-        $databaseNames = DB::connection()->select('SELECT name FROM sys.databases');
-
-        $result = [];
-        foreach ($databaseNames as $database) {
-            $result[] = $database->name;
-        }
-
-        return array_search($dbname, $result);
     }
 }
