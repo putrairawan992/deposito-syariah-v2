@@ -9,25 +9,27 @@
 
     <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex justify-center">
         <div style="max-width: 900px" class="bg-white rounded-lg p-4 mb-2 w-80 sm:w-full">
-            <div class="mx-0 sm:mx-4 font-semibold text-xl">Profil Anda</div>
-            <div class="mx-0 sm:mx-4 mb-4 mt-2 flex items-center bg-gray-200 rounded-md shadow-sm shadow-gray-600"
-                style="max-width: 500px">
-                <i class="fas fa-exclamation-circle text-xl ml-4 mr-2"></i>
-                <p class="text-sm p-2">
-                    Silahkan mengisi profil Anda dengan lengkap dan sesuai, terimakasih
-                </p>
+            <div class="sm:flex sm:items-center sm:justify-between mb-4">
+                <div class="mx-0 sm:mx-4 font-semibold text-xl mt-2">Profil Anda</div>
+                <div class="mt-2 sm:mt-0 w-full mr-4 flex items-center bg-gray-200 rounded-md shadow-sm shadow-gray-600"
+                    style="max-width: 500px">
+                    <i class="fas fa-exclamation-circle text-xl ml-4 mr-2"></i>
+                    <p class="text-sm p-2">
+                        Silahkan mengisi profil Anda dengan lengkap dan sesuai, terimakasih
+                    </p>
+                </div>
             </div>
             <form id="form-profil">
                 <div class="flex flex-col sm:flex-row">
 
-                    <div class="w-full sm:w-1/2 mx-0 sm:mx-5">
-                        <div class="font-semibold">Identitas</div>
+                    <div class="w-full sm:w-1/3 mx-0 sm:mx-5">
+                        <div class="font-semibold text-sm">Identitas</div>
                         <div class="flex flex-col mb-4">
                             <div class="h-1 w-1 rounded-full bg-black"></div>
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="nama" id="nama"
+                            <input readonly id="nama"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -36,7 +38,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="email" id="email"
+                            <input readonly id="email"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 type="email" placeholder=" " />
                             <label
@@ -45,7 +47,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="phone" id="phone"
+                            <input readonly id="phone"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -54,7 +56,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="alamat" id="alamat"
+                            <input readonly id="alamat"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -63,59 +65,21 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="id_privy" id="id_privy"
+                            <input readonly id="id_privy"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
                                 class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                                Punya PrivyID
+                                PrivyID
                             </label>
                         </div>
 
-                        <div class="font-semibold mt-4">Rekening Nasabah</div>
+                        <div class="font-semibold text-sm" style="margin-top:13px">Upload Foto</div>
                         <div class="flex flex-col mb-4">
                             <div class="h-1 w-1 rounded-full bg-black"></div>
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
-                        <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <select name="namaBank" id="namaBank"
-                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
-                                <option value="brazil">-- Pilih --</option>
-                                <option value="brazil">BCA</option>
-                                <option value="bucharest">BNI</option>
-                                <option value="london">Mandiri</option>
-                                <option value="washington">BRI</option>
-                            </select>
-                            <label
-                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                                Pilih Bank
-                            </label>
-                        </div>
-                        <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="norek" id="norek"
-                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                placeholder=" " />
-                            <label
-                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                                Nomor Rekening
-                            </label>
-                        </div>
-                        <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="atas_nama" id="atas_nama"
-                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                placeholder=" " />
-                            <label
-                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                                Nama Pemilik Rekening
-                            </label>
-                        </div>
-
-                        <div class="font-semibold" style="margin-top:18px">Upload Foto</div>
-                        <div class="flex flex-col mb-4">
-                            <div class="h-1 w-1 rounded-full bg-black"></div>
-                            <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
-                        </div>
-                        <div class="mb-3 relative h-11 w-full min-w-[200px]">
+                        <div class="mb-3 relative z-0 h-11 w-full min-w-[200px]">
                             <input name="image_ktp" id="image_ktp"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 type="file" accept="image/png, image/gif, image/jpeg" placeholder=" " />
@@ -124,7 +88,7 @@
                                 Foto KTP
                             </label>
                         </div>
-                        <div class="mb-3 relative h-11 w-full min-w-[200px]">
+                        <div class="mb-3 relative z-0 h-11 w-full min-w-[200px]">
                             <input name="image_selfie" id="image_selfie"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 type="file" accept="image/png, image/gif, image/jpeg" placeholder=" " />
@@ -133,7 +97,7 @@
                                 Foto Selfie Nasabah
                             </label>
                         </div>
-                        <div class="mb-3 relative h-11 w-full min-w-[200px]">
+                        <div class="mb-3 relative z-0 h-11 w-full min-w-[200px]">
                             <input name="image_ktp_ahli_waris" id="image_ktp_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 type="file" accept="image/png, image/gif, image/jpeg" placeholder=" " />
@@ -142,16 +106,17 @@
                                 Foto KTP Ahli Waris
                             </label>
                         </div>
+
                     </div>
 
-                    <div class="w-full sm:w-1/2 mx-0 sm:mx-5">
-                        <div class="font-semibold">Detail</div>
+                    <div class="w-full sm:w-1/3 mx-0 sm:mx-5">
+                        <div class="font-semibold text-sm">Detail</div>
                         <div class="flex flex-col mb-4">
                             <div class="h-1 w-1 rounded-full bg-black"></div>
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="ktp" id="ktp"
+                            <input readonly id="ktp"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -160,7 +125,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="tmpt_lahir" id="tmpt_lahir"
+                            <input readonly id="tmpt_lahir"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -169,20 +134,16 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <div
-                                class="absolute top-2/4 right-2 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500">
-                                <i class="fas fa-calendar-week text-xs"></i>
-                            </div>
-                            <input name="tgl_lahir" id="tgl_lahir"
+                            <input readonly id="tgl_lahir"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                type="date" />
+                                type="date" placeholder=" " />
                             <label
                                 class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                                 Tanggal Lahir
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="ibu_kandung" id="ibu_kandung"
+                            <input readonly id="ibu_kandung"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -203,7 +164,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="jenis_pekerjaan" id="jenis_pekerjaan"
+                            <input readonly id="jenis_pekerjaan"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -212,7 +173,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="nama_perusahaan" id="nama_perusahaan"
+                            <input readonly id="nama_perusahaan"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -221,7 +182,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="alamat_kerja" id="alamat_kerja"
+                            <input readonly id="alamat_kerja"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -243,13 +204,16 @@
                                 Penghasilan
                             </label>
                         </div>
-                        <div class="font-semibold mt-2">Ahli Waris</div>
+                    </div>
+
+                    <div class="w-full sm:w-1/3 mx-0 sm:mx-5">
+                        <div class="font-semibold text-sm">Ahli Waris</div>
                         <div class="flex flex-col mb-4">
                             <div class="h-1 w-1 rounded-full bg-black"></div>
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="nama_ahli_waris" id="nama_ahli_waris"
+                            <input readonly id="nama_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -258,7 +222,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="ktp_ahli_waris" id="ktp_ahli_waris"
+                            <input readonly id="ktp_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -267,7 +231,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="phone_ahli_waris" id="phone_ahli_waris"
+                            <input readonly id="phone_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -276,7 +240,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input name="hub_ahli_waris" id="hub_ahli_waris"
+                            <input readonly id="hub_ahli_waris"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -285,34 +249,62 @@
                             </label>
                         </div>
 
+                        <div class="font-semibold text-sm mt-5">Rekening Nasabah</div>
+                        <div class="flex flex-col mb-4">
+                            <div class="h-1 w-1 rounded-full bg-black"></div>
+                            <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
+                        </div>
+
+                        <div class="dropdown">
+                            <label tabindex="0"
+                                class="flex-row flex items-center middle none center rounded-md cursor-pointer
+                                    py-2 px-3 font-sans font-bold text-blue-gray-400 border shadow-md shadow-green-500/20 transition-all hover:shadow-lg
+                                    hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                data-ripple-light="true">
+                                <i class="fas fa-wallet text-sm mr-2"></i>
+                                <div class="text-sm">Daftar Bank</div>
+                            </label>
+                            <ul tabindex="0" id="listBank"
+                                class="bg-white dropdown-content z-[1] menu p-1 text-sm shadow rounded-md w-64 text-gray-700">
+                                <li><a>Belum Ada</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-6 p-2 rounded-md border border-green-800">
+                            <div class="flex justify-center items-center my-2">
+                                <label for="modalPIN" data-ripple-light="true"
+                                    class="text-sm hover:shadow-lg border border-black hover:cursor-pointer
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-3
+                                    block p-1 leading-normal text-inherit antialiased">
+                                    PIN dan Password</label>
+                            </div>
+                            <div class="flex justify-center items-center mb-2">
+                                <button data-ripple-light="true" onclick="editProfil()" id="btnEdit" type="button"
+                                    class="text-sm mr-2 hover:shadow-lg border border-black hover:cursor-pointer
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-3
+                                    block p-1 leading-normal text-inherit antialiased">
+                                    Edit</button>
+                                <button data-ripple-light="true" onclick="simpanProfil()" id="btnSimpan" type="button"
+                                    class="bg-gradient-to-tr from-green-600 to-green-400 text-sm mr-2 hover:shadow-lg
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                                    lg:px-3 block p-1 leading-normal text-inherit antialiased text-white">
+                                    Simpan</button>
+                                <button data-ripple-light="true" onclick="batalProfile()" id="btnBatal" type="button"
+                                    class="text-sm mr-2 hover:shadow-lg border border-black hover:cursor-pointer
+                                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-3
+                                        block p-1 leading-normal text-inherit antialiased">
+                                    Batal</button>
+                                <a data-ripple-light="true" href="/dashboard"
+                                    class="text-sm hover:shadow-lg border border-black
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-3
+                                    block p-1 leading-normal text-inherit antialiased">
+                                    Close</a>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
             </form>
-            <div class="w-full my-4">
-                <div class="flex justify-center items-center">
-                    <label for="modalPIN" data-ripple-light="true"
-                        class="text-sm mr-2 hover:shadow-lg border border-green-900 hover:cursor-pointer
-                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5
-                        block p-1 leading-normal text-inherit antialiased">
-                        PIN dan Password</label>
-                    <button data-ripple-light="true" onclick="simpanProfil()" id="btnSimpan"
-                        class="bg-gradient-to-tr from-green-600 to-green-400 text-sm mr-2 hover:shadow-lg
-                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                        lg:px-5 block p-1 leading-normal text-inherit antialiased text-white">
-                        Simpan</button>
-                    <button data-ripple-light="true" onclick="editProfil()" id="btnEdit"
-                        class="text-sm mr-2 hover:shadow-lg border border-green-900 hover:cursor-pointer
-                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5
-                    block p-1 leading-normal text-inherit antialiased">
-                        Edit</button>
-                    <a data-ripple-light="true" href="/dashboard"
-                        class="text-sm mr-2 hover:shadow-lg border border-green-900
-                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5
-                        block p-1 leading-normal text-inherit antialiased">
-                        Close</a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="sm:h-12 h-16"></div>
@@ -323,7 +315,7 @@
         <div class="modal-box bg-white text-gray-800">
             <h3 class="font-bold text-lg">Isikan Password dan PIN Anda</h3>
             <div class="w-full mt-4">
-                <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                <div class="mb-3 relative z-0 h-10 w-full min-w-[200px]">
                     <input id="pass"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
@@ -332,7 +324,7 @@
                         Isi Password
                     </label>
                 </div>
-                <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                <div class="mb-3 relative z-0 h-10 w-full min-w-[200px]">
                     <input id="konfirmasipass"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
@@ -345,7 +337,7 @@
                     <div class="h-1 w-1 rounded-full bg-black"></div>
                     <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                 </div>
-                <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                <div class="mb-3 relative z-0 h-10 w-full min-w-[200px]">
                     <input id="pin"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
@@ -354,7 +346,7 @@
                         Isi PIN Anda 6 Digit
                     </label>
                 </div>
-                <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                <div class="mb-3 relative z-0 h-10 w-full min-w-[200px]">
                     <input id="konfirmasipin"
                         class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         type="password" placeholder=" " />
@@ -381,7 +373,7 @@
                     lg:px-5 block p-1 leading-normal text-inherit antialiased text-white">
                     Simpan</button>
                 <label for="modalPIN" data-ripple-light="true" id="closePIN"
-                    class="text-sm mr-2 hover:shadow-lg border border-green-900 hover:cursor-pointer
+                    class="text-sm mr-2 hover:shadow-lg border hover:cursor-pointer
                     hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5
                     block p-1 leading-normal text-inherit antialiased">
                     Close</label>
@@ -393,6 +385,7 @@
         $('#signIn').hide()
         $('#signInBar').hide()
         $('#btnSimpan').hide()
+        $('#btnBatal').hide()
         $('#btnEdit').fadeIn()
         ajaxCall(serverApi + 'nasabah', null, "GET", "showProfile")
 
@@ -421,6 +414,10 @@
         }
 
         function editProfil() {
+            // $('#image_ktp').prop('readonly', false)
+            // $('#image_selfie').prop('readonly', false)
+            // $('#image_ktp_ahli_waris').prop('readonly', false)
+            $('#btnBatal').fadeIn()
             $('#btnSimpan').fadeIn()
             $('#btnEdit').hide()
             $('#nama').prop('readonly', false)
@@ -430,9 +427,6 @@
             $('#namaBank').prop('readonly', false)
             $('#norek').prop('readonly', false)
             $('#atas_nama').prop('readonly', false)
-            $('#image_ktp').prop('readonly', false)
-            $('#image_selfie').prop('readonly', false)
-            $('#image_ktp_ahli_waris').prop('readonly', false)
             $('#id_privy').prop('readonly', false)
             $('#ktp').prop('readonly', false)
             $('#tmpt_lahir').prop('readonly', false)
@@ -447,6 +441,36 @@
             $('#ktp_ahli_waris').prop('readonly', false)
             $('#phone_ahli_waris').prop('readonly', false)
             $('#hub_ahli_waris').prop('readonly', false)
+        }
+
+        function batalProfile() {
+            // $('#image_ktp').prop('readonly', false)
+            // $('#image_selfie').prop('readonly', false)
+            // $('#image_ktp_ahli_waris').prop('readonly', false)
+            $('#btnBatal').hide()
+            $('#btnSimpan').hide()
+            $('#btnEdit').fadeIn()
+            $('#nama').prop('readonly', true)
+            $('#email').prop('readonly', true)
+            $('#phone').prop('readonly', true)
+            $('#alamat').prop('readonly', true)
+            $('#namaBank').prop('readonly', true)
+            $('#norek').prop('readonly', true)
+            $('#atas_nama').prop('readonly', true)
+            $('#id_privy').prop('readonly', true)
+            $('#ktp').prop('readonly', true)
+            $('#tmpt_lahir').prop('readonly', true)
+            $('#tgl_lahir').prop('readonly', true)
+            $('#ibu_kandung').prop('readonly', true)
+            $('#status_pernikahan').prop('readonly', true)
+            $('#jenis_pekerjaan').prop('readonly', true)
+            $('#nama_perusahaan').prop('readonly', true)
+            $('#alamat_kerja').prop('readonly', true)
+            $('#penghasilan').prop('readonly', true)
+            $('#nama_ahli_waris').prop('readonly', true)
+            $('#ktp_ahli_waris').prop('readonly', true)
+            $('#phone_ahli_waris').prop('readonly', true)
+            $('#hub_ahli_waris').prop('readonly', true)
         }
 
         function updatePINPass(data) {

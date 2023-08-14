@@ -707,6 +707,9 @@ class AuthController extends Controller
 
     public function userprofile()
     {
+        if (auth()->user() == null) {
+            return response()->json('Not Authorized', 403);
+        }
         $detailUser = DB::table('users')
             ->where('iduser', auth()->user()->iduser)
             ->select('username', 'email', 'phone', 'role', 'status', 'kriptorone', 'kriptortwo')

@@ -1,5 +1,6 @@
 CREATE TABLE users (
   id int IDENTITY(1,1) PRIMARY KEY,
+  iduser varchar(255) DEFAULT NULL,
   username varchar(255) DEFAULT NULL,
   email varchar(255) DEFAULT NULL,
   phone varchar(255) DEFAULT NULL,
@@ -10,6 +11,7 @@ CREATE TABLE users (
   reset_token text DEFAULT NULL,
   [role] int NOT NULL DEFAULT 0, -- 99=SuperAdmin
   [status] int NOT NULL DEFAULT 0,
+  idmitra varchar(255) default NULL,
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,
   created_otp datetime DEFAULT NULL,
@@ -120,36 +122,41 @@ CREATE TABLE norek_nasabah (
 
 CREATE TABLE mitra (
   id int IDENTITY(1,1) PRIMARY KEY,
-  id_user INT NOT NULL,
+  idmitra INT NOT NULL,
+
   nama varchar(255) NOT NULL,
-  kode_bank varchar(255) default NULL,
+  email varchar(255) default NULL,
+  phone varchar(255) default NULL,
+  mulai_beroperasi date default NULL,
+  website varchar(255) default NULL,
+  alamat varchar(255) default NULL,
+  kota int NULL,
+
   no_npwp varchar(255) default NULL,
+  npwp_kota int NULL,
+  npwp_alamat varchar(255) default NULL,
   no_akta_pendirian varchar(255) default NULL,
-  tgl_pendirian date default NULL,
+  nama_pengurus varchar(255) default NULL,
+  jabatan_pengurus varchar(255) default NULL,
+  phone_pengurus varchar(255) default NULL,
+
   no_pengesahan_akta varchar(255) default NULL,
   tgl_pengesahan_akta date default NULL,
   nama_notaris varchar(255) default NULL,
   lokasi_notaris varchar(255) default NULL,
   no_ijin varchar(255) default NULL,
   tgl_ijin date default NULL,
-  kota int NULL,
-  alamat varchar(255) default NULL,
-  npwp_provinsi varchar(255) default NULL,
-  npwp_kota varchar(255) default NULL,
-  npwp_alamat varchar(255) default NULL,
-  website varchar(255) default NULL,
-  mulai_beroperasi date default NULL,
-  nama_pengurus varchar(255) default NULL,
-  jabatan_pengurus varchar(255) default NULL,
-  phone_pengurus varchar(255) default NULL,
-  id_bank int default NULL,
-  norek_bank varchar(255) default NULL,
+
   id_privy varchar(255) default NULL,
   logo varchar(255) default NULL,
-  validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid
+
+  validasi int DEFAULT 0, -- 1=Blm Valid, 2=Sdh Valid, 3=Tidak Aktif
   id_validator INT NOT NULL,
   keterangan varchar(255) default null,
+
   db_name varchar(255)  default NULL,
+  kriptorone varchar(255) default NULL,
+  kriptortwo varchar(255) default NULL,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
@@ -164,16 +171,14 @@ CREATE TABLE mitra (
 CREATE TABLE norek_mitra (
   id int IDENTITY(1,1) PRIMARY KEY,
   id_mitra int not null,
-  id_bank int not null,
+  id_bank varchar(255) not null,
   atas_nama varchar(255) not null,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
   deleted_at datetime DEFAULT NULL,
   user_created varchar(255) DEFAULT NULL,
   user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL,
-  CONSTRAINT fk_norekmitra_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id),
-  CONSTRAINT fk_norekmitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
+  user_deleted varchar(255) DEFAULT NULL
 );
 
 -- --------------------------------------------------------

@@ -36,6 +36,7 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "jenisLogin") jenisLogin(data);
             else if (goto == "afterLogin") afterLogin(data);
             else if (goto == "showAllNasabah") showAllNasabah(data);
+            else if (goto == "showAllMitra") showAllMitra(data);
             else if (goto == "updatePINPass") updatePINPass(data);
             else if (goto == "getNasabah") getNasabah(data);
             else if (goto == "afterSimpanValidasi") afterSimpanValidasi(data);
@@ -132,21 +133,47 @@ function userProfileNa(data) {
     switch (role) {
         case "99":
             $("#namaAdminKanan").text(data.userProfile.username);
-            $("#namaAdminKiri").text(data.userProfile.email);
+            data.userProfile.email.length < 17
+                ? $("#namaNasabah").text(data.userProfile.email)
+                : $("#namaNasabah").text(
+                      data.userProfile.email.substring(0, 8) + "..."
+                  );
             break;
         case "1":
             $("#namaAdminKanan").text(data.userProfile.username);
-            $("#namaAdminKiri").text(data.userProfile.email);
+            data.userProfile.email.length < 17
+                ? $("#namaNasabah").text(data.userProfile.email)
+                : $("#namaNasabah").text(
+                      data.userProfile.email.substring(0, 8) + "..."
+                  );
             break;
         case "2":
             $("#namaAdminKanan").text(data.userProfile.username);
-            $("#namaAdminKiri").text(data.userProfile.email);
+            data.userProfile.email.length < 17
+                ? $("#namaNasabah").text(data.userProfile.email)
+                : $("#namaNasabah").text(
+                      data.userProfile.email.substring(0, 8) + "..."
+                  );
             break;
         case "3":
             break;
         case "0":
+            data.userProfile.email == null
+                ? $("#namaNasabah").text(data.userProfile.phone)
+                : data.userProfile.email.length < 17
+                ? $("#namaNasabah").text(data.userProfile.email)
+                : $("#namaNasabah").text(
+                      data.userProfile.email.substring(0, 10) + "..."
+                  );
             break;
         case "10":
+            data.userProfile.email == null
+                ? $("#namaNasabah").text(data.userProfile.phone)
+                : data.userProfile.email.length < 17
+                ? $("#namaNasabah").text(data.userProfile.email)
+                : $("#namaNasabah").text(
+                      data.userProfile.email.substring(0, 10) + "..."
+                  );
             break;
         default:
             break;

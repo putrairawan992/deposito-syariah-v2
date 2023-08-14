@@ -97,6 +97,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');
 
         // Mitra Section
+        $router->get('/allmitra', 'AuthController@mitra');
         $router->post('/regmitra', 'MitraController@store');
         $router->put('/regmitra', 'MitraController@update');
         $router->put('/validasimitra', 'MitraController@validasi');

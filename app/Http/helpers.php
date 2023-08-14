@@ -172,7 +172,7 @@ function fileToAscii($uploadedFile, $kode, $pathNa)
     $ascii = base64_encode($ascii);
 
     // Generate a unique filename for the encrypted file
-    $encryptedFilename = uniqid() . '.' . pathinfo($uploadedFile, PATHINFO_EXTENSION);
+    $encryptedFilename = date('ymd') . rand(10, 99999) . uniqid() . '.' . pathinfo($uploadedFile, PATHINFO_EXTENSION);
 
     // Specify the destination path for the encrypted file
     $destinationPath = $pathNa . $encryptedFilename;

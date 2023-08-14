@@ -32,7 +32,7 @@
             <!-- Navbar -->
             <nav
                 class="absolute top-0 left-0 right-0 z-50 inset-0 block h-max w-full max-w-full rounded-none border border-white/80
-                    bg-white bg-opacity-90 py-2 px-4 text-white shadow-sm shadow-green-100 backdrop-blur-2xl
+                    bg-white py-2 px-4 text-white shadow-sm shadow-green-100 backdrop-blur-2xl
                     backdrop-saturate-200 lg:px-8 lg:py-4">
                 <div class="flex items-center text-gray-900">
                     <a href="#">
@@ -136,6 +136,10 @@
                                             class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
                                                 class="fas fa-id-card"></i>
                                             Profil</a></li>
+                                    <li><label for="modalRekBank"
+                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
+                                                class="fas fa-wallet"></i>
+                                            Daftar Rek Bank</label></li>
                                     <li><a onclick="logoutUser()"
                                             class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
                                                 class="fas fa-sign-out-alt"></i> Keluar</a></li>
@@ -144,7 +148,7 @@
                         </div>
                     </ul>
                     <ul style="display: none;" id="menuBar"
-                        class="absolute right-0 top-11 z-50 bg-white bg-opacity-90 rounded-md p-1 text-xs overflow-hidden text-blue-gray-900
+                        class="absolute right-0 top-11 z-50 bg-white rounded-md p-1 text-xs overflow-hidden text-blue-gray-900
                          transition-all duration-300 ease-in lg:hidden font-semibold">
                         <li id="linkDashboardBar"
                             class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
@@ -208,19 +212,23 @@
                             </li>
                             <li
                                 class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
                                 <a class="flex items-center" href="/profil">
                                     <i class="fas fa-id-card mr-2 text-xs"></i>Profil
                                 </a>
                             </li>
-                            <a id="signOutBar" href="#"
-                                class="my-1 items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                                py-1 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
-                                hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
-                                disabled:opacity-50 disabled:shadow-none flex"
-                                data-ripple-light="true">
-                                <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Keluar
-                            </a>
+                            <li><label for="modalRekBank"
+                                    class="hover:shadow-lg hover:border hover:border-green-900
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased"><i
+                                        class="fas fa-wallet mr-2 text-xs"></i>
+                                    Daftar Rekening</label></li>
+                            <li id="signOutBar"
+                                class="hover:shadow-lg hover:border hover:border-green-900
+                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                                <a class="flex items-center" onclick="logoutUser()">
+                                    <i class="fas fa-sign-out-alt mr-2 text-xs"></i>Keluar
+                                </a>
+                            </li>
                         </div>
                     </ul>
                     <button onclick="showMenu()"
@@ -425,9 +433,15 @@
             if (menuStatus == 0) {
                 $('#menuBar').fadeIn()
                 menuStatus = 1
+                $('#stepPIN').css('opacity', '0')
+                $('#stepFinish').css('opacity', '0')
+
             } else {
                 $('#menuBar').hide()
                 menuStatus = 0
+                $('#stepPIN').css('opacity', '1')
+                $('#stepFinish').css('opacity', '1')
+
             }
         }
     </script>

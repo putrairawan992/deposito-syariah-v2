@@ -19,6 +19,12 @@
     <div class="content text-black ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 ">
         <div class="p-4 mb-4 rounded-md bg-white">
             <div class="mb-3 text-lg font-sans font-semibold"> Daftar Nasabah </div>
+            <div class="flex justify-center mb-2" id="loading-tb-nasabah">
+                <div class="p-2 px-4 rounded-lg shadow-md border bg-blue-500 flex flex-row items-center text-white">
+                    <span class="loading loading-ring loading-md mr-2"></span>
+                    Load Data...
+                </div>
+            </div>
             <table id="tb-nasabah" class="display" style="width:100%">
             </table>
         </div>
@@ -380,20 +386,20 @@
         var valValidasi = null
         reloadData()
 
-
         function restyleButton() {
             setTimeout(function() {
-                $('.dt-button').css('border-radius', '10px').css('margin-right', '-5px').css('height', '30px').css(
+                $('.dt-button').css('border-radius', '10px').css('margin-right', '-5px').css('height', '33px').css(
                     'font-size', '12px').css('background-color', '#4CAF50').css('color', 'white')
             }, 700)
         }
 
         function reloadData() {
+            $("#loading-tb-nasabah").fadeIn()
             ajaxCall(serverApi + 'allnasabah', null, "GET", "showAllNasabah")
-            restyleButton()
         }
 
         function showAllNasabah(dataNa) {
+            restyleButton()
             var elementId = "tb-nasabah";
             $("#loading-tb-nasabah").hide();
             document.getElementById(elementId).innerHTML =

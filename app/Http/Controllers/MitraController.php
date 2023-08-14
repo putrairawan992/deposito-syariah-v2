@@ -14,58 +14,100 @@ use Illuminate\Support\Facades\Config;
 
 class MitraController extends Controller
 {
+    public function mitra()
+    {
+        $alluser = DB::table('users')
+            ->where('role', 2)
+            ->leftjoin('mitra', 'users.iduser', 'mitra.id_user')
+            ->get();
+        foreach ($alluser as $key => $value) {
+            $kriptorone = $value->kriptorone;
+            $kriptortwo = $value->kriptortwo;
+            if ($value->email != null) {
+                $value->email = dekripsina($value->email, $kriptorone, $kriptortwo);
+            }
+            if ($value->username != null) {
+                $value->username = dekripsina($value->username, $kriptorone, $kriptortwo);
+            }
+            if ($value->phone != null) {
+                $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
+            }
+            if ($value->store_token != null) {
+                $value->store_token = dekripsina($value->store_token, $kriptorone, $kriptortwo);
+            }
+            if ($value->reset_token != null) {
+                $value->reset_token = dekripsina($value->reset_token, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->nama)) {
+                $value->nama = dekripsina($value->nama, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->kode_bank)) {
+                $value->kode_bank = dekripsina($value->kode_bank, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->no_npwp)) {
+                $value->no_npwp = dekripsina($value->no_npwp, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->no_akta_pendirian)) {
+                $value->no_akta_pendirian = dekripsina($value->no_akta_pendirian, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->no_pengesahan_akta)) {
+                $value->no_pengesahan_akta = dekripsina($value->no_pengesahan_akta, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->website)) {
+                $value->website = dekripsina($value->website, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->phone_pengurus)) {
+                $value->phone_pengurus = dekripsina($value->phone_pengurus, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->id_privy)) {
+                $value->id_privy = dekripsina($value->id_privy, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->db_name)) {
+                $value->db_name = dekripsina($value->db_name, $kriptorone, $kriptortwo);
+            }
+            if (!empty($value->norek_bank)) {
+                $value->norek_bank = dekripsina($value->norek_bank, $kriptorone, $kriptortwo);
+            }
+        }
+
+        return response()->json($alluser, 200);
+    }
+
     public function store(Request $request)
     {
-        $username = $request->username;
-        $email = $request->email;
-        $password = $request->password;
-        $phone = $request->phone;
         $nama = $request->nama;
-
-        $kode_bank = $request->kode_bank;
-        $no_npwp = $request->no_npwp;
-        $no_akta_pendirian = $request->no_akta_pendirian;
-        $no_pengesahan_akta = $request->no_pengesahan_akta;
+        $email = $request->email;
+        $phone = $request->phone;
+        $mulai_beroperasi = $request->mulai_beroperasi;
         $website = $request->website;
-        $phone_pengurus = $request->phone_pengurus;
-        $id_privy = $request->id_privy;
-        // $db_name = 'ds_transaksi_' . $kode_bank;
-        $norek_bank = $request->norek_bank;
+        $alamat = $request->alamat;
+        $kota = $request->kota;
 
+        $no_npwp = $request->no_npwp;
+        $npwp_kota = $request->npwp_kota;
+        $npwp_alamat = $request->npwp_alamat;
+        $no_akta_pendirian = $request->no_akta_pendirian;
+        $nama_pengurus = $request->nama_pengurus;
+        $jabatan_pengurus = $request->jabatan_pengurus;
+        $phone_pengurus = $request->phone_pengurus;
+
+        $no_pengesahan_akta = $request->no_pengesahan_akta;
+        $tgl_pengesahan_akta = $request->tgl_pengesahan_akta;
         $nama_notaris = $request->nama_notaris;
         $lokasi_notaris = $request->lokasi_notaris;
         $no_ijin = $request->no_ijin;
-        $kota = $request->kota;
-        $alamat = $request->alamat;
-        $npwp_provinsi = $request->npwp_provinsi;
-        $npwp_kota = $request->npwp_kota;
-        $npwp_alamat = $request->npwp_alamat;
-        $nama_pengurus = $request->nama_pengurus;
-        $jabatan_pengurus = $request->jabatan_pengurus;
-        $keterangan = $request->keterangan;
-
-        $mulai_beroperasi = $request->mulai_beroperasi;
-        $tgl_pendirian = $request->tgl_pendirian;
-        $tgl_pengesahan_akta = $request->tgl_pengesahan_akta;
         $tgl_ijin = $request->tgl_ijin;
-        $id_bank = $request->id_bank;
+
+        $id_privy = $request->id_privy;
         $logo = $request->logo;
+
         $validasi = $request->validasi;
         $id_validator = auth()->user()->iduser;
-
-        // Check if field is empty
-        if (empty($email) or empty($username) or empty($password) or empty($phone)) {
-            return response()->json('Semua Kolom harus terisi', 400);
-        }
+        $keterangan = $request->keterangan;
 
         // Check if email is valid
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return response()->json('Email tidak Valid', 400);
-        }
-
-        // Check if password is greater than 5 character
-        if (strlen($password) < 8) {
-            return response()->json('Password Kurang Dari 8 Digit', 400);
         }
 
         // Check if username, email, phone already exist
@@ -101,21 +143,21 @@ class MitraController extends Controller
         }
 
         // Check mitra already exist
-        $cekMitra = DB::table('users')
-            ->where('role', 2)
-            ->leftjoin('mitra', 'users.iduser', 'mitra.id_user')
-            ->get();
+        $cekMitra = DB::table('mitra')->get();
         foreach ($cekMitra as $key => $value) {
             $dekripnama = null;
-            $dekripkode_bank = null;
+            $dekripemail = null;
+            $dekriphone = null;
+            $dekripwebsite = null;
+
             $dekripno_npwp = null;
             $dekripno_akta_pendirian = null;
-            $dekripno_pengesahan_akta = null;
-            $dekripwebsite = null;
             $dekripphone_pengurus = null;
+
+            $dekripno_pengesahan_akta = null;
+            $dekripno_ijin = null;
+
             $dekripid_privy = null;
-            $dekripdb_name = null;
-            $dekripnorek_bank = null;
 
             $kriptorone = $value->kriptorone;
             $kriptortwo = $value->kriptortwo;
@@ -128,10 +170,26 @@ class MitraController extends Controller
                 }
             }
 
-            if (!empty($value->kode_bank)) {
-                $dekripkode_bank = dekripsina($value->kode_bank, $kriptorone, $kriptortwo);
-                if ($kode_bank == $dekripkode_bank) {
-                    return response()->json('Kode Bank sudah digunakan, Silahkan gunakan yang lain', 404);
+            if (!empty($value->email)) {
+                $dekripemail = dekripsina($value->email, $kriptorone, $kriptortwo);
+                if ($email == $dekripemail) {
+                    return response()->json('Email ini sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
+            }
+
+            if (!empty($value->phone)) {
+                $dekriphone = dekripsina($value->phone, $kriptorone, $kriptortwo);
+                if ($phone == $dekriphone) {
+                    return response()->json('No Telepon Mitra Bank ini sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
+            }
+
+            if (!empty($value->website)) {
+                $dekripwebsite = dekripsina($value->website, $kriptorone, $kriptortwo);
+                if ($website == $dekripwebsite) {
+                    return response()->json('Website ini sudah digunakan, Silahkan gunakan yang lain', 404);
                     break;
                 }
             }
@@ -152,6 +210,14 @@ class MitraController extends Controller
                 }
             }
 
+            if (!empty($value->phone_pengurus)) {
+                $dekripphone_pengurus = dekripsina($value->phone_pengurus, $kriptorone, $kriptortwo);
+                if ($phone_pengurus == $dekripphone_pengurus) {
+                    return response()->json('No Telpon Pengurus sudah digunakan, Silahkan gunakan yang lain', 404);
+                    break;
+                }
+            }
+
             if (!empty($value->no_pengesahan_akta)) {
                 $dekripno_pengesahan_akta = dekripsina($value->no_pengesahan_akta, $kriptorone, $kriptortwo);
                 if ($no_pengesahan_akta == $dekripno_pengesahan_akta) {
@@ -160,18 +226,10 @@ class MitraController extends Controller
                 }
             }
 
-            if (!empty($value->website)) {
-                $dekripwebsite = dekripsina($value->website, $kriptorone, $kriptortwo);
-                if ($website == $dekripwebsite) {
-                    return response()->json('Website sudah digunakan, Silahkan gunakan yang lain', 404);
-                    break;
-                }
-            }
-
-            if (!empty($value->phone_pengurus)) {
-                $dekripphone_pengurus = dekripsina($value->phone_pengurus, $kriptorone, $kriptortwo);
-                if ($phone_pengurus == $dekripphone_pengurus) {
-                    return response()->json('No Telp Pengurus sudah digunakan, Silahkan gunakan yang lain', 404);
+            if (!empty($value->no_ijin)) {
+                $dekripno_ijin = dekripsina($value->no_ijin, $kriptorone, $kriptortwo);
+                if ($no_ijin == $dekripno_ijin) {
+                    return response()->json('No Ijin Akta sudah digunakan, Silahkan gunakan yang lain', 404);
                     break;
                 }
             }
@@ -183,37 +241,16 @@ class MitraController extends Controller
                     break;
                 }
             }
-
-            if (!empty($value->db_name)) {
-                $dekripdb_name = dekripsina($value->db_name, $kriptorone, $kriptortwo);
-                if ($db_name == $dekripdb_name) {
-                    return response()->json('DB sudah digunakan, Silahkan gunakan yang lain', 404);
-                    break;
-                }
-            }
-
-            if (!empty($value->norek_bank)) {
-                $dekripnorek_bank = dekripsina($value->norek_bank, $kriptorone, $kriptortwo);
-                if ($id_bank . $norek_bank == $id_bank . $dekripnorek_bank) {
-                    return response()->json('Norek Bank sudah digunakan, Silahkan gunakan yang lain', 404);
-                    break;
-                }
-            }
         }
 
         // Create new enkripsi Mitra
         $kriptor = generatekriptor();
         $kriptorone = $kriptor['randnum'];
         $kriptortwo = $kriptor['randomBytes'];
-        $username = newenkripsina($username, $kriptorone, $kriptortwo);
         $email = newenkripsina($email, $kriptorone, $kriptortwo);
         $phone = newenkripsina($phone, $kriptorone, $kriptortwo);
         $nama = newenkripsina($nama, $kriptorone, $kriptortwo);
-        $password = app('hash')->make($password);
 
-        if (!empty($kode_bank)) {
-            $kode_bank = newenkripsina($kode_bank, $kriptorone, $kriptortwo);
-        }
         if (!empty($no_npwp)) {
             $no_npwp = newenkripsina($no_npwp, $kriptorone, $kriptortwo);
         }
