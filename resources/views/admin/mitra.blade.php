@@ -246,7 +246,7 @@
                         </div>
 
                         <div id="bankSection">
-                            <div class="font-semibold mt-7">Rekening Mitra Bank</div>
+                            <div class="font-semibold mt-7">Informasi Lainnya</div>
                             <div class="flex flex-col mb-4">
                                 <div class="h-1 w-1 rounded-full bg-black"></div>
                                 <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
@@ -255,12 +255,26 @@
                             <div class="flex flex-row">
                                 <div class="dropdown dropdown-top">
                                     <label tabindex="0"
+                                        class="ml-2 flex-row flex items-center middle none center rounded-md cursor-pointer
+                                        py-2 px-3 font-sans font-bold text-blue-gray-400 border shadow-md shadow-green-500/20 transition-all hover:shadow-lg
+                                        hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                        data-ripple-light="true">
+                                        <i class="fas fa-users text-sm mr-2"></i>
+                                        <div class="text-sm">Admin Bank</div>
+                                    </label>
+                                    <ul tabindex="0" id="listBank"
+                                        class="bg-white dropdown-content z-[1] menu p-1 text-sm shadow rounded-md w-64 text-gray-700">
+                                        <li><a>Belum Ada</a></li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown dropdown-top">
+                                    <label tabindex="0"
                                         class="flex-row flex items-center middle none center rounded-md cursor-pointer
-                                py-2 px-3 font-sans font-bold text-blue-gray-400 border shadow-md shadow-green-500/20 transition-all hover:shadow-lg
-                                hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                        py-2 px-3 font-sans font-bold text-blue-gray-400 border shadow-md shadow-green-500/20 transition-all hover:shadow-lg
+                                        hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                         data-ripple-light="true">
                                         <i class="fas fa-wallet text-sm mr-2"></i>
-                                        <div class="text-sm">Daftar Bank</div>
+                                        <div class="text-sm">Rekening Bank</div>
                                     </label>
                                     <ul tabindex="0" id="listBank"
                                         class="bg-white dropdown-content z-[1] menu p-1 text-sm shadow rounded-md w-64 text-gray-700">
@@ -269,11 +283,10 @@
                                 </div>
                                 <label
                                     class="ml-2 flex-row flex items-center middle none center rounded-md cursor-pointer
-                                py-2 px-3 font-sans font-bold text-blue-gray-400 border shadow-md shadow-green-500/20 transition-all hover:shadow-lg
-                                hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                    py-2 px-3 font-sans font-bold text-blue-gray-400 border shadow-md shadow-green-500/20 transition-all hover:shadow-lg
+                                   hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                     data-ripple-light="true">
-                                    <i class="fas fa-plus-circle text-sm mr-2"></i>
-                                    <div class="text-sm">Tambah / Edit Bank</div>
+                                    <i class="fas fa-cog text-sm"></i>
                                 </label>
                             </div>
                         </div>
@@ -356,7 +369,7 @@
                             <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <input readonly id="validator"
+                            <input readonly id="id_validator"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                                 placeholder=" " />
                             <label
@@ -365,7 +378,7 @@
                             </label>
                         </div>
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
-                            <select id="status" name="status"
+                            <select id="validasi" name="validasi"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
                                 <option value="0">Belum Periksa</option>
                                 <option value="1">Belum Valid</option>
@@ -443,6 +456,44 @@
     <script>
         var valValidasi = null
         reloadData()
+        ajaxCall(serverApi + 'provinsi', null, "GET", "showProvinsi")
+
+        function showProvinsi(data) {
+            var op = '<option value="0" disabled>-- Pilih Provinsi --</option>'
+            data.forEach(e => {
+                op += '<option value="' + e.provinsi + '">' + e.provinsi + '</option>'
+            });
+            $('#provinsi').html(op)
+            $('#provinsiNPWP').html(op)
+        }
+
+        function pilihKota() {
+            ajaxCall(serverApi + 'kota', ({
+                'provinsi': $('#provinsi').val()
+            }), "GET", "showKota")
+        }
+
+        function pilihKotaNPWP() {
+            ajaxCall(serverApi + 'kota', ({
+                'provinsi': $('#provinsiNPWP').val()
+            }), "GET", "showKotaNPWP")
+        }
+
+        function showKota(data) {
+            var op = '<option value="0" selected disabled>-- Pilih Kota --</option>'
+            data.forEach(e => {
+                op += '<option value="' + e.id + '">' + e.kota + '</option>'
+            });
+            $('#kota').html(op)
+        }
+
+        function showKotaNPWP(data) {
+            var op = '<option value="0" selected disabled>-- Pilih Kota --</option>'
+            data.forEach(e => {
+                op += '<option value="' + e.id + '">' + e.kota + '</option>'
+            });
+            $('#npwp_kota').html(op)
+        }
 
         function restyleButton() {
             setTimeout(function() {
@@ -453,7 +504,7 @@
 
         function reloadData() {
             $("#loading-tb-mitra").fadeIn();
-            ajaxCall(serverApi + 'allmitra', null, "GET", "showAllMitra")
+            ajaxCall(serverApi + 'mitra', null, "GET", "showAllMitra")
         }
 
         function showAllMitra(dataNa) {
@@ -461,40 +512,41 @@
             var elementId = "tb-mitra";
             $("#loading-tb-mitra").hide();
             document.getElementById(elementId).innerHTML =
-                '<thead><tr><th>#</th><th>KTP</th><th>Nama</th><th>Status</th><th>Validasi</th></tr> </thead>'
+                '<thead><tr><th>#</th><th>Nama</th><th>Pengurus</th><th>Status</th><th>Validasi</th><th>Keterangan</th></tr></thead>'
             var t = "<tbody>";
             dataNa.forEach(data => {
                 var tr = '<tr class="align-center">';
-                var idUserna = data['iduser']
+                var idMitrana = data['idmitra']
                 tr +=
-                    '<td class="text-center align-middle" nowrap><label id="btnNasabah" for="modalProfil" data-ripple-light="true"' +
+                    '<td class="text-center align-middle" nowrap><label id="btnMitra" for="modalMitra" data-ripple-light="true"' +
                     'class="cursor-pointer rounded-md bg-gradient-to-tr from-green-600 to-green-400 py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40">' +
-                    data["iduser"] + "</label></td>";
-                tr += '<td class="text-left align-middle" nowrap>' + data["ktp"] + "</td>";
-                tr += '<td class="text-left align-middle" nowrap><div class="val_iduser" hidden>' + idUserna +
-                    '</div><div>' + data["nama"] + "</div></td > ";
-                if (data["status"] == "0") {
+                    data["idmitra"] + "</label></td>";
+                tr += '<td class="text-left align-middle" nowrap>' + data["nama"] + "</td>";
+                tr += '<td class="text-left align-middle" nowrap><div class="val_idmitra" hidden>' + idMitrana +
+                    '</div><div>' + data["nama_pengurus"] + "</div></td > ";
+                if (data["validasi"] != "2") {
                     tr +=
-                        '<td class="text-left align-middle" nowrap><button class="pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-md shadow-green-500/20 transition-all">' +
+                        '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-sm shadow-green-500/20 transition-all">' +
                         'Tidak Aktif' + "</button></td>";
                 } else {
                     tr +=
-                        '<td class="text-left align-middle" nowrap><button class="pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-md shadow-green-500/20 transition-all">' +
+                        '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-sm shadow-green-500/20 transition-all">' +
                         'Aktif' + "</button></td>";
                 }
                 if (data["validasi"] == "0") {
                     tr +=
-                        '<td class="text-left align-middle" nowrap><button class="pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-md shadow-green-500/20 transition-all">' +
+                        '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-sm shadow-green-500/20 transition-all">' +
                         'Belum diperiksa' + "</button>";
                 } else if (data["validasi"] == "1") {
                     tr +=
-                        '<td class="text-left align-middle" nowrap><button class="pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-md shadow-green-500/20 transition-all">' +
+                        '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-sm shadow-green-500/20 transition-all">' +
                         'Data Tidak Valid' + "</button>";
                 } else {
                     tr +=
-                        '<td class="text-left align-middle" nowrap><button class="pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-md shadow-green-500/20 transition-all">' +
+                        '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-sm shadow-green-500/20 transition-all">' +
                         'Data Valid' + "</button>";
                 }
+                tr += '<td class="text-left align-middle text-sm" nowrap>' + data["keterangan"] + "</td>";
 
                 tr += "</td></tr>";
                 t += tr;
@@ -505,8 +557,8 @@
 
         $(document).on("click", "#btnMitra", function() {
             var row = $(this).closest("tr")
-            var id = row.find(".val_iduser").text()
-            ajaxCall(serverApi + 'nasabah/' + id, null, "GET", "getNasabah")
+            var id = row.find(".val_idmitra").text()
+            ajaxCall(serverApi + 'mitra/' + id, null, "GET", "getMitra")
         })
 
         function newMitra() {
@@ -570,6 +622,72 @@
             $('#tgl_ijin').val('')
             $('#status').val('')
             $('#keterangan').val('')
+        }
+
+        function getMitra(data) {
+            $('#bankSection').fadeIn()
+
+            $('#nama').prop('readonly', false)
+            $('#email').prop('readonly', false)
+            $('#phone').prop('readonly', false)
+            $('#mulai_beroperasi').prop('readonly', false)
+            $('#website').prop('readonly', false)
+            $('#alamat').prop('readonly', false)
+            $('#provinsi').prop('readonly', false)
+            $('#kota').prop('readonly', false)
+            $('#id_privy').prop('readonly', false)
+
+            $('#no_npwp').prop('readonly', false)
+            $('#npwp_alamat').prop('readonly', false)
+            $('#provinsiNPWP').prop('readonly', false)
+            $('#npwp_kota').prop('readonly', false)
+            $('#no_akta_pendirian').prop('readonly', false)
+            $('#nama_pengurus').prop('readonly', false)
+            $('#jabatan_pengurus').prop('readonly', false)
+            $('#phone_pengurus').prop('readonly', false)
+
+            $('#no_pengesahan_akta').prop('readonly', false)
+            $('#tgl_pengesahan_akta').prop('readonly', false)
+            $('#nama_notaris').prop('readonly', false)
+            $('#lokasi_notaris').prop('readonly', false)
+            $('#no_ijin').prop('readonly', false)
+            $('#tgl_ijin').prop('readonly', false)
+            $('#status').prop('readonly', false)
+            $('#keterangan').prop('readonly', false)
+            $('#validasi').prop('readonly', false)
+
+            // Clear Value
+            $('#id_validator').val(data.id_validator)
+            $('#validasi').val(data.validasi)
+            $('#idmitra').val(data.idmitra)
+            $('#nama').val(data.nama)
+            $('#email').val(data.email)
+            $('#phone').val(data.phone)
+            $('#mulai_beroperasi').val(data.mulai_beroperasi)
+            $('#website').val(data.website)
+            $('#alamat').val(data.alamat)
+            $('#provinsi').val(data.provinsi)
+            $('#kota').val(data.kota)
+            $('#id_privy').val(data.id_privy)
+            // $('#logo').val(data.logo)
+
+            $('#no_npwp').val(data.no_npwp)
+            $('#npwp_alamat').val(data.npwp_alamat)
+            $('#provinsiNPWP').val(data.provinsiNPWP)
+            $('#npwp_kota').val(data.npwp_kota)
+            $('#no_akta_pendirian').val(data.no_akta_pendirian)
+            $('#nama_pengurus').val(data.nama_pengurus)
+            $('#jabatan_pengurus').val(data.jabatan_pengurus)
+            $('#phone_pengurus').val(data.phone_pengurus)
+
+            $('#no_pengesahan_akta').val(data.no_pengesahan_akta)
+            $('#tgl_pengesahan_akta').val(data.tgl_pengesahan_akta)
+            $('#nama_notaris').val(data.nama_notaris)
+            $('#lokasi_notaris').val(data.lokasi_notaris)
+            $('#no_ijin').val(data.no_ijin)
+            $('#tgl_ijin').val(data.tgl_ijin)
+            $('#status').val(data.status)
+            $('#keterangan').val(data.keterangan)
         }
 
         function simpanMitra() {

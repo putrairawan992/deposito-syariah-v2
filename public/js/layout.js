@@ -39,7 +39,11 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "showAllMitra") showAllMitra(data);
             else if (goto == "updatePINPass") updatePINPass(data);
             else if (goto == "getNasabah") getNasabah(data);
+            else if (goto == "getMitra") getMitra(data);
             else if (goto == "afterSimpanValidasi") afterSimpanValidasi(data);
+            else if (goto == "showKota") showKota(data);
+            else if (goto == "showKotaNPWP") showKotaNPWP(data);
+            else if (goto == "showProvinsi") showProvinsi(data);
             else if (goto == "clearImg") null;
             else swalBerhasil();
         },

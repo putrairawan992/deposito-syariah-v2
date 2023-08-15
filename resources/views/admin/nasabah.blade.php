@@ -385,6 +385,9 @@
     <script>
         var valValidasi = null
         reloadData()
+        ajaxCall(serverApi + 'kota', null, "GET", "showKota")
+
+        function showKota(data) {}
 
         function restyleButton() {
             setTimeout(function() {

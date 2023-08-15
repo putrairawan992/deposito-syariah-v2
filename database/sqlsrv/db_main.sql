@@ -167,8 +167,9 @@ CREATE TABLE mitra (
   deleted_at datetime DEFAULT NULL,
   user_created varchar(255) DEFAULT NULL,
   user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL
-  -- CONSTRAINT fk_mitra_bank FOREIGN KEY (id_bank) REFERENCES bank(id)
+  user_deleted varchar(255) DEFAULT NULL,
+  CONSTRAINT fk_kota FOREIGN KEY (kota) REFERENCES kota(id),
+  CONSTRAINT fk_kota_npwk FOREIGN KEY (npwp_kota) REFERENCES kota(id)
 );
 
 CREATE UNIQUE INDEX ux_idmitra

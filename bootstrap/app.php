@@ -70,6 +70,7 @@ $app->routeMiddleware([
     'admin' => App\Http\Middleware\Admin::class,
     'owner' => App\Http\Middleware\Owner::class,
     'authuser' => App\Http\Middleware\AuthUser::class,
+    'viacors' => App\Http\Middleware\CorsMiddleware::class,
 ]);
 
 /*

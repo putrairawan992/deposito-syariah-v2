@@ -97,11 +97,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');
 
         // Mitra Section
-        $router->get('/allmitra', 'MitraController@index');
+        $router->get('/mitra', 'MitraController@index');
+        $router->get('/mitra/{idmitra}', 'MitraController@detail');
         $router->post('/regmitra', 'MitraController@store');
         $router->put('/validasimitra', 'MitraController@validasi');
         $router->put('/restoremitra/{id}', 'MitraController@restore');
         $router->delete('/hapusmitra/{id}', 'MitraController@delete');
+        $router->get('/cekdbmitra/{dbname}', 'MitraController@cekDBMitra');
 
         // Nasabah Section
         $router->get('/allnasabah', 'NasabahController@index');
@@ -122,11 +124,15 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/validasipembelian', 'ProductController@buyvalidasi');
     });
 
+    $router->group(['middleware' => ['viacors', 'nasabah']], function () use ($router) {
+        // Akses Nasabah
+        $router->post('/regnasabah', 'NasabahController@store');
+    });
+
     $router->group(['middleware' => 'nasabah'], function () use ($router) {
         // Akses Nasabah
         $router->get('/refreshtoken', 'AuthController@refresh');
         $router->get('/nasabah', 'NasabahController@detail');
-        $router->post('/regnasabah', 'NasabahController@store');
 
         // Promo Splash Screen
         $router->get('/showsplash', 'SplashController@show');
@@ -168,6 +174,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['middleware' => 'authuser'], function () use ($router) {
+        $router->get('/provinsi', 'OtherController@getprovinsi');
+        $router->get('/kota', 'OtherController@getkota');
+
         // Update Pass PIN Email Username Phone
         $router->put('/upuser', 'AuthController@update');
         $router->get('/logout', 'AuthController@logout');
