@@ -691,6 +691,13 @@
         }
 
         function simpanMitra() {
+            swal({
+                icon: "warning",
+                title: "Proses",
+                text: "Data Sedang di Proses",
+                button: false,
+            });
+
             dataNa = new FormData(document.getElementById("form-mitra"))
             url = serverApi + 'regmitra'
             $.ajax({

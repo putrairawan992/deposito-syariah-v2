@@ -473,7 +473,7 @@ class AuthController extends Controller
                 return response()->json('otp', 200);
             }
         }
-        return response()->json('User tidak terdaftar', 400);
+        return response()->json('User tidak terdaftar', 403);
     }
 
     public function cekloginmobile(Request $request)
@@ -661,6 +661,69 @@ class AuthController extends Controller
             $this->storeToken($idNa, $token, $kriptorone, $kriptortwo);
             return $this->respondWithToken($token);
         }
+    }
+
+    public function forgotpass(Request $request)
+    {
+        $username = $request->username;
+        $cekRole = User::all();
+        foreach ($cekRole as $key => $value) {
+            $role = $value->role;
+            $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
+            $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);
+            $dekripEmail = dekripsina($value->email, $value->kriptorone, $value->kriptortwo);
+            if ($username == $dekripPhone) {
+                if ($role == 0 || $role == 10) {
+                    $updateData['password'] = null;
+                    try {
+                        DB::table('users')
+                            ->where('phone', $value->phone)
+                            ->update($updateData);
+                    } catch (\Throwable $th) {
+                        return response()->json($th->getMessage(), 400);
+                    }
+                    return $this->ceklogin($request);
+                    break;
+                } else {
+                    return response()->json('User tidak terdaftar', 400);
+                    break;
+                }
+            } elseif ($username == $dekripUsername || $username == $dekripEmail) {
+                // return response()->json('password', 200);
+                break;
+            }
+        }
+
+        return response()->json('User tidak terdaftar', 403);
+    }
+
+    public function forgotpassmobile(Request $request)
+    {
+        $username = $request->username;
+        $cekRole = User::all();
+        foreach ($cekRole as $key => $value) {
+            $role = $value->role;
+            $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
+            if ($username == $dekripPhone) {
+                if ($role == 0 || $role == 10) {
+                    $updateData['password'] = null;
+                    try {
+                        DB::table('users')
+                            ->where('phone', $value->phone)
+                            ->update($updateData);
+                    } catch (\Throwable $th) {
+                        return response()->json($th->getMessage(), 400);
+                    }
+                    return $this->cekloginmobile($request);
+                    break;
+                } else {
+                    return response()->json('User tidak terdaftar', 400);
+                    break;
+                }
+            }
+        }
+
+        return response()->json('User tidak terdaftar', 403);
     }
 
     public function isiPassPIN(Request $request)

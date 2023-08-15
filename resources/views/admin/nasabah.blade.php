@@ -545,6 +545,13 @@
         }
 
         function simpanValidasi() {
+            swal({
+                icon: "warning",
+                title: "Proses",
+                text: "Data Sedang di Proses",
+                button: false,
+            });
+
             dataNa = {
                 'id': $('#id').val(),
                 'validasi': $('#validasi').val(),

@@ -55,6 +55,9 @@ $router->get('/promo', function () use ($router) {
 $router->get('/pemberitahuan', function () use ($router) {
     return view('nasabah.pemberitahuan');
 });
+$router->get('/faq', function () use ($router) {
+    return view('nasabah.faq');
+});
 
 // Auth
 $router->get('/login', function () use ($router) {
@@ -77,6 +80,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     // Fix Function
     $router->get('/userprofile', 'AuthController@userprofile');
     $router->post('/ceklogin', 'AuthController@ceklogin');
+    $router->post('/forgotpass', 'AuthController@forgotpass');
+    $router->post('/forgotpassmobile', 'AuthController@forgotpassmobile');
     $router->post('/cekloginmobile', 'AuthController@cekloginmobile');
     $router->post('/login', 'AuthController@login');
     $router->get('/showpromo', 'PromoController@show');

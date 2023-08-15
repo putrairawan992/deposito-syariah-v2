@@ -20,7 +20,7 @@
         </style>
     </head>
 
-    <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">
+    <div class="content text-black transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 flex justify-center">
         <div>
             <div class="bg-white rounded-lg p-4 mb-2 w-80 sm:w-full">
                 <div class="sm:flex sm:items-center sm:justify-between">

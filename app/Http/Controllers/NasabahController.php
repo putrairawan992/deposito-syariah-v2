@@ -146,13 +146,25 @@ class NasabahController extends Controller
             $getNasabah->phone_ahli_waris = dekripsina($getNasabah->phone_ahli_waris, $kriptorone, $kriptortwo);
         }
         if ($getNasabah->image_ktp != null) {
-            $getNasabah->image_ktp = dekripsinaFile($getNasabah->image_ktp, $kriptorone, $kriptortwo, $pathShowImg);
+            if (file_exists($getNasabah->image_ktp)) {
+                $getNasabah->image_ktp = dekripsinaFile($getNasabah->image_ktp, $kriptorone, $kriptortwo, $pathShowImg);
+            } else {
+                $getNasabah->image_ktp = null;
+            }
         }
         if ($getNasabah->image_selfie != null) {
-            $getNasabah->image_selfie = dekripsinaFile($getNasabah->image_selfie, $kriptorone, $kriptortwo, $pathShowImg);
+            if (file_exists($getNasabah->image_selfie)) {
+                $getNasabah->image_selfie = dekripsinaFile($getNasabah->image_selfie, $kriptorone, $kriptortwo, $pathShowImg);
+            } else {
+                $getNasabah->image_selfie = null;
+            }
         }
         if ($getNasabah->image_ktp_ahli_waris != null) {
-            $getNasabah->image_ktp_ahli_waris = dekripsinaFile($getNasabah->image_ktp_ahli_waris, $kriptorone, $kriptortwo, $pathShowImg);
+            if (file_exists($getNasabah->image_ktp_ahli_waris)) {
+                $getNasabah->image_ktp_ahli_waris = dekripsinaFile($getNasabah->image_ktp_ahli_waris, $kriptorone, $kriptortwo, $pathShowImg);
+            } else {
+                $getNasabah->image_ktp_ahli_waris = null;
+            }
         }
 
         unset($getNasabah->otp);

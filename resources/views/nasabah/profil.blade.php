@@ -7,11 +7,11 @@
         <title>My Profil - Deposito Syariah</title>
     </head>
 
-    <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex justify-center">
+    <div class="content text-black transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 flex justify-center">
         <div style="max-width: 900px" class="bg-white rounded-lg p-4 mb-2 w-80 sm:w-full">
-            <div class="sm:flex sm:items-center sm:justify-between mb-4">
-                <div class="mx-0 sm:mx-4 font-semibold text-xl mt-2">Profil Anda</div>
-                <div class="mt-2 sm:mt-0 w-full mr-4 flex items-center bg-gray-200 rounded-md shadow-sm shadow-gray-600"
+            <div class="md:flex md:items-center md:justify-between mb-4">
+                <div class="mx-0 md:mx-4 font-semibold text-xl mt-2">Profil Anda</div>
+                <div class="mt-2 md:mt-0 w-full mr-4 flex items-center bg-gray-200 rounded-md shadow-sm shadow-gray-600"
                     style="max-width: 500px">
                     <i class="fas fa-exclamation-circle text-xl ml-4 mr-2"></i>
                     <p class="text-sm p-2">
@@ -20,9 +20,9 @@
                 </div>
             </div>
             <form id="form-profil">
-                <div class="flex flex-col sm:flex-row">
+                <div class="flex flex-col md:flex-row">
 
-                    <div class="w-full sm:w-1/3 mx-0 sm:mx-5">
+                    <div class="w-full md:w-1/3 mx-0 md:mx-5">
                         <div class="font-semibold text-sm">Identitas</div>
                         <div class="flex flex-col mb-4">
                             <div class="h-1 w-1 rounded-full bg-black"></div>
@@ -109,7 +109,7 @@
 
                     </div>
 
-                    <div class="w-full sm:w-1/3 mx-0 sm:mx-5">
+                    <div class="w-full md:w-1/3 mx-0 md:mx-5">
                         <div class="font-semibold text-sm">Detail</div>
                         <div class="flex flex-col mb-4">
                             <div class="h-1 w-1 rounded-full bg-black"></div>
@@ -206,7 +206,7 @@
                         </div>
                     </div>
 
-                    <div class="w-full sm:w-1/3 mx-0 sm:mx-5">
+                    <div class="w-full md:w-1/3 mx-0 md:mx-5">
                         <div class="font-semibold text-sm">Ahli Waris</div>
                         <div class="flex flex-col mb-4">
                             <div class="h-1 w-1 rounded-full bg-black"></div>

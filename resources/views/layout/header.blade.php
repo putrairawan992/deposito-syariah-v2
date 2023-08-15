@@ -27,224 +27,225 @@
 </head>
 
 <body class="bg-gradient-to-l from-green-900 to-green-800 h-full min-h-screen">
-    <div class="sticky top-0 z-sticky" id="idHeader">
-        <div class="flex flex-wrap">
-            <!-- Navbar -->
-            <nav
-                class="absolute top-0 left-0 right-0 z-50 inset-0 block h-max w-full max-w-full rounded-none border border-white/80
-                    bg-white py-2 px-4 text-white shadow-sm shadow-green-100 backdrop-blur-2xl
-                    backdrop-saturate-200 lg:px-8 lg:py-4">
-                <div class="flex items-center text-gray-900">
-                    <a href="#">
-                        <img class="h-8 md:h-10 lg:h-16 -my-4" src="/img/Logo Harta Insan Karimah.png" alt="Logo HIK">
+    <div
+        class="fixed w-full z-30 flex bg-white bg-opacity-95 p-2 items-center justify-center py-2 px-4
+        lg:px-8 lg:py-4">
+        <div class="logo transform ease-in-out duration-500 flex-none h-full flex items-center justify-center">
+            <img class="h-8 lg:h-10 -my-4" src="/img/Logo Harta Insan Karimah.png" alt="Logo HIK">
+        </div>
+        <!-- SPACER -->
+        <div class="grow h-full flex items-center justify-center"></div>
+        <div class="flex-none h-full text-center flex items-center justify-center">
+
+            <div class="flex items-center text-gray-900">
+                <ul class="ml-auto hidden items-center gap-2 md:flex md:font-light md:text-sm lg:font-normal">
+                    <li id="linkDashboard"
+                        class="hover:shadow-lg hover:border hover:border-green-900 text-xs lg:text-sm
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/dashboard">
+                            Beranda
+                        </a>
+                    </li>
+                    <li id="linkPromo"
+                        class="hover:shadow-lg hover:border hover:border-green-900 text-xs lg:text-sm
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/promo">
+                            Promo
+                        </a>
+                    </li>
+                    <li id="linkProduk"
+                        class="hover:shadow-lg hover:border hover:border-green-900 text-xs lg:text-sm
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/produk">
+                            Produk
+                        </a>
+                    </li>
+                    <li id="linkPortofolio"
+                        class="hover:shadow-lg hover:border hover:border-green-900 text-xs lg:text-sm
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/portofolio">
+                            Portofolio
+                        </a>
+                    </li>
+                    <li id="linkBlog"
+                        class="hover:shadow-lg hover:border hover:border-green-900 text-xs lg:text-sm
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/blog">
+                            Blog
+                        </a>
+                    </li>
+                    <li id="linkFAQ"
+                        class="hover:shadow-lg hover:border hover:border-green-900 text-xs lg:text-sm
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/faq">
+                            FAQ
+                        </a>
+                    </li>
+                    <li id="linkContactUs"
+                        class="hover:shadow-lg hover:border hover:border-green-900 text-xs lg:text-sm
+                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/contactus">
+                            Hubungi Kami
+                        </a>
+                    </li>
+                    <a id="signIn" href="/login"
+                        class="text-xs lg:text-sm items-center middle none center hidden rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-2 px-4 font-sans font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadohover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none md:flex"
+                        data-ripple-light="true">
+                        <i class="fas fa-sign-in-alt mr-2 text-lg"></i>Masuk
                     </a>
-                    <ul class="ml-auto hidden items-center gap-2 md:flex md:font-light md:text-sm lg:font-normal">
-                        <li id="linkDashboard"
-                            class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/dashboard">
-                                Beranda
-                            </a>
-                        </li>
-                        <li id="linkPromo"
-                            class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/promo">
-                                Promo
-                            </a>
-                        </li>
-                        <li id="linkProduk"
-                            class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/produk">
-                                Produk
-                            </a>
-                        </li>
-                        <li id="linkPortofolio"
-                            class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/portofolio">
-                                Portofolio
-                            </a>
-                        </li>
-                        <li id="linkBlog"
-                            class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/blog">
-                                Blog
-                            </a>
-                        </li>
-                        <li id="linkFAQ"
-                            class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/faq">
-                                FAQ
-                            </a>
-                        </li>
-                        <li id="linkContactUs"
-                            class="hover:shadow-lg hover:border hover:border-green-900
-                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/contactus">
-                                Hubungi Kami
-                            </a>
-                        </li>
-                        <a id="signIn" href="/login"
-                            class="items-center middle none center hidden rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-2 px-4 font-sans text-xs font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none md:flex"
-                            data-ripple-light="true">
-                            <i class="fas fa-sign-in-alt mr-2 text-lg"></i>Masuk
-                        </a>
-                        <div class="flex-row flex items-center" id="identity">
-                            <div class="dropdown dropdown-bottom dropdown-end ml-2 mr-6">
-                                <div class="indicator">
-                                    <span class="indicator-item badge bg-red-900 text-white text-xs "
-                                        id="countNotif">&#8734;</span>
-                                    <button tabindex="0"
-                                        class="bg-opacity-0 btn-circle btn -m-2 hover:shadow-lg hover:bg-green-100 hover:border hover:border-green-900
-                                        hover:shadow-green-500/40 active:opacity-[0.85]">
-                                        <i class="text-xl far fa-bell text-green-900"></i>
-                                    </button>
-                                </div>
-                                <ul tabindex="0"
-                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md w-72 mt-5 font-sans text-gray-700"
-                                    id="listNotif">
-                                    <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
-                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
-                                    <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
-                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
-                                    <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
-                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
-                                    <li><a
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
-                                            Pembelian Anda telah di Konfirmasi BPR</a></li>
-                                </ul>
-                            </div>
-                            <div class="dropdown dropdown-bottom dropdown-end">
+                    <div class="flex-row flex items-center" id="identity">
+                        <div class="dropdown dropdown-bottom dropdown-end ml-2 mr-6">
+                            <div class="indicator">
+                                <span
+                                    class="border-0 indicator-item badge bg-red-900 text-white text-xs -top-1 -right-1 lg:right-0 lg:top-0"
+                                    id="countNotif">&#8734;</span>
                                 <button tabindex="0"
-                                    class="flex-row flex items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                                    py-2 px-3 font-sans font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg
-                                    hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    data-ripple-light="true">
-                                    <i class="fas fa-user-circle text-xl mr-2"></i>
-                                    <div class="text-sm" id="namaNasabah">Nasabah</div>
+                                    class="bg-opacity-0 btn-circle btn-sm lg:btn-md btn -m-2 hover:shadow-lg hover:bg-green-100 hover:border hover:border-green-900
+                                    hover:shadow-green-500/40 active:opacity-[0.85]">
+                                    <i class="text-sm lg:text-lg far fa-bell text-green-900"></i>
                                 </button>
-                                <ul tabindex="0"
-                                    class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md mt-5 w-52 text-gray-700">
-                                    <li><a href="/profil"
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
-                                                class="fas fa-id-card"></i>
-                                            Profil</a></li>
-                                    <li><label for="modalRekBank"
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
-                                                class="fas fa-wallet"></i>
-                                            Daftar Rek Bank</label></li>
-                                    <li><a onclick="logoutUser()"
-                                            class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
-                                                class="fas fa-sign-out-alt"></i> Keluar</a></li>
-                                </ul>
                             </div>
+                            <ul tabindex="0"
+                                class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md w-72 mt-5 font-sans text-gray-700"
+                                id="listNotif">
+                                <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                        Pembelian Anda telah di Konfirmasi BPR</a></li>
+                                <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                        Pembelian Anda telah di Konfirmasi BPR</a></li>
+                                <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                        Pembelian Anda telah di Konfirmasi BPR</a></li>
+                                <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                        Pembelian Anda telah di Konfirmasi BPR</a></li>
+                                <li><a href="/pemberitahuan"
+                                        class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                        Lihat Semua Pemberitahuan</a></li>
+                            </ul>
                         </div>
-                    </ul>
-                    <ul style="display: none;" id="menuBar"
-                        class="absolute right-0 top-11 z-50 bg-white rounded-md p-1 text-xs overflow-hidden text-blue-gray-900
-                         transition-all duration-300 ease-in lg:hidden font-semibold">
-                        <li id="linkDashboardBar"
-                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/dashboard">
-                                Beranda
-                            </a>
-                        </li>
-                        <li id="linkPromoBar"
-                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/promo">
-                                Promo
-                            </a>
-                        </li>
-                        <li id="linkProdukBar"
-                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/produk">
-                                Produk
-                            </a>
-                        </li>
-                        <li id="linkPortofolioBar"
-                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/portofolio">
-                                Portofolio
-                            </a>
-                        </li>
-                        <li id="linkBlogBar"
-                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/blog">
-                                Blog
-                            </a>
-                        </li>
-                        <li id="linkFAQBar"
-                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/faq">
-                                FAQ
-                            </a>
-                        </li>
-                        <li id="linkContactUsBar"
-                            class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                            <a class="flex items-center" href="/contactus">
-                                Hubungi Kami
-                            </a>
-                        </li>
-                        <a id="signInBar" href="/"
-                            class="my-1 items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
-                            hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
-                            disabled:opacity-50 disabled:shadow-none flex"
-                            data-ripple-light="true">
-                            <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Masuk
+                        <div class="dropdown dropdown-bottom dropdown-end">
+                            <button tabindex="0"
+                                class="flex-row flex items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
+                                py-2 px-3 font-sans font-bold text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg
+                                hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                data-ripple-light="true">
+                                <i class="fas fa-user-circle text-sm mr-2"></i>
+                                <div class="text-xs lg:text-sm" id="namaNasabah">Nasabah</div>
+                            </button>
+                            <ul tabindex="0"
+                                class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md mt-3 lg:mt-5 w-52 text-gray-700">
+                                <li><a href="/profil"
+                                        class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
+                                            class="fas fa-id-card"></i>
+                                        Profil</a></li>
+                                <li><label for="modalRekBank"
+                                        class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
+                                            class="fas fa-wallet"></i>
+                                        Daftar Rek Bank</label></li>
+                                <li><a onclick="logoutUser()"
+                                        class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
+                                            class="fas fa-sign-out-alt"></i> Keluar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+                <ul style="display: none;" id="menuBar"
+                    class="absolute right-0 top-11 z-50 bg-white rounded-md p-1 text-xs overflow-hidden text-blue-gray-900
+                                         transition-all duration-300 ease-in lg:hidden font-semibold">
+                    <li id="linkDashboardBar"
+                        class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/dashboard">
+                            Beranda
                         </a>
-                        <div class="flex-col flex" id="identityBar">
-                            <hr class="h-px m-1 bg-green-900" />
-                            <li
-                                class="hover:shadow-lg hover:border hover:border-green-900 hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                                <a class="flex items-center" href="/notifikasi">
-                                    <i class="far fa-bell mr-2 text-xs"></i>Notifikasi
-                                    <span class="indicator-item badge bg-red-900 text-white text-xs ml-1"
-                                        id="countNotifBar">&#8734;</span>
-                                </a>
-                            </li>
-                            <li
+                    </li>
+                    <li id="linkPromoBar"
+                        class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/promo">
+                            Promo
+                        </a>
+                    </li>
+                    <li id="linkProdukBar"
+                        class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/produk">
+                            Produk
+                        </a>
+                    </li>
+                    <li id="linkPortofolioBar"
+                        class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/portofolio">
+                            Portofolio
+                        </a>
+                    </li>
+                    <li id="linkBlogBar"
+                        class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/blog">
+                            Blog
+                        </a>
+                    </li>
+                    <li id="linkFAQBar"
+                        class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/faq">
+                            FAQ
+                        </a>
+                    </li>
+                    <li id="linkContactUsBar"
+                        class="whitespace-nowrap rounded-md px-2 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                        <a class="flex items-center" href="/contactus">
+                            Hubungi Kami
+                        </a>
+                    </li>
+                    <a id="signInBar" href="/"
+                        class="my-1 items-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
+                                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
+                                            hover:shadohover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
+                                            disabled:opacity-50 disabled:shadow-none flex"
+                        data-ripple-light="true">
+                        <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Masuk
+                    </a>
+                    <div class="flex-col flex" id="identityBar">
+                        <hr class="h-px m-1 bg-green-900" />
+                        <li
+                            class="hover:shadow-lg hover:border hover:border-greenhover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                            <a class="flex items-center" href="/notifikasi">
+                                <i class="far fa-bell mr-2 text-xs"></i>Notifikasi
+                                <span class="indicator-item badge bg-red-900 text-white text-xs ml-1"
+                                    id="countNotifBar">&#8734;</span>
+                            </a>
+                        </li>
+                        <li
+                            class="hover:shadow-lg hover:border hover:border-green-900
+                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                            <a class="flex items-center" href="/profil">
+                                <i class="fas fa-id-card mr-2 text-xs"></i>Profil
+                            </a>
+                        </li>
+                        <li><label for="modalRekBank"
                                 class="hover:shadow-lg hover:border hover:border-green-900
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                                <a class="flex items-center" href="/profil">
-                                    <i class="fas fa-id-card mr-2 text-xs"></i>Profil
-                                </a>
-                            </li>
-                            <li><label for="modalRekBank"
-                                    class="hover:shadow-lg hover:border hover:border-green-900
-                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased"><i
-                                        class="fas fa-wallet mr-2 text-xs"></i>
-                                    Daftar Rekening</label></li>
-                            <li id="signOutBar"
-                                class="hover:shadow-lg hover:border hover:border-green-900
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
-                                <a class="flex items-center" onclick="logoutUser()">
-                                    <i class="fas fa-sign-out-alt mr-2 text-xs"></i>Keluar
-                                </a>
-                            </li>
-                        </div>
-                    </ul>
-                    <button onclick="showMenu()"
-                        class="middle none relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] rounded-lg text-center font-sans
-                        text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-transparent focus:bg-transparent
-                        active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none md:hidden">
-                        <span class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                stroke="currentColor" strokeWidth="2">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16">
-                                </path>
-                            </svg>
-                        </span>
-                    </button>
-                </div>
-            </nav>
+                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased"><i
+                                    class="fas fa-wallet mr-2 text-xs"></i>
+                                Daftar Rekening</label></li>
+                        <li id="signOutBar"
+                            class="hover:shadow-lg hover:border hover:border-green-900
+                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-5 block p-1 font-sans font-normal leading-normal text-inherit antialiased">
+                            <a class="flex items-center" onclick="logoutUser()">
+                                <i class="fas fa-sign-out-alt mr-2 text-xs"></i>Keluar
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+                <button onclick="showMenu()"
+                    class="middle none relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] rounded-lg text-center font-sans
+                                        text-xs font-medium uppercase text-blue-gray-500 transition-all hover:bg-transparent focus:bg-transparent
+                                        active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none md:hidden">
+                    <span class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor"
+                            strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16">
+                            </path>
+                        </svg>
+                    </span>
+                </button>
+
+            </div>
+
         </div>
     </div>
 
@@ -383,7 +384,7 @@
                         <div class="flex justify-center">
                             <button data-ripple-light="true"
                                 class="bg-gradient-to-tr from-green-600 to-green-400 text-sm mr-2 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
                                 lg:px-5 block p-1 leading-normal text-inherit antialiased text-white">
                                 Ajukan</button>
                         </div>
@@ -419,8 +420,22 @@
             <div class="modal-action">
                 <label for="modalProduk" data-ripple-light="true"
                     class="bg-gray-200 border border-gray-500 cursor-pointer text-sm mr-2 hover:shadow-lg
-                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
                         lg:px-5 block p-1 leading-normal text-inherit antialiased">
+                    Close</label>
+            </div>
+        </div>
+    </div>
+
+
+    <input type="checkbox" id="modalRekBank" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box bg-white text-gray-800">
+            <div class="modal-action">
+                <label for="modalRekBank" data-ripple-light="true"
+                    class="bg-gray-200 border border-gray-500 cursor-pointer text-sm mr-2 hover:shadow-lg
+                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                    lg:px-5 block p-1 leading-normal text-inherit antialiased">
                     Close</label>
             </div>
         </div>

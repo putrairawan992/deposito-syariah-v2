@@ -3,24 +3,6 @@
 @section('content')
     <script src="js/layout.js"></script>
     <script src="js/nasabah/dashboard.js"></script>
-    <script>
-        function scroll_style() {
-            var window_top = $(window).scrollTop();
-            var div_top = $('#topLimit').offset().top;
-
-            if (window_top > div_top) {
-                $('#stepNa').css('opacity', '0')
-            }
-
-            if (window_top <= div_top) {
-                $('#stepNa').css('opacity', '1')
-            }
-        }
-        $(function() {
-            $(window).scroll(scroll_style);
-            scroll_style();
-        });
-    </script>
 
     <head>
         <title>Dashboard - Deposito Syariah</title>
@@ -37,7 +19,7 @@
         </style>
     </head>
 
-    <div class="mx-2 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">
+    <div class="content text-black transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 flex justify-center">
         <div style="max-width: 1100px">
             <div class="flex flex-col sm:flex-row mb-2 text-xs font-sans sm:text-base">
                 <div class="w-full sm:w-4/6 bg-white rounded-lg p-4 mb-2 sm:mb-0 sm:mr-2 sm:font-semibold font-light">

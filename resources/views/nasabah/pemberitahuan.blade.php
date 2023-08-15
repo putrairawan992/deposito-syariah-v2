@@ -8,16 +8,16 @@
         <title>Pemberitahuan - Deposito Syariah</title>
     </head>
 
-    <div class="mx-1 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">
+    <div class="content text-black transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 flex justify-center">
         <div style="max-width: 1100px">
             <div class="font-sans bg-white rounded-lg p-2 sm:p-4 mb-2 w-80 sm:w-full">
-                <div class="font-semibold mb-4 w-full text-center">Semua Pemberitahuan</div>
+                <div class="font-semibold mb-3 w-full text-center text-lg font-sans">Semua Pemberitahuan</div>
                 <table class="table table-sm" id="tbPemberitahuan">
                     <!-- head -->
                     <thead>
                         <tr class="text-black text-base">
-                            <th></th>
-                            <th class="text-center">Pemberitahuan</th>
+                            <th>#</th>
+                            <th class="text-center">Keterangan</th>
                             <th class="text-center">Waktu</th>
                         </tr>
                     </thead>

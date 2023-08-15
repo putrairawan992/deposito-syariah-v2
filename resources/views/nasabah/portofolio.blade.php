@@ -8,8 +8,8 @@
         <title>Portofolio - Deposito Syariah</title>
     </head>
 
-    <div class="mx-1 sm:mx-7 sm:mt-20 mt-12 text-black flex items-center justify-center">
-        <div style="max-width: 1100px">
+    <div class="content text-black transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 flex justify-center">
+        <div style="max-width: 1300px">
             <div class="font-sans bg-white rounded-lg p-2 sm:p-4 mb-2 w-80 sm:w-full">
                 <div class="text-xl font-semibold mb-2 w-full">Portofolio Anda</div>
                 <div class="flex flex-row mb-4">
@@ -40,344 +40,204 @@
                         Batal</button>
                 </div>
                 <div>
-                    <div class="mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs sm:text-sm">
+                    <div
+                        class="px-5 mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs font-sans md:text-sm lg:text-base">
                         <div class="flex justify-between">
                             <div class="font-semibold">BPR Kencana</div>
-                            <div class="bg-blue-800 text-white rounded-md py-1 px-4">Aktif</div>
+                            <div class="bg-blue-800 text-white rounded-md py-1 px-4 text-xs md:text-sm">Aktif</div>
                         </div>
-                        <div class="hidden sm:flex justify-between text-xs mt-2 items-center">
-                            <div class="mr-5">
+                        <div class="grid grid-rows-4 sm:grid-rows-2 lg:grid-rows-1 grid-flow-col gap-4">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nilai Deposito</div>
                                 <div>Rp 10.000.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Bagi Hasil Setara</div>
                                 <div>5% / Tahun</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nisbah</div>
                                 <div>40 : 60</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Estimasi Bagi Hasil</div>
                                 <div>Rp 125.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tenor</div>
                                 <div>6 Bulan</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tanggal Jatuh Tempo</div>
                                 <div>18 September 2023</div>
                             </div>
-                            <label for="modalPortofolio" data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</label>
-                        </div>
-                        <div class="grid sm:hidden grid-cols-2 gap-2 text-xs mt-2 items-center">
-                            <div class="mr-0">
-                                <div>Nilai Deposito</div>
-                                <div>Rp 10.000.000</div>
+                            <div class="flex items-center sm:justify-end justify-center">
+                                <label for="modalPortofolio" data-ripple-light="true"
+                                    class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 text-xs sm:text-sm
+                                    lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
+                                    Lihat Detail</label>
                             </div>
-                            <div class="mr-0">
-                                <div>Bagi Hasil Setara</div>
-                                <div>5% / Tahun</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Nisbah</div>
-                                <div>40 : 60</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Estimasi Bagi Hasil</div>
-                                <div>Rp 125.000</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tenor</div>
-                                <div>6 Bulan</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tanggal Jatuh Tempo</div>
-                                <div>18 September 2023</div>
-                            </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
                         </div>
                     </div>
-                    <div class="mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs sm:text-sm">
+                    <div
+                        class="px-5 mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs font-sans md:text-sm lg:text-base">
                         <div class="flex justify-between">
                             <div class="font-semibold">BPR Kencana</div>
-                            <div class="bg-orange-500 text-white rounded-md py-1 px-4">Proses</div>
+                            <div class="bg-orange-600 text-white rounded-md py-1 px-4 text-xs md:text-sm">Proses</div>
                         </div>
-                        <div class="hidden sm:flex justify-between text-xs mt-2 items-center">
-                            <div class="mr-5">
+                        <div class="grid grid-rows-4 sm:grid-rows-2 lg:grid-rows-1 grid-flow-col gap-4">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nilai Deposito</div>
                                 <div>Rp 10.000.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Bagi Hasil Setara</div>
                                 <div>5% / Tahun</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nisbah</div>
                                 <div>40 : 60</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Estimasi Bagi Hasil</div>
                                 <div>Rp 125.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tenor</div>
                                 <div>6 Bulan</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tanggal Jatuh Tempo</div>
                                 <div>18 September 2023</div>
                             </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
-                        </div>
-                        <div class="grid sm:hidden grid-cols-2 gap-2 text-xs mt-2 items-center">
-                            <div class="mr-0">
-                                <div>Nilai Deposito</div>
-                                <div>Rp 10.000.000</div>
+                            <div class="flex items-center sm:justify-end justify-center">
+                                <label for="modalPortofolio" data-ripple-light="true"
+                                    class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 text-xs sm:text-sm
+                                    lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
+                                    Lihat Detail</label>
                             </div>
-                            <div class="mr-0">
-                                <div>Bagi Hasil Setara</div>
-                                <div>5% / Tahun</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Nisbah</div>
-                                <div>40 : 60</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Estimasi Bagi Hasil</div>
-                                <div>Rp 125.000</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tenor</div>
-                                <div>6 Bulan</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tanggal Jatuh Tempo</div>
-                                <div>18 September 2023</div>
-                            </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
                         </div>
                     </div>
-                    <div class="mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs sm:text-sm">
+                    <div
+                        class="px-5 mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs font-sans md:text-sm lg:text-base">
                         <div class="flex justify-between">
                             <div class="font-semibold">BPR Kencana</div>
-                            <div class="bg-green-800 text-white rounded-md py-1 px-4">Lunas</div>
+                            <div class="bg-green-600 text-white rounded-md py-1 px-4 text-xs md:text-sm">Lunas</div>
                         </div>
-                        <div class="hidden sm:flex justify-between text-xs mt-2 items-center">
-                            <div class="mr-5">
+                        <div class="grid grid-rows-4 sm:grid-rows-2 lg:grid-rows-1 grid-flow-col gap-4">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nilai Deposito</div>
                                 <div>Rp 10.000.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Bagi Hasil Setara</div>
                                 <div>5% / Tahun</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nisbah</div>
                                 <div>40 : 60</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Estimasi Bagi Hasil</div>
                                 <div>Rp 125.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tenor</div>
                                 <div>6 Bulan</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tanggal Jatuh Tempo</div>
                                 <div>18 September 2023</div>
                             </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
-                        </div>
-                        <div class="grid sm:hidden grid-cols-2 gap-2 text-xs mt-2 items-center">
-                            <div class="mr-0">
-                                <div>Nilai Deposito</div>
-                                <div>Rp 10.000.000</div>
+                            <div class="flex items-center sm:justify-end justify-center">
+                                <label for="modalPortofolio" data-ripple-light="true"
+                                    class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 text-xs sm:text-sm
+                                    lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
+                                    Lihat Detail</label>
                             </div>
-                            <div class="mr-0">
-                                <div>Bagi Hasil Setara</div>
-                                <div>5% / Tahun</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Nisbah</div>
-                                <div>40 : 60</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Estimasi Bagi Hasil</div>
-                                <div>Rp 125.000</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tenor</div>
-                                <div>6 Bulan</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tanggal Jatuh Tempo</div>
-                                <div>18 September 2023</div>
-                            </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
                         </div>
                     </div>
-                    <div class="mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs sm:text-sm">
+                    <div
+                        class="px-5 mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs font-sans md:text-sm lg:text-base">
                         <div class="flex justify-between">
                             <div class="font-semibold">BPR Kencana</div>
-                            <div class="bg-red-800 text-white rounded-md py-1 px-4">Batal</div>
+                            <div class="bg-red-700 text-white rounded-md py-1 px-4 text-xs md:text-sm">Batal</div>
                         </div>
-                        <div class="hidden sm:flex justify-between text-xs mt-2 items-center">
-                            <div class="mr-5">
+                        <div class="grid grid-rows-4 sm:grid-rows-2 lg:grid-rows-1 grid-flow-col gap-4">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nilai Deposito</div>
                                 <div>Rp 10.000.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Bagi Hasil Setara</div>
                                 <div>5% / Tahun</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nisbah</div>
                                 <div>40 : 60</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Estimasi Bagi Hasil</div>
                                 <div>Rp 125.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tenor</div>
                                 <div>6 Bulan</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tanggal Jatuh Tempo</div>
                                 <div>18 September 2023</div>
                             </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
-                        </div>
-                        <div class="grid sm:hidden grid-cols-2 gap-2 text-xs mt-2 items-center">
-                            <div class="mr-0">
-                                <div>Nilai Deposito</div>
-                                <div>Rp 10.000.000</div>
+                            <div class="flex items-center sm:justify-end justify-center">
+                                <label for="modalPortofolio" data-ripple-light="true"
+                                    class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 text-xs sm:text-sm
+                                    lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
+                                    Lihat Detail</label>
                             </div>
-                            <div class="mr-0">
-                                <div>Bagi Hasil Setara</div>
-                                <div>5% / Tahun</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Nisbah</div>
-                                <div>40 : 60</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Estimasi Bagi Hasil</div>
-                                <div>Rp 125.000</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tenor</div>
-                                <div>6 Bulan</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tanggal Jatuh Tempo</div>
-                                <div>18 September 2023</div>
-                            </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
                         </div>
                     </div>
-                    <div class="mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs sm:text-sm">
+                    <div
+                        class="px-5 mb-3 w-full rounded-lg border border-green-800 shadow-md p-2 text-xs font-sans md:text-sm lg:text-base">
                         <div class="flex justify-between">
                             <div class="font-semibold">BPR Kencana</div>
-                            <div class="bg-blue-800 text-white rounded-md py-1 px-4">Aktif</div>
+                            <div class="bg-blue-800 text-white rounded-md py-1 px-4 text-xs md:text-sm">Aktif</div>
                         </div>
-                        <div class="hidden sm:flex justify-between text-xs mt-2 items-center">
-                            <div class="mr-5">
+                        <div class="grid grid-rows-4 sm:grid-rows-2 lg:grid-rows-1 grid-flow-col gap-4">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nilai Deposito</div>
                                 <div>Rp 10.000.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Bagi Hasil Setara</div>
                                 <div>5% / Tahun</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Nisbah</div>
                                 <div>40 : 60</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Estimasi Bagi Hasil</div>
                                 <div>Rp 125.000</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tenor</div>
                                 <div>6 Bulan</div>
                             </div>
-                            <div class="mr-5">
+                            <div class="mr-3 md:mr-10">
                                 <div>Tanggal Jatuh Tempo</div>
                                 <div>18 September 2023</div>
                             </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
-                        </div>
-                        <div class="grid sm:hidden grid-cols-2 gap-2 text-xs mt-2 items-center">
-                            <div class="mr-0">
-                                <div>Nilai Deposito</div>
-                                <div>Rp 10.000.000</div>
+                            <div class="flex items-center sm:justify-end justify-center">
+                                <label for="modalPortofolio" data-ripple-light="true"
+                                    class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
+                                    hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 text-xs sm:text-sm
+                                    lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
+                                    Lihat Detail</label>
                             </div>
-                            <div class="mr-0">
-                                <div>Bagi Hasil Setara</div>
-                                <div>5% / Tahun</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Nisbah</div>
-                                <div>40 : 60</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Estimasi Bagi Hasil</div>
-                                <div>Rp 125.000</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tenor</div>
-                                <div>6 Bulan</div>
-                            </div>
-                            <div class="mr-0">
-                                <div>Tanggal Jatuh Tempo</div>
-                                <div>18 September 2023</div>
-                            </div>
-                            <button data-ripple-light="true"
-                                class="bg-gradient-to-tr from-green-600 to-green-400 hover:shadow-lg
-                                hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                                lg:px-4 block p-1 leading-normal text-inherit antialiased text-white">
-                                Lihat Detail</button>
                         </div>
                     </div>
                 </div>
