@@ -18,10 +18,19 @@
 
     <div class="content text-black ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 ">
         <div class="p-4 mb-4 rounded-md bg-white">
-            <div class="mb-3 text-lg font-sans font-semibold"> Daftar Nasabah </div>
+            <div class="flex justify-between items-center mb-3">
+                <div class="mb-3 md:mb-0 text-lg font-sans font-semibold"> Daftar Nasabah </div>
+                <div class="mt-2 md:mt-0 w-full flex items-center bg-gray-200 rounded-md shadow-sm shadow-gray-600"
+                    style="max-width: 700px">
+                    <i class="fas fa-exclamation-circle text-xl ml-4 mr-2"></i>
+                    <p class="text-sm p-2">
+                        Admin dapat melihat daftar Nasabah serta dapat memberikan validasi mengenai data Nasabah.
+                    </p>
+                </div>
+            </div>
             <div class="flex justify-center mb-2" id="loading-tb-nasabah">
                 <div class="p-2 px-4 rounded-lg shadow-md border bg-blue-500 flex flex-row items-center text-white">
-                    <span class="loading loading-ring loading-md mr-2"></span>
+                    <span class="loading loading-ring loading-md mr-2 font-semibold font-sans"></span>
                     Load Data...
                 </div>
             </div>
@@ -388,13 +397,6 @@
         ajaxCall(serverApi + 'kota', null, "GET", "showKota")
 
         function showKota(data) {}
-
-        function restyleButton() {
-            setTimeout(function() {
-                $('.dt-button').css('border-radius', '10px').css('margin-right', '-5px').css('height', '33px').css(
-                    'font-size', '12px').css('background-color', '#4CAF50').css('color', 'white')
-            }, 700)
-        }
 
         function reloadData() {
             $("#loading-tb-nasabah").fadeIn()

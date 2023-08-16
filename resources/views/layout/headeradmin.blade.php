@@ -137,11 +137,11 @@
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Splash Screen</div><i class="fas fa-tv pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/aksesuser"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Akses User</div><i class="fas fa-users-cog pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/aksesuser"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Aktivitas</div><i class="fas fa-list-alt pr-5"></i>
             </a>
@@ -179,6 +179,10 @@
             <a href="#"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-tv"></i>
+            </a>
+            <a href="/admin/aksesuser"
+                class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
+                <i class="fas fa-users-cog"></i>
             </a>
             <a href="#"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">

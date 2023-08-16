@@ -42,6 +42,86 @@ class AuthController extends Controller
         return response()->json($alluser, 200);
     }
 
+    public function alladmin()
+    {
+        auth()->user()->role == 99
+            ? ($alluser = DB::table('users')
+                ->where('role', '!=', 0)
+                ->where('role', '!=', 10)
+                ->get())
+            : ($alluser = DB::table('users')
+                ->where('role', '!=', 99)
+                ->where('role', '!=', 0)
+                ->where('role', '!=', 10)
+                ->get());
+
+        foreach ($alluser as $key => $value) {
+            $kriptorone = $value->kriptorone;
+            $kriptortwo = $value->kriptortwo;
+            if ($value->email != null) {
+                $value->email = dekripsina($value->email, $kriptorone, $kriptortwo);
+            }
+            if ($value->username != null) {
+                $value->username = dekripsina($value->username, $kriptorone, $kriptortwo);
+            }
+            if ($value->phone != null) {
+                $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
+            }
+
+            unset($value->otp);
+            unset($value->pin);
+            unset($value->password);
+            unset($value->store_token);
+            unset($value->reset_token);
+            unset($value->kriptorone);
+            unset($value->kriptortwo);
+            unset($value->idmitra);
+        }
+
+        return response()->json($alluser, 200);
+    }
+
+    public function detail($iduser)
+    {
+        auth()->user()->role == 99
+            ? ($getUser = DB::table('users')
+                ->where('iduser', $iduser)
+                ->where('role', '!=', 0)
+                ->where('role', '!=', 10)
+                ->first())
+            : ($getUser = DB::table('users')
+                ->where('iduser', $iduser)
+                ->where('role', '!=', 99)
+                ->where('role', '!=', 0)
+                ->where('role', '!=', 10)
+                ->first());
+
+        $kriptorone = $getUser->kriptorone;
+        $kriptortwo = $getUser->kriptortwo;
+        if ($getUser->email != null) {
+            $getUser->email = dekripsina($getUser->email, $kriptorone, $kriptortwo);
+        }
+        if ($getUser->username != null) {
+            $getUser->username = dekripsina($getUser->username, $kriptorone, $kriptortwo);
+        }
+        if ($getUser->phone != null) {
+            $getUser->phone = dekripsina($getUser->phone, $kriptorone, $kriptortwo);
+        }
+        if ($getUser->user_created == null) {
+            $getUser->user_created = 'Super Admin';
+        }
+
+        unset($getUser->otp);
+        unset($getUser->pin);
+        unset($getUser->password);
+        unset($getUser->store_token);
+        unset($getUser->reset_token);
+        unset($getUser->kriptorone);
+        unset($getUser->kriptortwo);
+
+        return response()->json($getUser, 200);
+    }
+
     public function nasabah()
     {
         $alluser = DB::table('users')
@@ -162,15 +242,20 @@ class AuthController extends Controller
 
     public function regadmin(Request $request)
     {
+        $iduser = $request->iduser;
         $username = $request->username;
         $email = $request->email;
         $password = $request->password;
         $phone = $request->phone;
         $role = $request->role;
+        $status = $request->status;
+        $idmitra = $request->idmitra;
 
         // Check if field is empty
-        if (empty($email) or empty($username) or empty($password)) {
-            return response()->json('Semua Kolom harus terisi', 400);
+        if (empty($iduser)) {
+            if (empty($email) or empty($username) or empty($password)) {
+                return response()->json('Semua Kolom harus terisi', 400);
+            }
         }
 
         // Check if email is valid
@@ -179,8 +264,10 @@ class AuthController extends Controller
         }
 
         // Check if password is greater than 5 character
-        if (strlen($password) < 6) {
-            return response()->json('Password Kurang Dari 6 Digit', 400);
+        if (!empty($password)) {
+            if (strlen($password) < 6) {
+                return response()->json('Password Kurang Dari 6 Digit', 400);
+            }
         }
 
         // Check if password is greater than 5 character
@@ -189,8 +276,9 @@ class AuthController extends Controller
         }
 
         // Check if username, email, phone already exist
-        $cekData = User::all();
-        foreach ($cekData as $key => $value) {
+        $cekData = DB::table('users');
+        !empty($iduser) ? $cekData->where('iduser', '!=', $iduser) : null;
+        foreach ($cekData->get() as $key => $value) {
             $dekripEmail = null;
             $dekripUsername = null;
             $dekripPhone = null;
@@ -223,18 +311,20 @@ class AuthController extends Controller
         }
 
         // Check Id User
-        $cekUserId = DB::table('users')
-            ->wherein('role', [1, 3, 99])
-            ->get();
-        $key = true;
-        while ($key) {
-            $count = 0;
-            $userId = 'A' . date('y') . rand(100, 999) . date('m');
-            foreach ($cekUserId as $value) {
-                $noIdNa = $value->id;
-                $noIdNa == $userId ? $count++ : null;
+        if (empty($iduser)) {
+            $cekUserId = DB::table('users')
+                ->wherein('role', [1, 2, 3, 99])
+                ->get();
+            $key = true;
+            while ($key) {
+                $count = 0;
+                $userId = 'A' . date('y') . rand(100, 999) . date('m');
+                foreach ($cekUserId as $value) {
+                    $noIdNa = $value->id;
+                    $noIdNa == $userId ? $count++ : null;
+                }
+                $count == 0 ? ($key = false) : null;
             }
-            $count == 0 ? ($key = false) : null;
         }
 
         // Create new user
@@ -244,22 +334,44 @@ class AuthController extends Controller
         $enkripUsername = newenkripsina($username, $kriptorone, $kriptortwo);
         $enkripEmail = newenkripsina($email, $kriptorone, $kriptortwo);
         $enkripPhone = newenkripsina($phone, $kriptorone, $kriptortwo);
-        // return response()->json([$enkripUsername, $enkripEmail, $enkripPhone], 400);
-        try {
-            $user = new User();
-            $user->username = $enkripUsername;
-            $user->iduser = $userId;
-            $user->email = $enkripEmail;
-            $user->phone = $enkripPhone;
-            $user->password = app('hash')->make($password);
-            $user->kriptorone = $kriptor['kriptorone'];
-            $user->kriptortwo = $kriptor['kriptortwo'];
-            $user->role = $role;
-            $user->status = 1;
-            $user->user_created = auth()->user()->iduser;
 
-            if ($user->save()) {
-                return response()->json('Register Admin Berhasil', 200);
+        try {
+            if (empty($iduser)) {
+                $user = new User();
+                $user->username = $enkripUsername;
+                $user->iduser = $userId;
+                $user->email = $enkripEmail;
+                $user->phone = $enkripPhone;
+                $user->password = app('hash')->make($password);
+                $user->kriptorone = $kriptor['kriptorone'];
+                $user->kriptortwo = $kriptor['kriptortwo'];
+                $user->role = $role;
+                $user->status = $status;
+                $user->idmitra = $idmitra;
+                $user->user_created = auth()->user()->iduser;
+
+                if ($user->save()) {
+                    return response()->json('Register Admin Berhasil', 200);
+                }
+            } else {
+                $getUser = DB::table('users')
+                    ->where('iduser', $iduser)
+                    ->first();
+                $kriptorone = $getUser->kriptorone;
+                $kriptortwo = $getUser->kriptortwo;
+
+                $updateUser['username'] = oldenkripsina($username, $kriptorone, $kriptortwo);
+                $updateUser['email'] = oldenkripsina($email, $kriptorone, $kriptortwo);
+                $updateUser['phone'] = oldenkripsina($phone, $kriptorone, $kriptortwo);
+                $updateUser['password'] = app('hash')->make($password);
+                $updateUser['role'] = $role;
+                $updateUser['status'] = $status;
+                $updateUser['idmitra'] = $idmitra;
+                $updateUser['user_updated'] = auth()->user()->iduser;
+                DB::table('users')
+                    ->where('iduser', $iduser)
+                    ->update($updateUser);
+                return response()->json('Update Admin Berhasil', 200);
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -363,7 +475,7 @@ class AuthController extends Controller
 
         // Get KriptorCode
         $myUser = DB::table('users')
-            ->where('id', auth()->user()->id)
+            ->where('iduser', auth()->user()->iduser)
             ->first();
         $kriptorone = $myUser->kriptorone;
         $kriptortwo = $myUser->kriptortwo;
@@ -376,7 +488,7 @@ class AuthController extends Controller
 
         try {
             DB::table('users')
-                ->where('id', auth()->user()->id)
+                ->where('iduser', auth()->user()->iduser)
                 ->update($updateData);
             return response()->json('Update Berhasil', 200);
         } catch (\Exception $e) {
@@ -503,7 +615,9 @@ class AuthController extends Controller
             }
         }
         $loginField = $username;
-        $cekRole = DB::table('users')->wherein('role', [0, 10]);
+        $cekRole = DB::table('users')
+            ->wherein('role', [0, 10])
+            ->get();
         foreach ($cekRole as $key => $value) {
             $dekripPhone = dekripsina($value->phone, $value->kriptorone, $value->kriptortwo);
             $dekripUsername = dekripsina($value->username, $value->kriptorone, $value->kriptortwo);

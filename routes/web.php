@@ -35,6 +35,9 @@ $router->get('/admin/nasabah', function () use ($router) {
 $router->get('/admin/mitra', function () use ($router) {
     return view('admin.mitra');
 });
+$router->get('/admin/aksesuser', function () use ($router) {
+    return view('admin.aksesuser');
+});
 
 // Nasabah Page
 $router->get('/dashboard', function () use ($router) {
@@ -97,6 +100,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['middleware' => 'admin'], function () use ($router) {
         // Admin Section
+        $router->get('/alladmin', 'AuthController@alladmin');
+        $router->get('/admin/{iduser}', 'AuthController@detail');
         $router->post('/regadmin', 'AuthController@regadmin');
         $router->put('/updateadmin', 'AuthController@update');
         $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');

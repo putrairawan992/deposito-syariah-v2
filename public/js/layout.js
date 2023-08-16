@@ -1,6 +1,5 @@
 var serverURL = "/";
 var serverApi = serverURL + "api/";
-let thisYear = parseInt(new Date().getFullYear());
 
 var role = null;
 var token = null;
@@ -15,6 +14,19 @@ if (window.localStorage.getItem("jwttoken")) {
     if (!window.location.href.includes("login")) {
         window.open(serverURL + "login", "_self");
     }
+}
+
+function restyleButton() {
+    setTimeout(function () {
+        $(".dt-button")
+            .css("border-radius", "7px")
+            .css("margin-right", "-5px")
+            .css("height", "33px")
+            .css("font-size", "12px")
+            .css("background-color", "#4CAF50")
+            .css("color", "white")
+            .css("border", "0");
+    }, 700);
 }
 
 function ajaxCall(url, dataNa = null, type = "GET", goto) {
@@ -37,14 +49,18 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "afterLogin") afterLogin(data);
             else if (goto == "showAllNasabah") showAllNasabah(data);
             else if (goto == "showAllMitra") showAllMitra(data);
+            else if (goto == "showAllAdmin") showAllAdmin(data);
             else if (goto == "updatePINPass") updatePINPass(data);
             else if (goto == "getNasabah") getNasabah(data);
             else if (goto == "getMitra") getMitra(data);
+            else if (goto == "getAdmin") getAdmin(data);
             else if (goto == "afterSimpanValidasi") afterSimpanValidasi(data);
             else if (goto == "showKota") showKota(data);
             else if (goto == "showKotaNPWP") showKotaNPWP(data);
             else if (goto == "showProvinsi") showProvinsi(data);
             else if (goto == "clearImg") null;
+            else if (goto == "logoutUser")
+                swalBerhasil("Berhasil", "Logout Berhasil");
             else swalBerhasil();
         },
         error: function (xhr, XMLHttpRequest, textStatus, errorThrown) {
@@ -204,6 +220,7 @@ function buildTableNoExport(table, elementId) {
                 },
             },
         ],
+        columnDefs: [{ targets: "no-sort", targets: [0] }],
     });
 }
 
@@ -214,7 +231,7 @@ function logoutUser() {
         text: "Anda melakukan logout Aplikasi",
         button: false,
     });
-    ajaxCall(serverApi + "logout", null, "GET");
+    ajaxCall(serverApi + "logout", null, "GET", "logoutUser");
     window.localStorage.removeItem("jwttoken");
     setTimeout(function () {
         window.open("/login", "_self");

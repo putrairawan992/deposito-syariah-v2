@@ -20,7 +20,7 @@
     </head>
 
     <div class="content text-black transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 flex justify-center">
-        <div style="max-width: 1100px">
+        <div style="max-width: 1400px">
             <div class="flex flex-col sm:flex-row mb-2 text-xs font-sans sm:text-base">
                 <div class="w-full sm:w-4/6 bg-white rounded-lg p-4 mb-2 sm:mb-0 sm:mr-2 sm:font-semibold font-light">
                     <div class="">
@@ -41,10 +41,9 @@
                     </div>
                 </div>
                 <div class="w-full bg-white rounded-lg p-4" id="topLimit">
-                    <div class="flex justify-center font-thin sm:font-medium">Lengkapi data anda untuk membuka
-                    </div>
-                    <div class="flex justify-center font-thin sm:font-medium mb-2">dan memulai
-                        pendanaan
+                    <div id="textKelengkapan" class="font-thin sm:font-medium">
+                        <div class="flex justify-center">Lengkapi data anda untuk membuka</div>
+                        <div class="flex justify-center mb-2 -mt-1">dan memulai pendanaan</div>
                     </div>
                     <div class="flex justify-center">
                         <ul class="steps steps-horizontal font-medium sm:text-sm" id="stepNa">
@@ -62,7 +61,7 @@
                     href="/produk">
                     Lihat semua produk
                 </a>
-                <div class="mt-3 grid sm:grid-cols-2 grid-cols-1 sm:gap-3 gap-1 sm:text-base text-xs">
+                <div class="mt-3 grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 sm:gap-3 gap-1 sm:text-base text-xs">
                     <div class="rounded-md border py-2 px-4 border-green-800 shadow-md shadow-green-500/40">
                         <div class="font-bold">BPR Kencana Abadi</div>
                         <div class="text-xs my-2 font-body grid sm:grid-cols-3 grid-cols-2 sm:gap-3 gap-1">

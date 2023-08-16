@@ -31,7 +31,7 @@
         class="fixed w-full z-30 flex bg-white bg-opacity-95 p-2 items-center justify-center py-2 px-4
         lg:px-8 lg:py-4">
         <div class="logo transform ease-in-out duration-500 flex-none h-full flex items-center justify-center">
-            <img class="h-8 lg:h-10 -my-4" src="/img/Logo Harta Insan Karimah.png" alt="Logo HIK">
+            <img class="h-8 lg:h-12 -my-4" src="/img/Logo Harta Insan Karimah.png" alt="Logo HIK">
         </div>
         <!-- SPACER -->
         <div class="grow h-full flex items-center justify-center"></div>
@@ -448,14 +448,14 @@
             if (menuStatus == 0) {
                 $('#menuBar').fadeIn()
                 menuStatus = 1
-                $('#stepPIN').css('opacity', '0')
-                $('#stepFinish').css('opacity', '0')
+                // $('#stepPIN').css('opacity', '0')
+                // $('#stepFinish').css('opacity', '0')
 
             } else {
                 $('#menuBar').hide()
                 menuStatus = 0
-                $('#stepPIN').css('opacity', '1')
-                $('#stepFinish').css('opacity', '1')
+                // $('#stepPIN').css('opacity', '1')
+                // $('#stepFinish').css('opacity', '1')
 
             }
         }

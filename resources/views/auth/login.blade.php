@@ -14,7 +14,7 @@
                 <img class="h-8 md:h-10 lg:h-16" src="/img/Logo Harta Insan Karimah.png" alt="Logo HIK">
             </div>
             <div class="text-center text-md md:text-xl font-semibold mt-2">Selamat Datang</div>
-            <div class="text-center text-xs lg:text-sm" id="textLogin">Silahkan masukan nomor handphone. </div>
+            <div class="text-center text-xs lg:text-base" id="textLogin">Silahkan masukan nomor handphone. </div>
 
             <div id="form-login" class="-mt-2">
                 <div class="px-3">
@@ -44,7 +44,7 @@
                                 class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-800 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-800 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-800 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                                 Password
                             </label>
-                            <label class="mb-6 text-xs italic">Anda lupa password ? <button class="underline"
+                            <label class="mb-6 text-sm italic">Anda lupa password ? <button class="underline"
                                     onclick="forgotPass()">Klik</button></label>
                         </div>
                     </div>
@@ -71,46 +71,46 @@
                                 class="mx-1 md:mx-2 bg-green-50 ring-green-700 focus:ring h-10 w-8 text-center outline-none rounded-md"
                                 id="sixth" maxlength="1" />
                         </div>
-                        <div class="flex justify-center text-xs lg:text-sm mt-3 italic">Tidak terima OTP, Kirim Ulang
+                        <div class="flex justify-center text-sm lg:text-base mt-3 italic">Tidak terima OTP, Kirim Ulang
                             OTP dalam 60 detik </div>
                     </div>
 
                     <div class="flex justify-center my-4">
                         <button id="nextBtn" onclick="nextLogin()"
                             class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
+                            py-2 px-4 font-sans text-sm font-thin text-white shadow-md shadow-green-500/20 transition-all
                             hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
                             disabled:opacity-50 disabled:shadow-none flex"
                             data-ripple-light="true">
-                            <i class="fas fa-arrow-right mr-2 text-xs"></i>Lanjut
+                            <i class="fas fa-arrow-right mr-2 text-sm"></i>Lanjut
                         </button>
                         <button id="backBtn" onclick="backLogin()"
                             class="hidden pr-2 pl-4 mr-1 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                            py-2 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
+                            py-2 font-sans text-sm font-thin text-white shadow-md shadow-green-500/20 transition-all
                             hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
                             disabled:opacity-50 disabled:shadow-none"
                             data-ripple-light="true">
-                            <i class="fas fa-arrow-left mr-2 text-xs"></i>
+                            <i class="fas fa-arrow-left mr-2 text-sm"></i>
                         </button>
                         <button id="loginBtn" onclick="loginUser()"
                             class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
+                            py-2 px-4 font-sans text-sm font-thin text-white shadow-md shadow-green-500/20 transition-all
                             hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
                             disabled:opacity-50 disabled:shadow-none flex"
                             data-ripple-light="true">
-                            <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Login
+                            <i class="fas fa-sign-in-alt mr-2 text-sm"></i>Login
                         </button>
                         <button id="loginOTPBtn" onclick="loginOTP()"
                             class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
+                            py-2 px-4 font-sans text-sm font-thin text-white shadow-md shadow-green-500/20 transition-all
                             hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
                             disabled:opacity-50 disabled:shadow-none flex"
                             data-ripple-light="true">
-                            <i class="fas fa-sign-in-alt mr-2 text-xs"></i>Login
+                            <i class="fas fa-sign-in-alt mr-2 text-sm"></i>Login
                         </button>
                         <button id="loadingBtn"
                             class="w-2/6 items-center justify-center middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400
-                            py-2 px-4 font-sans text-xs font-thin text-white shadow-md shadow-green-500/20 transition-all
+                            py-2 px-4 font-sans text-sm font-thin text-white shadow-md shadow-green-500/20 transition-all
                             hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none
                             disabled:opacity-50 disabled:shadow-none flex"
                             data-ripple-light="true">
@@ -122,11 +122,12 @@
             </div>
         </div>
     </div>
-    <div class="md:hidden flex justify-center items-center w-full text-xs absolute bottom-16 sm:bottom-10 text-green-100">
+    <div
+        class="md:hidden flex justify-center items-center w-full text-xs md:text-sm  absolute bottom-16 sm:bottom-10 text-green-100">
         <div>Tercatat dan diawasi oleh OJK &nbsp;</div>
         <div class="font-semibold">No.S-123/MS.123/122/2023</div>
     </div>
-    <div class="hidden md:block absolute text-xs bottom-12 left-8 text-green-100">
+    <div class="hidden md:block absolute text-xs md:text-sm  bottom-12 left-8 text-green-100">
         <div>Tercatat dan diawasi oleh OJK</div>
         <div class="font-semibold">No.S-123/MS.123/122/2023</div>
     </div>
@@ -186,11 +187,14 @@
                 ajaxCall(serverApi + "ceklogin", JSON.stringify({
                     'username': $("#usernameNa").val(),
                 }), "POST", "jenisLogin")
+                $('#nextBtn').hide()
+                $('#loadingBtn').fadeIn()
             } else {
                 swalGagal("Perhatian", "Dimohon untuk mengisi dengan lengkap")
+                $('#usernameNa').prop('disabled', false)
+                $('#nextBtn').fadeIn()
+                $('#loadingBtn').hide()
             }
-            $('#nextBtn').hide()
-            $('#loadingBtn').fadeIn()
         }
 
         function jenisLogin(data) {
