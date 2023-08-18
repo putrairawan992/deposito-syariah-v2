@@ -38,6 +38,15 @@ $router->get('/admin/mitra', function () use ($router) {
 $router->get('/admin/aksesuser', function () use ($router) {
     return view('admin.aksesuser');
 });
+$router->get('/admin/promo', function () use ($router) {
+    return view('admin.promo');
+});
+$router->get('/admin/produk', function () use ($router) {
+    return view('admin.produk');
+});
+$router->get('/admin/transaksi', function () use ($router) {
+    return view('admin.transaksi');
+});
 
 // Nasabah Page
 $router->get('/dashboard', function () use ($router) {

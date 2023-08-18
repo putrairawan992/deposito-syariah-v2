@@ -260,7 +260,7 @@
                 tr += '<td class="text-left align-middle" nowrap>' + data["phone"] + "</td>";
 
                 tr +=
-                    '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-sm shadow-green-500/20 transition-all">'
+                    '<td class="text-center align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-sm shadow-green-500/20 transition-all">'
                 switch (data["role"]) {
                     case "99":
                         tr += 'Super Admin'
@@ -269,7 +269,7 @@
                         tr += 'Admin Utama'
                         break;
                     case "2":
-                        tr += 'Admin Mitra BPR'
+                        tr += 'Admin ' + data["idmitra"]
                         break;
                     case "3":
                         tr += 'Admin CS'
@@ -284,11 +284,11 @@
 
                 if (data["status"] == 1) {
                     tr +=
-                        '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-sm shadow-green-500/20 transition-all">' +
+                        '<td class="text-center align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-sm shadow-green-500/20 transition-all">' +
                         'Aktif' + "</button></td>";
                 } else {
                     tr +=
-                        '<td class="text-left align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-sm shadow-green-500/20 transition-all">' +
+                        '<td class="text-center align-middle" nowrap><button class="border pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-sm shadow-green-500/20 transition-all">' +
                         'Tidak Aktif' + "</button></td>";
                 }
 

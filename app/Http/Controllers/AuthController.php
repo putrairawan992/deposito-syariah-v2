@@ -67,6 +67,12 @@ class AuthController extends Controller
             if ($value->phone != null) {
                 $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
             }
+            if ($value->idmitra != null) {
+                $getmitra = DB::table('mitra')
+                    ->where('idmitra', $value->idmitra)
+                    ->first();
+                $value->idmitra = dekripsina($getmitra->nama, $getmitra->kriptorone, $getmitra->kriptortwo);
+            }
 
             unset($value->otp);
             unset($value->pin);
@@ -75,7 +81,6 @@ class AuthController extends Controller
             unset($value->reset_token);
             unset($value->kriptorone);
             unset($value->kriptortwo);
-            unset($value->idmitra);
         }
 
         return response()->json($alluser, 200);

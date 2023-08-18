@@ -121,17 +121,17 @@
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Nasabah</div><i class="fas fa-users pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/promo"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Promo</div><i class="fas fa-percentage pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/produk"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Produk</div><i class="fas fa-file-contract pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/transaksi"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
-                <div>Transaksi</div><i class="fas fa-wallet pr-5"></i>
+                <div>Portofolio</div><i class="fas fa-wallet pr-5"></i>
             </a>
             <a href="#"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
@@ -164,15 +164,15 @@
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-users"></i>
             </a>
-            <a href="#"
+            <a href="/admin/promo"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-percentage"></i>
             </a>
-            <a href="#"
+            <a href="/admin/produk"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-file-contract"></i>
             </a>
-            <a href="#"
+            <a href="/admin/transaksi"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-wallet"></i>
             </a>

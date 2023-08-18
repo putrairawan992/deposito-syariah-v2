@@ -294,7 +294,7 @@
                                         hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-3
                                         block p-1 leading-normal text-inherit antialiased">
                                     Batal</button>
-                                <a data-ripple-light="true" href="/dashboard"
+                                <a data-ripple-light="true" href="/dashboard" hidden
                                     class="text-sm hover:shadow-lg border border-black
                                     hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 lg:px-3
                                     block p-1 leading-normal text-inherit antialiased">
