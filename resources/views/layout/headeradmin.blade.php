@@ -42,8 +42,9 @@
                 <div class="flex-row flex items-center" id="identity">
                     <div class="dropdown dropdown-bottom dropdown-end ml-2 mr-6">
                         <div class="indicator">
-                            <span class="indicator-item badge bg-red-900 text-white text-xs "
-                                id="countNotif">&#8734;</span>
+                            <span id="indikatorNotif"
+                                class="border-0 w-3 indicator-item badge bg-red-900 text-white text-xs "
+                                id="countNotif">3</span>
                             <button tabindex="0"
                                 class="bg-opacity-0 btn-circle border-0 btn -m-2 hover:shadow-lg hover:bg-green-100 hover:border hover:border-green-900
                                     hover:shadow-green-500/40 active:opacity-[0.85]">
@@ -61,6 +62,9 @@
                                     Nasabah No 00001 menunggu Validasi</a></li>
                             <li><a class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
                                     Nasabah No 00001 menunggu Validasi</a></li>
+                            <li><a href="/admin/notifikasi"
+                                    class="rounded-md border-0 hover:text-black hover:border hover:border-green-700">
+                                    Lihat Semua Pemberitahuan</a></li>
                         </ul>
                     </div>
                     <div class="dropdown dropdown-bottom dropdown-end">
@@ -133,7 +137,7 @@
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Portofolio</div><i class="fas fa-wallet pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/splash"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Splash Screen</div><i class="fas fa-tv pr-5"></i>
             </a>
@@ -141,11 +145,11 @@
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Akses User</div><i class="fas fa-users-cog pr-5"></i>
             </a>
-            <a href="/admin/aksesuser"
+            <a href="/admin/aktivitas"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Aktivitas</div><i class="fas fa-list-alt pr-5"></i>
             </a>
-            <a href="#"
+            <a href="/admin/laporan"
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Laporan</div><i class="fas fa-file-alt pr-5"></i>
             </a>
@@ -176,7 +180,7 @@
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-wallet"></i>
             </a>
-            <a href="#"
+            <a href="/admin/splash"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-tv"></i>
             </a>
@@ -184,11 +188,11 @@
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-users-cog"></i>
             </a>
-            <a href="#"
+            <a href="/admin/aktivitas"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-list-alt"></i>
             </a>
-            <a href="#"
+            <a href="/admin/laporan"
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-file-alt"></i>
             </a>

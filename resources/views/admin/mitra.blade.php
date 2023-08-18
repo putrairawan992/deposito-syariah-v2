@@ -411,8 +411,8 @@
                         <div class="flex justify-end mt-7">
                             <button data-ripple-light="true" onclick="simpanMitra()" type="button"
                                 class="bg-gradient-to-tr from-green-600 to-green-400 text-sm hover:shadow-lg
-                        hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
-                        lg:px-5 block p-1 leading-normal text-inherit antialiased text-white">
+                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                            lg:px-5 block p-1 leading-normal text-inherit antialiased text-white">
                                 Simpan</button>
 
                         </div>

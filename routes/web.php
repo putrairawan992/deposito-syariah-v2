@@ -47,6 +47,21 @@ $router->get('/admin/produk', function () use ($router) {
 $router->get('/admin/transaksi', function () use ($router) {
     return view('admin.transaksi');
 });
+$router->get('/admin/splash', function () use ($router) {
+    return view('admin.splash');
+});
+$router->get('/admin/aktivitas', function () use ($router) {
+    return view('admin.aktivitas');
+});
+$router->get('/admin/notifikasi', function () use ($router) {
+    return view('admin.notifikasi');
+});
+$router->get('/admin/laporan', function () use ($router) {
+    return view('admin.laporan');
+});
+$router->get('/admin/notifikasi', function () use ($router) {
+    return view('admin.notifikasi');
+});
 
 // Nasabah Page
 $router->get('/dashboard', function () use ($router) {

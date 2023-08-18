@@ -235,6 +235,7 @@ CREATE TABLE splash_screen (
   id_admin INT NOT NULL,
   image varchar(255) DEFAULT 0,
   deskripsi varchar(255) DEFAULT 0,
+  urutan INT DEFAULT 1,
   status INT DEFAULT 1,
   created_at datetime DEFAULT current_timestamp,
   updated_at datetime DEFAULT NULL,
