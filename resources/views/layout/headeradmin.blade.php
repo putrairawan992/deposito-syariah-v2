@@ -78,10 +78,10 @@
                         </button>
                         <ul tabindex="0"
                             class="bg-white dropdown-content z-[1] menu p-2 shadow rounded-md mt-5 w-52 text-gray-700">
-                            <li><a href="/profil"
+                            <li><label for="modalProfil" onclick="getMyprofil()"
                                     class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
                                         class="fas fa-id-card"></i>
-                                    Profil</a></li>
+                                    Profil</label></li>
                             <li><a onclick="logoutUser()"
                                     class="rounded-md border-0 hover:text-black hover:border hover:border-green-700"><i
                                         class="fas fa-sign-out-alt"></i> Keluar</a></li>
@@ -104,12 +104,14 @@
             </div>
         </div>
         <div onclick="openNav()"
-            class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#233b1e] hover:bg-green-500 absolute top-2 p-3 rounded-full text-white hover:rotate-45">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
+            class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#233b1e] hover:bg-green-500 absolute top-2 p-3 rounded-full text-white hover:rotate-90">
+            <div class="h-4 w-4"></div>
+            <i class="fas fa-angle-right font-bold absolute top-3 left-4"></i>
+            {{-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
                 stroke="currentColor" class="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round"
                     d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-            </svg>
+            </svg> --}}
         </div>
         <!-- MAX SIDEBAR-->
         <div class="max hidden text-white pr-2 mt-16 flex-col space-y-2 w-full h-[calc(100vh)]">
@@ -200,6 +202,101 @@
 
     </aside>
 
+    <!-- Put this part before </body> tag -->
+    <input type="checkbox" id="modalProfil" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box bg-white text-gray-800">
+            <div class="font-sans font-semibold -mt-2 mb-2 text-lg" id="titleModalProfil">My Profile</div>
+            <label for="modalProfil" class="absolute top-3 right-4 text-xl cursor-pointer"><i
+                    class="far fa-times-circle"></i></label>
+            <form id="form-admin">
+                <input type="text" hidden id="iduserProfil" name="iduser" />
+                <div class="w-full">
+                    <div class="font-semibold">Identitas User</div>
+                    <div class="flex flex-col mb-4">
+                        <div class="h-1 w-1 rounded-full bg-black"></div>
+                        <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
+                    </div>
+                    <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                        <input readonly id="usernameProfil" name="username"
+                            class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                            placeholder=" " />
+                        <label
+                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                            Username
+                        </label>
+                    </div>
+                    <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                        <input readonly id="emailProfil" name="email"
+                            class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                            placeholder=" " />
+                        <label
+                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                            Email
+                        </label>
+                    </div>
+                    <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                        <input readonly id="phoneProfil" name="phone"
+                            class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                            placeholder=" " />
+                        <label
+                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                            Phone
+                        </label>
+                    </div>
+                    <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                        <input readonly id="roleProfil"
+                            class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                            placeholder=" " />
+                        <label
+                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                            Role
+                        </label>
+                    </div>
+
+                    <div id="passwordNa" class="hidden">
+                        <div class="font-semibold">Ganti Password ?</div>
+                        <div class="flex flex-col mb-4">
+                            <div class="h-1 w-1 rounded-full bg-black"></div>
+                            <div class="bg-black" style="margin-top:-2.5px; height: 1px"></div>
+                        </div>
+                        <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                            <input name="password" id="passwordprofil"
+                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                type="password" placeholder=" " />
+                            <label
+                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                                Insert Password
+                            </label>
+                        </div>
+                        <div class="mb-3 relative h-10 w-full min-w-[200px]">
+                            <input id="confirmpasswordprofil"
+                                class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                type="password" placeholder=" " />
+                            <label
+                                class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-green-700 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-green-700 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-green-700 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                                Konfirmasi Password
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mt-7">
+                        <button data-ripple-light="true" onclick="editMyprofil()" type="button" id="btnEditProfil"
+                            class="text-sm hover:shadow-lg text-blue-gray-500 border hidden
+                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2
+                            lg:px-5 p-1 leading-normal text-inherit antialiased">
+                            Edit</button>
+                        <button data-ripple-light="true" onclick="saveMyprofil()" type="button"
+                            id="btnSimpanProfil"
+                            class="bg-gradient-to-tr from-green-600 to-green-400 text-sm hover:shadow-lg
+                            hover:shadow-green-500/40 whitespace-nowrap rounded-md px-2 hidden
+                            lg:px-5 p-1 leading-normal text-inherit antialiased text-white">
+                            Simpan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         const sidebar = document.querySelector("aside");
         const maxSidebar = document.querySelector(".max")
@@ -242,7 +339,50 @@
             }
 
         }
-    </script>
 
+        function getMyprofil() {
+            $('#passwordNa').hide()
+            $('#btnEditProfil').fadeIn()
+            $('#btnSimpanProfil').hide()
+            ajaxCall(serverApi + "userprofile", null, "GET", "showMyprofil");
+        }
+
+        function editMyprofil() {
+            $('#btnEditProfil').hide()
+            $('#btnSimpanProfil').fadeIn()
+            // $('#usernameProfil').prop('readonly', false)
+            // $('#emailProfil').prop('readonly', false)
+            $('#phoneProfil').prop('readonly', false)
+            $('#passwordNa').fadeIn()
+        }
+
+        function showMyprofil(data) {
+            $('#roleProfil').val(data.userProfile.jabatan)
+            $('#usernameProfil').val(data.userProfile.username)
+            $('#emailProfil').val(data.userProfile.email)
+            $('#phoneProfil').val(data.userProfile.phone)
+        }
+
+        function saveMyprofil() {
+            swalTunggu()
+            if ($('#passwordprofil').val() != "") {
+                if ($('#passwordprofil').val() != $('#confirmpasswordprofil').val()) {
+                    swalGagal('Password',
+                        'Password yang anda inputkan berbeda')
+                } else {
+                    dataNa = {
+                        'password': $('#passwordprofil').val(),
+                        'phone': $('#phoneProfil').val(),
+                    }
+                    ajaxCall(serverApi + "upuser", JSON.stringify(dataNa), "put", "getMyprofil");
+                }
+            } else {
+                dataNa = {
+                    'phone': $('#phoneProfil').val(),
+                }
+                ajaxCall(serverApi + "upuser", JSON.stringify(dataNa), "put", "getMyprofil");
+            }
+        }
+    </script>
 
 </html>

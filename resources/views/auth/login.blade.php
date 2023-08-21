@@ -7,14 +7,14 @@
         <title>Login - Deposito Syariah</title>
     </head>
     <div class="flex items-center justify-center h-screen">
-        <div style="max-width: 1100px"
+        <div style="max-width: 500px"
             class="p-3 relative flex w-5/6 sm:w-3/5 md:w-2/5 flex-col rounded-xl bg-white bg-clip-border
                 text-gray-700 shadow-sm shadow-white">
             <div class="flex items-center justify-center">
                 <img class="h-8 md:h-10 lg:h-16" src="/img/Logo Harta Insan Karimah.png" alt="Logo HIK">
             </div>
-            <div class="text-center text-md md:text-xl font-semibold mt-2">Selamat Datang</div>
-            <div class="text-center text-xs lg:text-base" id="textLogin">Silahkan masukan nomor handphone. </div>
+            <div class="text-center text-md md:text-2xl font-semibold mt-2">Selamat Datang</div>
+            <div class="text-center text-xs lg:text-lg" id="textLogin">Silahkan masukan nomor handphone. </div>
 
             <div id="form-login" class="-mt-2">
                 <div class="px-3">
