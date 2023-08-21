@@ -433,7 +433,7 @@ class AuthController extends Controller
 
         // Check if password is greater than 5 character
         if (!empty($phone) && strlen($phone) < 10) {
-            return response()->json('Password Kurang Dari 6 Digit', 400);
+            return response()->json('No Handphone Kurang Dari 10 Digit', 400);
         }
 
         // Check if username, email, phone already exist

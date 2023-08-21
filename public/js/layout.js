@@ -45,6 +45,7 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
         success: function (data) {
             if (goto == "userprofile") userProfileNa(data);
             else if (goto == "showProfile") showProfile(data);
+            else if (goto == "showMyprofil") showMyprofil(data);
             else if (goto == "jenisLogin") jenisLogin(data);
             else if (goto == "afterLogin") afterLogin(data);
             else if (goto == "showAllNasabah") showAllNasabah(data);
@@ -61,7 +62,10 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "clearImg") null;
             else if (goto == "logoutUser")
                 swalBerhasil("Berhasil", "Logout Berhasil");
-            else swalBerhasil();
+            else if (goto == "getMyprofil") {
+                getMyprofil();
+                swalBerhasil();
+            } else swalBerhasil();
         },
         error: function (xhr, XMLHttpRequest, textStatus, errorThrown) {
             if (xhr.status == 0) {
@@ -94,7 +98,8 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
                     if (!window.location.href.includes("login")) {
                         window.open(serverURL + "login", "_self");
                     }
-                }
+                } else if (goto == "getMyprofil")
+                    swalGagal((title = "Gagal"), xhr.responseText);
             }
         },
     });
