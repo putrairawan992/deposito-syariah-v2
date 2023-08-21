@@ -105,7 +105,8 @@
         </div>
         <div onclick="openNav()"
             class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#233b1e] hover:bg-green-500 absolute top-2 p-3 rounded-full text-white hover:rotate-90">
-            <i class="fas fa-angle-right font-bold w-5 h-5"></i>
+            <div class="h-4 w-4"></div>
+            <i class="fas fa-angle-right font-bold absolute top-3 left-4"></i>
             {{-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
                 stroke="currentColor" class="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round"
