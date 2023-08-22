@@ -108,9 +108,9 @@ CREATE TABLE nasabah (
 
 -- --------------------------------------------------------
 
-CREATE TABLE norek_nasabah (
+CREATE TABLE norek (
   id int IDENTITY(1,1) PRIMARY KEY,
-  id_user varchar(255) NOT NULL,
+  id_owner varchar(255) NOT NULL,
   bank varchar(255) NOT NULL,
   norek varchar(255) NOT NULL,
   atas_nama varchar(255) DEFAULT NULL,
@@ -119,8 +119,7 @@ CREATE TABLE norek_nasabah (
   deleted_at datetime DEFAULT NULL,
   user_created varchar(255) DEFAULT NULL,
   user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL,
-  CONSTRAINT fk_norek_nasabah FOREIGN KEY (id_user) REFERENCES users(iduser)
+  user_deleted varchar(255) DEFAULT NULL
 );
 
 -- --------------------------------------------------------
@@ -174,22 +173,6 @@ CREATE TABLE mitra (
 
 CREATE UNIQUE INDEX ux_idmitra
 ON mitra (idmitra);
-
--- --------------------------------------------------------
-
-CREATE TABLE norek_mitra (
-  id int IDENTITY(1,1) PRIMARY KEY,
-  id_mitra varchar(255) not null,
-  nama varchar(255) not null,
-  atas_nama varchar(255) not null,
-  created_at datetime DEFAULT current_timestamp,
-  updated_at datetime DEFAULT NULL,
-  deleted_at datetime DEFAULT NULL,
-  user_created varchar(255) DEFAULT NULL,
-  user_updated varchar(255) DEFAULT NULL,
-  user_deleted varchar(255) DEFAULT NULL,
-  CONSTRAINT fk_norek_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(idmitra)
-);
 
 -- --------------------------------------------------------
 
@@ -252,10 +235,11 @@ CREATE TABLE splash_screen (
 
 CREATE TABLE produk (
   id int IDENTITY(1,1) PRIMARY KEY,
-  id_mitra INT NOT NULL,
+  id_mitra varchar(255) NOT NULL,
   no_produk varchar(255) NOT NULL,
   minimal varchar(255) NULL,
   target varchar(255) NULL,
+  nisbah varchar(255) NULL,
   bagi_hasil varchar(255) NULL,
   tenor varchar(255) NULL,
   start_date date NULL,
@@ -269,7 +253,7 @@ CREATE TABLE produk (
   user_deleted varchar(255) DEFAULT NULL,
   kriptorone varchar(255) default NULL,
   kriptortwo varchar(255) default NULL,
-  CONSTRAINT fk_produk_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(id)
+  CONSTRAINT fk_produk_mitra FOREIGN KEY (id_mitra) REFERENCES mitra(idmitra)
 );
 
 -- --------------------------------------------------------

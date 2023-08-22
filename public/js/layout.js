@@ -56,9 +56,12 @@ function ajaxCall(url, dataNa = null, type = "GET", goto) {
             else if (goto == "getMitra") getMitra(data);
             else if (goto == "getAdmin") getAdmin(data);
             else if (goto == "afterSimpanValidasi") afterSimpanValidasi(data);
+            else if (goto == "afterSimpanProduk") afterSimpanProduk(data);
             else if (goto == "showKota") showKota(data);
             else if (goto == "showKotaNPWP") showKotaNPWP(data);
             else if (goto == "showProvinsi") showProvinsi(data);
+            else if (goto == "showAllProduk") showAllProduk(data);
+            else if (goto == "getProduk") getProduk(data);
             else if (goto == "clearImg") null;
             else if (goto == "logoutUser")
                 swalBerhasil("Berhasil", "Logout Berhasil");
@@ -140,14 +143,21 @@ function userProfileNa(data) {
     if (window.location.href.includes("login") && (role == 0 || role == 10)) {
         window.open(serverURL + "dashboard", "_self");
     }
-    if (window.location.href.includes("login") && (role == 1 || role == 99)) {
+    if (
+        window.location.href.includes("login") &&
+        (role == 1 || role == 99 || role == 2)
+    ) {
         window.open(serverURL + "admin/dashboard", "_self");
-    }
-    if (window.location.href.includes("login") && role == 2) {
-        window.open(serverURL + "mitra/dashboard", "_self");
     }
     if (window.location.href.includes("login") && role == 3) {
         window.open(serverURL + "cs/dashboard", "_self");
+    }
+    if (window.location.href.includes("admin/produk")) {
+        role == "2" ? $("#addProduk").fadeIn() : $("#addProduk").hide();
+        role == "2" ? $("#mitraInfo").fadeIn() : $("#mitraInfo").hide();
+        role == "2"
+            ? $("#btnSimpanProduk").fadeIn()
+            : $("#btnSimpanProduk").hide();
     }
 
     if (data["message"] == "Unauthorized.") {
@@ -163,6 +173,28 @@ function userProfileNa(data) {
                 : $("#namaNasabah").text(
                       data.userProfile.email.substring(0, 8) + "..."
                   );
+
+            $("#menuDashboard").fadeIn();
+            $("#menuMitra").fadeIn();
+            $("#menuNasabah").fadeIn();
+            $("#menuPromo").fadeIn();
+            $("#menuProduk").fadeIn();
+            $("#menuPortofolio").fadeIn();
+            $("#menuSplash").fadeIn();
+            $("#menuAkses").fadeIn();
+            $("#menuAktivitas").fadeIn();
+            $("#menuLaporan").fadeIn();
+
+            $("#menubarDashboard").fadeIn();
+            $("#menubarMitra").fadeIn();
+            $("#menubarNasabah").fadeIn();
+            $("#menubarPromo").fadeIn();
+            $("#menubarProduk").fadeIn();
+            $("#menubarPortofolio").fadeIn();
+            $("#menubarSplash").fadeIn();
+            $("#menubarAkses").fadeIn();
+            $("#menubarAktivitas").fadeIn();
+            $("#menubarLaporan").fadeIn();
             break;
         case "1":
             $("#namaAdminKanan").text(data.userProfile.username);
@@ -171,6 +203,28 @@ function userProfileNa(data) {
                 : $("#namaNasabah").text(
                       data.userProfile.email.substring(0, 8) + "..."
                   );
+
+            $("#menuDashboard").fadeIn();
+            $("#menuMitra").fadeIn();
+            $("#menuNasabah").fadeIn();
+            $("#menuPromo").fadeIn();
+            $("#menuProduk").fadeIn();
+            $("#menuPortofolio").fadeIn();
+            $("#menuSplash").fadeIn();
+            $("#menuAkses").fadeIn();
+            $("#menuAktivitas").fadeIn();
+            $("#menuLaporan").fadeIn();
+
+            $("#menubarDashboard").fadeIn();
+            $("#menubarMitra").fadeIn();
+            $("#menubarNasabah").fadeIn();
+            $("#menubarPromo").fadeIn();
+            $("#menubarProduk").fadeIn();
+            $("#menubarPortofolio").fadeIn();
+            $("#menubarSplash").fadeIn();
+            $("#menubarAkses").fadeIn();
+            $("#menubarAktivitas").fadeIn();
+            $("#menubarLaporan").fadeIn();
             break;
         case "2":
             $("#namaAdminKanan").text(data.userProfile.username);
@@ -179,6 +233,28 @@ function userProfileNa(data) {
                 : $("#namaNasabah").text(
                       data.userProfile.email.substring(0, 8) + "..."
                   );
+
+            $("#menuDashboard").fadeIn();
+            $("#menuMitra").hide();
+            $("#menuNasabah").fadeIn();
+            $("#menuPromo").fadeIn();
+            $("#menuProduk").fadeIn();
+            $("#menuPortofolio").fadeIn();
+            $("#menuSplash").hide();
+            $("#menuAkses").fadeIn();
+            $("#menuAktivitas").fadeIn();
+            $("#menuLaporan").fadeIn();
+
+            $("#menubarDashboard").fadeIn();
+            $("#menubarMitra").hide();
+            $("#menubarNasabah").fadeIn();
+            $("#menubarPromo").fadeIn();
+            $("#menubarProduk").fadeIn();
+            $("#menubarPortofolio").fadeIn();
+            $("#menubarSplash").hide();
+            $("#menubarAkses").fadeIn();
+            $("#menubarAktivitas").fadeIn();
+            $("#menubarLaporan").fadeIn();
             break;
         case "3":
             break;

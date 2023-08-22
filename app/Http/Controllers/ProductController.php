@@ -10,18 +10,21 @@ use App\Models\File;
 
 class ProductController extends Controller
 {
-    protected $connection = 'db2';
-
     public function index()
     {
-        $produk = DB::table('produk')->get();
+        $produk = DB::table('produk');
+        auth()->user()->role == 2 ? ($produk = $produk->where('id_mitra', auth()->user()->idmitra)) : null;
+        $produk = $produk
+            ->leftjoin('mitra', 'produk.id_mitra', '=', 'mitra.idmitra')
+            ->select('produk.*', 'mitra.nama', 'mitra.kriptorone', 'mitra.kriptortwo')
+            ->orderby('created_at', 'DESC')
+            ->get();
 
         foreach ($produk as $value) {
-            !empty($value->no_produk) ? ($value->no_produk = dekripsina($value->no_produk, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->minimal) ? ($value->minimal = dekripsina($value->minimal, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->target) ? ($value->target = dekripsina($value->target, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->bagi_hasil) ? ($value->bagi_hasil = dekripsina($value->bagi_hasil, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->tenor) ? ($value->tenor = dekripsina($value->tenor, $value->kriptorone, $value->kriptortwo)) : null;
+            !empty($value->nama) ? ($value->nama = dekripsina($value->nama, $value->kriptorone, $value->kriptortwo)) : null;
+            $value->expire = date('d M Y', strtotime($value->end_date));
+            unset($value->kriptorone);
+            unset($value->kriptortwo);
         }
 
         return $produk;
@@ -50,117 +53,88 @@ class ProductController extends Controller
     public function detail($id)
     {
         $produkDetail = DB::table('produk')
-            ->where('id', $id)
+            ->where('no_produk', $id)
+            ->leftjoin('mitra', 'produk.id_mitra', '=', 'mitra.idmitra')
+            ->select('produk.*', 'mitra.nama', 'mitra.kriptorone', 'mitra.kriptortwo')
             ->first();
-        if ($produkDetail) {
-            !empty($produkDetail->no_produk) ? ($produkDetail->no_produk = dekripsina($produkDetail->no_produk, $produkDetail->kriptorone, $produkDetail->kriptortwo)) : null;
-            !empty($produkDetail->minimal) ? ($produkDetail->minimal = dekripsina($produkDetail->minimal, $produkDetail->kriptorone, $produkDetail->kriptortwo)) : null;
-            !empty($produkDetail->target) ? ($produkDetail->target = dekripsina($produkDetail->target, $produkDetail->kriptorone, $produkDetail->kriptortwo)) : null;
-            !empty($produkDetail->bagi_hasil) ? ($produkDetail->bagi_hasil = dekripsina($produkDetail->bagi_hasil, $produkDetail->kriptorone, $produkDetail->kriptortwo)) : null;
-            !empty($produkDetail->tenor) ? ($produkDetail->tenor = dekripsina($produkDetail->tenor, $produkDetail->kriptorone, $produkDetail->kriptortwo)) : null;
-        } else {
-            return response()->json('Data tidak Ada', 400);
-        }
+        !empty($produkDetail->nama) ? ($produkDetail->nama = dekripsina($produkDetail->nama, $produkDetail->kriptorone, $produkDetail->kriptortwo)) : null;
 
         return response()->json($produkDetail, 200);
     }
 
     public function store(Request $request)
     {
-        if (auth()->user()->role == 2) {
-            $mitraId = DB::table('mitra')
-                ->where('id_user', auth()->user()->iduser)
-                ->first();
-            $mitraIDNa = $mitraId->id;
-        } else {
-            $mitraIDNa = $request->id_mitra;
-        }
-
-        $no_produkNa = 'D' . $mitraIDNa;
-        $mitraIDNa < 100 ? ($no_produkNa = 'D0' . $mitraIDNa) : null;
-        $mitraIDNa < 10 ? ($no_produkNa = 'D00' . $mitraIDNa) : null;
-
+        // return response()->json($request->all(), 400);
         // Check No Produk
-        $cekProduk = DB::table('produk')->get();
-        $key = true;
-        while ($key) {
-            $count = 0;
-            $no_produkNa .= '-' . date('ym') . rand(99, 999);
-            foreach ($cekProduk as $value) {
-                $noProdukNa = dekripsina($value->no_produk, $value->kriptorone, $value->kriptortwo);
-                $noProdukNa == $no_produkNa ? $count++ : null;
+        if (empty($request->no_produk)) {
+            $cekProduk = DB::table('produk')->get();
+            $key = true;
+            while ($key) {
+                $count = 0;
+                $no_produkNa = 'D' . date('ym') . rand(999, 9999) . date('d');
+                foreach ($cekProduk as $value) {
+                    $no_produkNa == $value->no_produk ? $count++ : null;
+                }
+                $count == 0 ? ($key = false) : null;
             }
-            $count == 0 ? ($key = false) : null;
+            $no_produk = $no_produkNa;
         }
 
-        // Start Enkripsi
-        $kriptor = generatekriptor();
-        $no_produk = newenkripsina($no_produkNa, $kriptor['randnum'], $kriptor['randomBytes']);
-        $minimal = newenkripsina($request->minimal, $kriptor['randnum'], $kriptor['randomBytes']);
-        $target = newenkripsina($request->target, $kriptor['randnum'], $kriptor['randomBytes']);
-        $bagi_hasil = newenkripsina($request->bagi_hasil, $kriptor['randnum'], $kriptor['randomBytes']);
-        $tenor = newenkripsina($request->tenor, $kriptor['randnum'], $kriptor['randomBytes']);
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
-
-        $insertData = [
-            'id_mitra' => $mitraIDNa,
-            'no_produk' => $no_produk,
-            'minimal' => $minimal,
-            'target' => $target,
-            'bagi_hasil' => $bagi_hasil,
-            'tenor' => $tenor,
-            'start_date' => $start_date,
-            'end_date' => $request->end_date,
-            'user_created' => auth()->user()->iduser,
-            'kriptorone' => $kriptor['kriptorone'],
-            'kriptortwo' => $kriptor['kriptortwo'],
-        ];
-
-        try {
-            DB::table('produk')->insert([$insertData]);
-            return response()->json($insertData, 200);
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
-    }
-
-    public function update(Request $request)
-    {
         $minimal = $request->minimal;
         $target = $request->target;
+        $nisbah = $request->nisbah;
         $bagi_hasil = $request->bagi_hasil;
         $tenor = $request->tenor;
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        // Create new enkripsi Mitra
-        $getProduk = DB::table('produk')
-            ->where('id', $request->id)
-            ->first();
-        if (empty($getProduk)) {
-            return response()->json('Data tidak ditemukan', 400);
-        }
-        $kriptorone = $getProduk->kriptorone;
-        $kriptortwo = $getProduk->kriptortwo;
+        // Cek Produk
+        $req_produk = $request->no_produk;
+        $cekProduk = DB::table('produk')
+            ->where('no_produk', $req_produk)
+            ->get();
 
-        !empty($minimal) ? ($updateData['minimal'] = oldenkripsina($minimal, $kriptorone, $kriptortwo)) : null;
-        !empty($target) ? ($updateData['target'] = oldenkripsina($target, $kriptorone, $kriptortwo)) : null;
-        !empty($bagi_hasil) ? ($updateData['bagi_hasil'] = oldenkripsina($bagi_hasil, $kriptorone, $kriptortwo)) : null;
-        !empty($tenor) ? ($updateData['tenor'] = oldenkripsina($tenor, $kriptorone, $kriptortwo)) : null;
-        !empty($start_date) ? ($updateData['start_date'] = $start_date) : null;
-        !empty($end_date) ? ($updateData['end_date'] = $end_date) : null;
+        if (count($cekProduk) == 0) {
+            $insertData = [
+                'id_mitra' => auth()->user()->idmitra,
+                'no_produk' => $no_produk,
+                'minimal' => $minimal,
+                'target' => $target,
+                'nisbah' => $nisbah,
+                'bagi_hasil' => $bagi_hasil,
+                'tenor' => $tenor,
+                'start_date' => $start_date,
+                'end_date' => $request->end_date,
+                'user_created' => auth()->user()->iduser,
+                // 'kriptorone' => $kriptor['kriptorone'],
+                // 'kriptortwo' => $kriptor['kriptortwo'],
+            ];
 
-        $updateData['updated_at'] = date('Y-m-d H:i:s');
-        $updateData['user_updated'] = auth()->user()->iduser;
+            try {
+                DB::table('produk')->insert([$insertData]);
+                return response()->json('Tambah Produk Berhasil', 200);
+            } catch (\Throwable $th) {
+                return response()->json($th->getMessage(), 400);
+            }
+        } else {
+            !empty($minimal) ? ($updateProduk['minimal'] = $minimal) : null;
+            !empty($target) ? ($updateProduk['target'] = $target) : null;
+            !empty($nisbah) ? ($updateProduk['nisbah'] = $bagi_hasil) : null;
+            !empty($bagi_hasil) ? ($updateProduk['bagi_hasil'] = $bagi_hasil) : null;
+            !empty($tenor) ? ($updateProduk['tenor'] = $tenor) : null;
+            !empty($start_date) ? ($updateProduk['start_date'] = $start_date) : null;
+            !empty($end_date) ? ($updateProduk['end_date'] = $end_date) : null;
+            $updateProduk['updated_at'] = date('Y-m-d H:i:s');
+            $updateProduk['user_updated'] = auth()->user()->iduser;
 
-        try {
-            DB::table('produk')
-                ->where('id', $request->id)
-                ->update($updateData);
-            return response()->json($updateData, 200);
-        } catch (\Throwable $th) {
-            return $th->getMessage();
+            try {
+                DB::table('produk')
+                    ->where('no_produk', $req_produk)
+                    ->update($updateProduk);
+                return response()->json('Update Produk Berhasil', 200);
+            } catch (\Throwable $th) {
+                return response()->json($th->getMessage(), 400);
+            }
         }
     }
 

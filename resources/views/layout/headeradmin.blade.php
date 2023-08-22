@@ -115,86 +115,86 @@
         </div>
         <!-- MAX SIDEBAR-->
         <div class="max hidden text-white pr-2 mt-16 flex-col space-y-2 w-full h-[calc(100vh)]">
-            <a href="/admin/dashboard"
+            <a href="/admin/dashboard" id="menuDashboard" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
-                <div> Dashboard</div><i class="fas fa-tachometer-alt pr-5"></i>
+                <div>Dashboard</div><i class="fas fa-tachometer-alt pr-5"></i>
             </a>
-            <a href="/admin/mitra"
+            <a href="/admin/mitra" id="menuMitra" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Mitra</div><i class="fas fa-handshake pr-5"></i>
             </a>
-            <a href="/admin/nasabah"
+            <a href="/admin/nasabah" id="menuNasabah" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Nasabah</div><i class="fas fa-users pr-5"></i>
             </a>
-            <a href="/admin/promo"
+            <a href="/admin/promo" id="menuPromo" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Promo</div><i class="fas fa-percentage pr-5"></i>
             </a>
-            <a href="/admin/produk"
+            <a href="/admin/produk" id="menuProduk" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Produk</div><i class="fas fa-file-contract pr-5"></i>
             </a>
-            <a href="/admin/transaksi"
+            <a href="/admin/transaksi" id="menuPortofolio" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Portofolio</div><i class="fas fa-wallet pr-5"></i>
             </a>
-            <a href="/admin/splash"
+            <a href="/admin/splash" id="menuSplash" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Splash Screen</div><i class="fas fa-tv pr-5"></i>
             </a>
-            <a href="/admin/aksesuser"
+            <a href="/admin/aksesuser" id="menuAkses" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Akses User</div><i class="fas fa-users-cog pr-5"></i>
             </a>
-            <a href="/admin/aktivitas"
+            <a href="/admin/aktivitas" id="menuAktivitas" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Aktivitas</div><i class="fas fa-list-alt pr-5"></i>
             </a>
-            <a href="/admin/laporan"
+            <a href="/admin/laporan" id="menuLaporan" hidden
                 class="-ml-2 hover:ml-1 rounded-md hover:bg-green-800 w-full text-white hover:text233b1e] p-2 pl-8 transform ease-in-out duration-300 flex justify-between items-center space-x-3">
                 <div>Laporan</div><i class="fas fa-file-alt pr-5"></i>
             </a>
         </div>
         <!-- MINI SIDEBAR-->
         <div class="mini mt-16 flex flex-col space-y-2 w-full h-[calc(100vh)]">
-            <a href="/admin/dashboard"
+            <a href="/admin/dashboard" id="menubarDashboard" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-tachometer-alt"></i>
             </a>
-            <a href="/admin/mitra"
+            <a href="/admin/mitra" id="menubarMitra" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-handshake"></i>
             </a>
-            <a href="/admin/nasabah"
+            <a href="/admin/nasabah" id="menubarNasabah" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-users"></i>
             </a>
-            <a href="/admin/promo"
+            <a href="/admin/promo" id="menubarPromo" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-percentage"></i>
             </a>
-            <a href="/admin/produk"
+            <a href="/admin/produk" id="menubarProduk" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-file-contract"></i>
             </a>
-            <a href="/admin/transaksi"
+            <a href="/admin/transaksi" id="menubarPortofolio" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-wallet"></i>
             </a>
-            <a href="/admin/splash"
+            <a href="/admin/splash" id="menubarSplash" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-tv"></i>
             </a>
-            <a href="/admin/aksesuser"
+            <a href="/admin/aksesuser" id="menubarAkses" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-users-cog"></i>
             </a>
-            <a href="/admin/aktivitas"
+            <a href="/admin/aktivitas" id="menubarAktivitas" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-list-alt"></i>
             </a>
-            <a href="/admin/laporan"
+            <a href="/admin/laporan" id="menubarLaporan" hidden
                 class="-ml-1 hover:ml-0 rounded-md hover:bg-green-800 justify-end text-white w-full bg-[#233b1e] p-3 transform ease-in-out duration-300 flex">
                 <i class="fas fa-file-alt"></i>
             </a>

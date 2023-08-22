@@ -82,6 +82,7 @@ class MitraController extends Controller
                 $value->db_name = dekripsina($value->db_name, $kriptorone, $kriptortwo);
             }
 
+            $value->status_db = checkDatabaseName($value->db_name);
             unset($value->kriptorone);
             unset($value->kriptortwo);
         }
@@ -481,12 +482,7 @@ class MitraController extends Controller
             $updateMitra['kriptortwo'] = $kriptor['kriptortwo'];
 
             // Get DB Name
-            $cekMitraNa = DB::table('mitra')
-                ->where('idmitra', $idmitra)
-                ->first();
-            $kriptorone = $cekMitraNa->kriptorone;
-            $kriptortwo = $cekMitraNa->kriptortwo;
-            $genDBName = dekripsina($cekMitraNa->db_name, $kriptorone, $kriptortwo);
+            $genDBName = 'ds_txm_' . $idmitra;
             $checkDB = checkDatabaseName($genDBName);
 
             $updateMitra['db_name'] = newenkripsina($genDBName, $kriptor['randnum'], $kriptor['randomBytes']);

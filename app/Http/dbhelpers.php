@@ -28,6 +28,7 @@ function createTbTransaksi($dbname)
             $table->increments('id');
             $table->integer('id_coa')->nullable();
             $table->integer('id_produk');
+            $table->string('id_nasabah');
             $table->integer('amount')->default(0);
             $table->integer('bagi_hasil')->nullable();
             $table->string('bukti_transfer')->nullable();
