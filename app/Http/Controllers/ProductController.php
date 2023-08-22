@@ -113,7 +113,7 @@ class ProductController extends Controller
         } else {
             !empty($minimal) ? ($updateProduk['minimal'] = $minimal) : null;
             !empty($target) ? ($updateProduk['target'] = $target) : null;
-            !empty($nisbah) ? ($updateProduk['nisbah'] = $bagi_hasil) : null;
+            !empty($nisbah) ? ($updateProduk['nisbah'] = $nisbah) : null;
             !empty($bagi_hasil) ? ($updateProduk['bagi_hasil'] = $bagi_hasil) : null;
             !empty($tenor) ? ($updateProduk['tenor'] = $tenor) : null;
             !empty($start_date) ? ($updateProduk['start_date'] = $start_date) : null;
@@ -217,8 +217,8 @@ class ProductController extends Controller
                 $getTrx = DB::table('transaksi')->get();
             } else {
                 $getTrx = DB::table('transaksi')
-                    // ->where('id_nasabah', auth()->user()->iduser)
-                    // ->where('jenis', 3)
+                    ->where('id_nasabah', auth()->user()->iduser)
+                    ->where('jenis', 3)
                     ->get();
             }
             foreach ($getTrx as $value) {

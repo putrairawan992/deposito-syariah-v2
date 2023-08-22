@@ -49,11 +49,19 @@ class AuthController extends Controller
                 ->where('role', '!=', 0)
                 ->where('role', '!=', 10)
                 ->get())
-            : ($alluser = DB::table('users')
+            : null;
+        auth()->user()->role == 99
+            ? ($alluser = DB::table('users')
                 ->where('role', '!=', 99)
                 ->where('role', '!=', 0)
                 ->where('role', '!=', 10)
-                ->get());
+                ->get())
+            : null;
+        auth()->user()->role == 2
+            ? ($alluser = DB::table('users')
+                ->where('idmitra', auth()->user()->idmitra)
+                ->get())
+            : null;
 
         foreach ($alluser as $key => $value) {
             $kriptorone = $value->kriptorone;
@@ -67,12 +75,12 @@ class AuthController extends Controller
             if ($value->phone != null) {
                 $value->phone = dekripsina($value->phone, $kriptorone, $kriptortwo);
             }
-            if ($value->idmitra != null) {
-                $getmitra = DB::table('mitra')
-                    ->where('idmitra', $value->idmitra)
-                    ->first();
-                $value->idmitra = dekripsina($getmitra->nama, $getmitra->kriptorone, $getmitra->kriptortwo);
-            }
+            // if ($value->idmitra != null) {
+            //     $getmitra = DB::table('mitra')
+            //         ->where('idmitra', $value->idmitra)
+            //         ->first();
+            //     $value->idmitra = dekripsina($getmitra->nama, $getmitra->kriptorone, $getmitra->kriptortwo);
+            // }
 
             unset($value->otp);
             unset($value->pin);
@@ -340,6 +348,7 @@ class AuthController extends Controller
         $enkripEmail = newenkripsina($email, $kriptorone, $kriptortwo);
         $enkripPhone = newenkripsina($phone, $kriptorone, $kriptortwo);
 
+        $role == 99 || $role == 1 || $role == 0 || $role == 10 ? ($idmitra = null) : null;
         try {
             if (empty($iduser)) {
                 $user = new User();
