@@ -10,6 +10,8 @@ use App\Models\File;
 
 class ProductController extends Controller
 {
+    protected $connection = 'db2';
+
     public function index()
     {
         $produk = DB::table('produk');
@@ -38,14 +40,6 @@ class ProductController extends Controller
             ->where('start_date', '<=', date('Y-m-d'))
             ->orderby('id', 'desc')
             ->get();
-
-        foreach ($produk as $value) {
-            !empty($value->no_produk) ? ($value->no_produk = dekripsina($value->no_produk, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->minimal) ? ($value->minimal = dekripsina($value->minimal, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->target) ? ($value->target = dekripsina($value->target, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->bagi_hasil) ? ($value->bagi_hasil = dekripsina($value->bagi_hasil, $value->kriptorone, $value->kriptortwo)) : null;
-            !empty($value->tenor) ? ($value->tenor = dekripsina($value->tenor, $value->kriptorone, $value->kriptortwo)) : null;
-        }
 
         return $produk;
     }
@@ -206,18 +200,16 @@ class ProductController extends Controller
 
     public function buyshow()
     {
-        $connection = 'db2';
         $listDbTrx = DB::table('mitra')
-            ->leftjoin('users', 'mitra.id_user', 'users.iduser')
-            ->select('users.kriptorone', 'users.kriptortwo', 'db_name')
+            ->select('kriptorone', 'kriptortwo', 'db_name')
             ->get();
 
         // Check transaksi every db transaksi
         $result = [];
         foreach ($listDbTrx as $value) {
             $value->dbname = dekripsina($value->db_name, $value->kriptorone, $value->kriptortwo);
-            config(["database.connections.{$connection}.database" => $value->dbname]);
-            DB::purge($connection);
+            config(["database.connections.{'db2'}.database" => $value->dbname]);
+            DB::purge('db2');
 
             // Get transaksi every db transaksi
             // Jenis = 3 (Pembelian)
@@ -225,19 +217,16 @@ class ProductController extends Controller
                 $getTrx = DB::table('transaksi')->get();
             } else {
                 $getTrx = DB::table('transaksi')
-                    ->where('id_nasabah', auth()->user()->iduser)
-                    ->where('jenis', 3)
+                    // ->where('id_nasabah', auth()->user()->iduser)
+                    // ->where('jenis', 3)
                     ->get();
             }
             foreach ($getTrx as $value) {
-                !empty($value->no_transaksi) ? ($value->no_transaksi = dekripsina($value->no_transaksi, $value->kriptorone, $value->kriptortwo)) : null;
                 !empty($value->amount) ? ($value->amount = dekripsina($value->amount, $value->kriptorone, $value->kriptortwo)) : null;
-                !empty($value->bagi_hasil) ? ($value->bagi_hasil = dekripsina($value->bagi_hasil, $value->kriptorone, $value->kriptortwo)) : null;
-                !empty($value->tenor) ? ($value->tenor = dekripsina($value->tenor, $value->kriptorone, $value->kriptortwo)) : null;
                 unset($value->kriptorone);
                 unset($value->kriptortwo);
-                $result[] = $value;
             }
+            array_push($result, $getTrx);
         }
 
         return $result;
@@ -273,10 +262,8 @@ class ProductController extends Controller
     public function buystore(Request $req)
     {
         $produk = DB::table('produk')
-            ->leftjoin('mitra', 'produk.id_mitra', 'mitra.id')
-            ->leftjoin('users', 'mitra.id_user', 'users.iduser')
-            ->where('produk.id', $req->id)
-            ->select('produk.id_mitra', 'db_name', 'users.kriptorone', 'users.kriptortwo', 'produk.kriptorone as kriptoroneProduk', 'produk.kriptortwo as kriptortwoProduk', 'id_mitra', 'bagi_hasil', 'tenor')
+            ->leftjoin('mitra', 'produk.id_mitra', 'mitra.idmitra')
+            ->where('produk.no_produk', $req->no_produk)
             ->first();
         $dbname = dekripsina($produk->db_name, $produk->kriptorone, $produk->kriptortwo);
 
@@ -284,39 +271,28 @@ class ProductController extends Controller
         config(["database.connections.{$this->connection}.database" => $dbname]);
         DB::purge($this->connection);
         $cekTransaksi = DB::table('transaksi')->get();
-        $req->id < 100 ? ($genOne = 'D0' . $req->id . '-') : null;
-        $req->id < 10 ? ($genOne = 'D00' . $req->id . '-') : null;
-        $produk->id_mitra < 100 ? ($genTwo = 'M0' . $produk->id_mitra . '-') : null;
-        $produk->id_mitra < 10 ? ($genTwo = 'M00' . $produk->id_mitra . '-') : null;
         $key = true;
         while ($key) {
             $count = 0;
-            $no_transaksi = $genOne . $genTwo . date('ym') . rand(999, 9999);
+            $no_transaksi = 'P' . date('ym') . rand(999999, 9999999);
             foreach ($cekTransaksi as $value) {
-                $noTransaksiNa = dekripsina($value->no_transaksi, $value->kriptorone, $value->kriptortwo);
-                $noTransaksiNa == $no_transaksi ? $count++ : null;
+                $value->no_transaksi == $no_transaksi ? $count++ : null;
             }
             $count == 0 ? ($key = false) : null;
         }
 
         // Create Enkripsi
         $kriptor = generatekriptor();
-        $noTransaksi = newenkripsina($no_transaksi, $kriptor['randnum'], $kriptor['randomBytes']);
         $amount = newenkripsina($req->amount, $kriptor['randnum'], $kriptor['randomBytes']);
-        $bagi_hasilDekrip = dekripsina($produk->bagi_hasil, $produk->kriptoroneProduk, $produk->kriptortwoProduk);
-        $tenorDekrip = dekripsina($produk->tenor, $produk->kriptoroneProduk, $produk->kriptortwoProduk);
-        $bagi_hasil = newenkripsina($bagi_hasilDekrip, $kriptor['randnum'], $kriptor['randomBytes']);
-        $tenor = newenkripsina($tenorDekrip, $kriptor['randnum'], $kriptor['randomBytes']);
 
         $insertData = [
             'id_nasabah' => auth()->user()->iduser,
-            'id_mitra' => $produk->id_mitra,
             'id_coa' => '',
-            'id_produk' => $req->id,
-            'no_transaksi' => $noTransaksi,
+            'id_produk' => $req->no_produk,
+            'no_transaksi' => $no_transaksi,
             'amount' => $amount,
-            'bagi_hasil' => $bagi_hasil,
-            'tenor' => $tenor,
+            'bagi_hasil' => $produk->bagi_hasil,
+            'tenor' => $produk->tenor,
             'aro' => $req->aro,
             'jenis' => 3,
             'status' => 1,
@@ -326,11 +302,11 @@ class ProductController extends Controller
 
         $cekTransaksi = DB::table('transaksi')
             ->where('id_nasabah', auth()->user()->iduser)
-            ->where('id_produk', $req->id)
+            ->where('id_produk', $req->no_produk)
             ->where('jenis', 3)
             ->where('status', 1)
             ->first();
-
+        // return response()->json([$insertData, $cekTransaksi], 400);
         if (empty($cekTransaksi)) {
             try {
                 DB::table('transaksi')->insert([$insertData]);
@@ -339,7 +315,7 @@ class ProductController extends Controller
                 return $th->getMessage();
             }
         } else {
-            return response()->json(['Anda tidak bisa melakukan pengajuan, Karena transaksi Anda sebelumnya belum di Proses', $cekTransaksi], 400);
+            return response()->json('Anda tidak bisa melakukan pengajuan, Karena transaksi Anda sebelumnya belum di Proses', 400);
         }
     }
 

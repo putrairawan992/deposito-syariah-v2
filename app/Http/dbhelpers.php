@@ -27,9 +27,10 @@ function createTbTransaksi($dbname)
         Schema::create('transaksi', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_coa')->nullable();
-            $table->integer('id_produk');
+            $table->string('id_produk');
             $table->string('id_nasabah');
-            $table->integer('amount')->default(0);
+            $table->string('no_transaksi');
+            $table->string('amount');
             $table->integer('bagi_hasil')->nullable();
             $table->string('bukti_transfer')->nullable();
             $table->integer('tenor')->nullable();
