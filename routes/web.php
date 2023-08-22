@@ -102,7 +102,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/user', 'AuthController@index');
     $router->get('/listnasabah', 'AuthController@nasabah');
     $router->get('/listmitra', 'AuthController@mitra');
-    $router->get('/produk', 'ProductController@index');
 
     // Fix Function
     $router->get('/userprofile', 'AuthController@userprofile');
@@ -215,5 +214,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/upuser', 'AuthController@update');
         $router->get('/logout', 'AuthController@logout');
         $router->get('/clearImg', 'NasabahController@clearimg');
+
+        // Produk
+        $router->get('/produk', 'ProductController@index');
     });
 });

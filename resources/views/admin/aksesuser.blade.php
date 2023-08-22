@@ -54,7 +54,7 @@
             <div class="font-sans font-semibold -mt-2 mb-2 text-lg" id="titleModalAdmin">Pendaftaran Admin</div>
             <label for="modalAdmin" class="absolute top-3 right-4 text-xl cursor-pointer" id="closeModalMitra"><i
                     class="far fa-times-circle"></i></label>
-            <form id="form-admin">
+            <form id="form-akses-admin">
                 <input type="text" hidden id="iduser" name="iduser" />
                 <div class="w-full">
                     <div class="font-semibold">Identitas User</div>
@@ -156,7 +156,7 @@
                             User Created
                         </label>
                     </div>
-                    <div id="passwordNa" class="hidden">
+                    <div id="passwordUserAkses">
                         <div class="mb-3 relative h-10 w-full min-w-[200px]">
                             <input readonly id="password" name="password"
                                 class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-green-700 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
@@ -303,12 +303,12 @@
             var row = $(this).closest("tr")
             var id = row.find(".val_iduser").text()
             ajaxCall(serverApi + 'admin/' + id, null, "GET", "getAdmin")
+            $('#passwordUserAkses').hide()
         })
 
         function getAdmin(data) {
             $('#titleModalAdmin').text('Detail Admin')
             role == "99" || role == "1" ? $('#btnEdit').fadeIn() : $('#btnEdit').hide()
-            $('#passwordNa').hide()
             $('#btnSimpan').hide()
             $('#roleNa').hide()
             $('#mitraNa').hide()
@@ -344,7 +344,7 @@
             $('#titleModalAdmin').text('Pendaftaran Admin')
             $('#btnEdit').hide()
             role == "99" || role == "1" ? $('#btnSimpan').fadeIn() : $('#btnSimpan').hide()
-            $('#passwordNa').fadeIn()
+            $('#passwordUserAkses').fadeIn()
             $('#mitraNa').hide()
             $('#roleNa').fadeIn()
             $('#iduser').prop('readonly', false)
@@ -371,7 +371,7 @@
             $('#btnSimpan').fadeIn()
             $('#btnEdit').hide()
 
-            $('#passwordNa').fadeIn()
+            $('#passwordUserAkses').fadeIn()
             $('#username').prop('readonly', false)
             $('#email').prop('readonly', false)
             $('#phone').prop('readonly', false)
@@ -389,7 +389,7 @@
                     button: false,
                 });
 
-                dataNa = new FormData(document.getElementById("form-admin"))
+                dataNa = new FormData(document.getElementById("form-akses-admin"))
                 url = serverApi + 'regadmin'
                 $.ajax({
                     url: url,
