@@ -153,11 +153,15 @@ function userProfileNa(data) {
         window.open(serverURL + "cs/dashboard", "_self");
     }
     if (window.location.href.includes("admin/produk")) {
-        role == "2" ? $("#addProduk").fadeIn() : $("#addProduk").hide();
-        role == "2" ? $("#mitraInfo").fadeIn() : $("#mitraInfo").hide();
-        role == "2"
-            ? $("#btnSimpanProduk").fadeIn()
-            : $("#btnSimpanProduk").hide();
+        if (role == 2) {
+            $("#mitraInfo").fadeIn();
+            $("#addProduk").fadeIn();
+            $("#btnSimpanProduk").fadeIn();
+        } else {
+            $("#mitraInfo").hide();
+            $("#addProduk").hide();
+            $("#btnSimpanProduk").hide();
+        }
     }
 
     if (data["message"] == "Unauthorized.") {

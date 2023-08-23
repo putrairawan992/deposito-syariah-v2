@@ -200,11 +200,19 @@
                     e.no_produk + "</label></td>";
                 tr += '<td class="text-left align-middle" nowrap>' + e.nama +
                     '<div hidden class="val_idproduk">' + e.no_produk + ' </div></td>';
-                tr += '<td class="text-left align-middle" nowrap>' + e.minimal + '</td>';
+                tr += '<td class="text-left align-middle" nowrap>Rp ' + numbFor(e.minimal) + '</td>';
                 tr += '<td class="text-left align-middle" nowrap>' + e.bagi_hasil + ' % / Tahun</td>';
                 tr += '<td class="text-left align-middle" nowrap>' + e.nisbah + '</td>';
                 tr += '<td class="text-left align-middle" nowrap>' + e.tenor + ' Bulan</td>';
-                tr += '<td class="text-left align-middle" nowrap>' + e.status + '</td>';
+                if (e.status == "1") {
+                    tr +=
+                        '<td class="text-left align-middle" nowrap><button class="pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-green-800 shadow-md shadow-green-500/20 transition-all">' +
+                        'Aktif' + "</button></td>";
+                } else {
+                    tr +=
+                        '<td class="text-left align-middle" nowrap><button class="pointer-events-none rounded-md py-2 px-4 font-sans text-xs font-bold text-red-800 shadow-md shadow-green-500/20 transition-all">' +
+                        'Tidak Aktif' + "</button></td>";
+                }
                 tr += '<td class="text-left align-middle" nowrap>' + e.expire + '</td>';
                 tr += "</td></tr>";
                 t += tr;

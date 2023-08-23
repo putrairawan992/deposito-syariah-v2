@@ -90,11 +90,29 @@ function checkDatabaseName($dbname)
     // Get all database names on the current connection
     $databaseNames = DB::connection()->select('SELECT name FROM sys.databases');
 
-    $result = [];
+    $found = false;
     foreach ($databaseNames as $database) {
-        $result[] = $database->name;
+        if ($dbname == $database->name) {
+            $found = true;
+            break;
+        }
     }
+    return $found;
+}
 
-    return array_search($dbname, $result);
-    // return [$result, array_search($dbname, $result)];
+function getDataDbname($dbname, $calldata)
+{
+    $connection = 'db2';
+
+    // Set the dynamic database connection
+    DB::connection($connection)->setDatabaseName($dbname);
+
+    // Retrieve data from the specified table
+    // $data = DB::connection($connection)->table('your_table')->get();
+    $data = DB::connection($connection)->$calldata;
+
+    // Clear the dynamic database connection
+    DB::disconnect($connection);
+
+    return $data;
 }

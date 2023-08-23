@@ -122,15 +122,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/cekdb/{dbname}', 'DatabaseController@checkDatabaseName');
 
     $router->group(['middleware' => 'admin'], function () use ($router) {
-        // Admin Section
-        $router->get('/alladmin', 'AuthController@alladmin');
-        $router->get('/admin/{iduser}', 'AuthController@detail');
-        $router->post('/regadmin', 'AuthController@regadmin');
-        $router->put('/updateadmin', 'AuthController@update');
-        $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');
-
         // Mitra Section
-        $router->get('/mitra', 'MitraController@index');
         $router->get('/mitra/{idmitra}', 'MitraController@detail');
         $router->post('/regmitra', 'MitraController@store');
         $router->put('/validasimitra', 'MitraController@validasi');
@@ -180,6 +172,15 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['middleware' => 'mitra'], function () use ($router) {
+        $router->get('/mitra', 'MitraController@index');
+
+        // Admin Section
+        $router->get('/alladmin', 'AuthController@alladmin');
+        $router->get('/admin/{iduser}', 'AuthController@detail');
+        $router->post('/regadmin', 'AuthController@regadmin');
+        $router->put('/updateadmin', 'AuthController@update');
+        $router->put('/aktivadmin/{id}', 'AuthController@aktivasi');
+
         // Akses BPR
         $router->post('/neraca', 'MitraController@storeneraca');
         $router->put('/neraca', 'MitraController@updateneraca');

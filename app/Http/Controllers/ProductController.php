@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\helpers;
+use App\Http\dbhelpers;
 use App\Models\File;
 
 class ProductController extends Controller
@@ -38,8 +39,55 @@ class ProductController extends Controller
             ->where('status', 1)
             ->where('end_date', '>=', date('Y-m-d'))
             ->where('start_date', '<=', date('Y-m-d'))
+            ->leftjoin('mitra', 'mitra.idmitra', 'produk.id_mitra')
+            ->select('produk.*', 'mitra.db_name', 'mitra.kriptorone', 'mitra.kriptortwo')
             ->orderby('id', 'desc')
             ->get();
+
+        foreach ($produk as $value) {
+            $dbname = dekripsina($value->db_name, $value->kriptorone, $value->kriptortwo);
+            $checkDB = checkDatabaseName($dbname);
+            $value->terkumpul = 0;
+            $value->terkumpulpersen = 0;
+            if ($checkDB) {
+                config(["database.connections.{$this->connection}.database" => $dbname]);
+                DB::purge($this->connection);
+
+                $getTerkumpul = DB::table('transaksi')
+                    ->where('id_produk', $value->no_produk)
+                    ->where('jenis', 3)
+                    ->wherein('status', [5, 6])
+                    ->get();
+                $kalTerkumpul = 0;
+                foreach ($getTerkumpul as $valueNa) {
+                    $kalTerkumpul = $kalTerkumpul + dekripsina($valueNa->amount, $valueNa->kriptorone, $valueNa->kriptortwo);
+                }
+
+                $getPenarikan = DB::table('transaksi')
+                    ->where('id_produk', $value->no_produk)
+                    ->where('jenis', 2)
+                    ->wherein('status', [5, 6])
+                    ->get();
+                $kalPenarikan = 0;
+                foreach ($getPenarikan as $valueNa) {
+                    $kalPenarikan = $kalPenarikan + dekripsina($valueNa->amount, $valueNa->kriptorone, $valueNa->kriptortwo);
+                }
+
+                DB::disconnect($this->connection);
+
+                $value->terkumpul = $kalTerkumpul - $kalPenarikan;
+                $value->terkumpulpersen = $value->terkumpul / $value->target;
+            }
+
+            unset($value->db_name);
+            unset($value->updated_at);
+            unset($value->deleted_at);
+            unset($value->user_created);
+            unset($value->user_updated);
+            unset($value->user_deleted);
+            unset($value->kriptorone);
+            unset($value->kriptortwo);
+        }
 
         return $produk;
     }
@@ -113,7 +161,7 @@ class ProductController extends Controller
         } else {
             !empty($minimal) ? ($updateProduk['minimal'] = $minimal) : null;
             !empty($target) ? ($updateProduk['target'] = $target) : null;
-            !empty($nisbah) ? ($updateProduk['nisbah'] = $bagi_hasil) : null;
+            !empty($nisbah) ? ($updateProduk['nisbah'] = $nisbah) : null;
             !empty($bagi_hasil) ? ($updateProduk['bagi_hasil'] = $bagi_hasil) : null;
             !empty($tenor) ? ($updateProduk['tenor'] = $tenor) : null;
             !empty($start_date) ? ($updateProduk['start_date'] = $start_date) : null;
@@ -217,8 +265,8 @@ class ProductController extends Controller
                 $getTrx = DB::table('transaksi')->get();
             } else {
                 $getTrx = DB::table('transaksi')
-                    // ->where('id_nasabah', auth()->user()->iduser)
-                    // ->where('jenis', 3)
+                    ->where('id_nasabah', auth()->user()->iduser)
+                    ->where('jenis', 3)
                     ->get();
             }
             foreach ($getTrx as $value) {
